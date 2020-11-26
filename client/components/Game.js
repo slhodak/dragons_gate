@@ -6,10 +6,12 @@ import Factions from './Factions.js';
 export default class Game extends React.Component {
   constructor() {
     super();
-    // game state exists on the server
-    //    does game logic? for now
-    // browser refresh does not reset game
-    // server restart would reset game -- tech debt
+    // get game state from server
+    this.state = {};
+  }
+  fetchGameState() {
+    // get one big page with the whole game in it. json is fine
+    
   }
   render() {
     return (
