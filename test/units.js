@@ -1,5 +1,5 @@
 const assert = require('assert');
-const units = require('../units.js');
+const units = require('../game/units.js');
 
 describe('Unit', () => {
   describe('EliteSoldier', () => {
