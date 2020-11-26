@@ -6,7 +6,9 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
     "build": "webpack --config webpack.config.js",
-    "react-dev": "webpack --config webpack.config.js --watch"
+    "react-dev": "webpack --config webpack.config.js --watch",
+    "start": "node ./server/server.js",
+    "server-dev": "nodemon ./server/server.js"
   },
   "keywords": [
     "game",
@@ -31,6 +33,7 @@
     "@babel/preset-react": "^7.12.7",
     "babel-loader": "^8.2.1",
     "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
     "webpack-cli": "^4.2.0"
   }
 }
