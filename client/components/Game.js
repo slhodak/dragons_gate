@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Combat from './components/Combat.js';
-import Factions from './components/Factions.js';
+import Combat from './Combat.js';
+import Factions from './Factions.js';
 
 export default class Game extends React.Component {
   constructor() {

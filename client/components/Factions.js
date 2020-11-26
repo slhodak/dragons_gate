@@ -1,5 +1,5 @@
 import React from 'react';
-import Unit from 'unit.js';
+import Unit from './Unit.js';
 import style from '../style.css';
 
 export default (props) => (
