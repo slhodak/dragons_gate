@@ -1,0 +1,19 @@
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.combat {
+  display: flex;
+  flex-direction: column;
+}
+
+.factions {
+  display: flex;
+  flex-direction: column;
+}
+
+.unit {
+  height: 100px;
+  width: 100px;
+}

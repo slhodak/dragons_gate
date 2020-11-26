@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App.js';
+import Game from './components/Game.js';
 
-ReactDOM.render(<App />, document.getElementsByClassName('root')[0]);
+ReactDOM.render(<Game />, document.getElementsByClassName('root')[0]);
