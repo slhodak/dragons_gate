@@ -14,7 +14,7 @@ class Faction {
   constructor() {
     this.units = [];
   }
-  // return number of living units in the faction (lose if 0)
+  // return number of living units in the faction
   unitsAlive() {
     let alive = 0;
     this.units.forEach((unit) => {
