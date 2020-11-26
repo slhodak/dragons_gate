@@ -1,0 +1,21 @@
+{
+  "name": "dragons_gate",
+  "version": "1.0.0",
+  "description": "Game",
+  "main": "units.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "rpg",
+    "dragons",
+    "dice",
+    "turn-based"
+  ],
+  "author": "Sam Hodak",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
