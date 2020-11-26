@@ -19,12 +19,22 @@ class Game {
   }
   // Write game state to file
   async save() {
-    await fs.writeFile(this.stateFilePath, JSON.stringify(this.factions));
+    try {
+      await fs.writeFile(this.stateFilePath, JSON.stringify(this.factions));
+      return true;
+    } catch (err) {
+      return err;
+    }
   }
   async load() {
-    let stateData = await fs.readFile(this.stateFilePath, JSON.stringify(this.factions));
-    stateData = JSON.parse(stateData);
-    this.factions = stateData;
+    try {
+      let stateData = await fs.readFile(this.stateFilePath, JSON.stringify(this.factions));
+      stateData = JSON.parse(stateData);
+      this.factions = stateData;
+      return true;
+    } catch (err) {
+      return err;
+    }
   }
 }
 
