@@ -4,7 +4,9 @@
   "description": "Game",
   "main": "units.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/mocha/bin/mocha",
+    "build": "webpack --config webpack.config.js",
+    "react-dev": "webpack --config webpack.config.js --watch"
   },
   "keywords": [
     "game",
@@ -16,11 +18,19 @@
   "author": "Sam Hodak",
   "license": "ISC",
   "dependencies": {
+    "css-loader": "^5.0.1",
     "express": "^4.17.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.7.0"
   },
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "babel-loader": "^8.2.1",
+    "mocha": "^8.2.1",
+    "webpack-cli": "^4.2.0"
   }
 }
