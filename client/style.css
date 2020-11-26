@@ -6,14 +6,24 @@
 .combat {
   display: flex;
   flex-direction: column;
+  background-color: blue;
 }
 
 .factions {
   display: flex;
   flex-direction: column;
+  background-color: red;
+}
+
+.faction {
+  background-color: gray;
+  display: flex;
+  flex-direction: row;
+  width: 50vw;
 }
 
 .unit {
   height: 100px;
   width: 100px;
+  background-color: violet;
 }
