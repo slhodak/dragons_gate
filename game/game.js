@@ -14,8 +14,19 @@ class Game {
     }
   }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
-  doCombat(attacker, defender) {
-
+  doCombat(attacker, defender, type) {
+    // reject combatants who are deceased
+    let damage = 0;
+    // should use constant/enum
+    if (type === 'melee') {
+      damage = attacker.rollMeleeDamage();
+    } else if (type === 'ranged') {
+      damage = attacker.rollRangedDamage();
+    }
+    console.log(damage);
+    let defense = defender.rollDefenseArmor();
+    let loss = damage - defense;
+    defender.reduceHP(loss);
   }
   // Write game state to file
   async save() {

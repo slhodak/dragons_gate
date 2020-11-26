@@ -1,15 +1,9 @@
 const assert = require('assert');
 const {
   Unit,
-  EliteSoldier,
-  FlagBearer,
-  Yuma,
-  Kusarigama,
-  Daisho,
-  Shuriken,
-  Ryu,
-  Yokai,
-  Shinja
+  EliteSoldier, FlagBearer,
+  Yuma, Kusarigama, Daisho, Shuriken,
+  Ryu, Yokai, Shinja
 } = require('../game/units.js');
 
 describe('Unit', () => {
@@ -27,16 +21,16 @@ describe('Unit', () => {
   });
   describe('#roll', () => {
     it('should return an integer', () => {
-      let { meleeDamage } = this.unit.stats;
+      let { meleeDamage } = this.unit;
       let damage = this.unit.roll(meleeDamage);
       assert.equal(damage % 1, 0)
     });
     it('should return a valid roll value based on the input', () => {
-      let { meleeDamage } = this.unit.stats;
+      let { meleeDamage } = this.unit;
       let maxDamage = meleeDamage[0] * meleeDamage[1];
       let damage = this.unit.roll(meleeDamage);
       assert(damage > 0);
-      assert(damage < maxDamage)
+      assert(damage <= maxDamage)
     });
   });
   describe('EliteSoldier', () => {

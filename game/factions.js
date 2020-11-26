@@ -1,13 +1,7 @@
 const {
-  EliteSoldier,
-  FlagBearer,
-  Yuma,
-  Kusarigama,
-  Daisho,
-  Shuriken,
-  Ryu,
-  Yokai,
-  Shinja
+  EliteSoldier, FlagBearer,
+  Yuma, Kusarigama, Daisho, Shuriken,
+  Ryu, Yokai, Shinja
 } = require('./units.js');
 
 class Faction {
