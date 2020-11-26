@@ -6,6 +6,13 @@ const game = require('../game/game.js')();
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 
+// Send game data from value in memory
+app.get('/start', async (_req, res) => {
+  let newGame = game.factions;
+  res.send(newGame);
+});
+
+// Send game data from last save on disk
 app.get('/load', async (_req, res) => {
   let loaded = await game.load();
   if (loaded) {
