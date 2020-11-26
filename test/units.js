@@ -14,8 +14,7 @@ describe('Unit', () => {
       });
       it('should return a valid roll value based on the input', () => {
         let { attackDamage } = this.eliteSoldier.stats;
-        let damageSplit = attackDamage.split('d');
-        let maxDamage = damageSplit[0] * damageSplit[1];
+        let maxDamage = attackDamage[0] * attackDamage[1];
         let damage = this.eliteSoldier.roll(attackDamage);
         assert(damage > 0 && damage < maxDamage);
       });
