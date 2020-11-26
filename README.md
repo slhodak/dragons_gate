@@ -49,7 +49,7 @@ The winner of the game is determined by the combined score of all rounds for eac
 - Can attack twice per turn.
 ### Shuriken
 - Must choose between ranged and melee attack when fighting
-- Can use ranged weapons on anyone up to 10cm away, but the number of die rolled for Attack Damage is reduced by 1 for every 2cm in distance to the target.
+- Can use ranged weapons on anyone up to 10cm away, but the number of die rolled for Ranged Damage is reduced by 1 for every 2cm in distance to the target.
 ---
 ## Guardians
 - These spirits consist of 1 Ryu (dragon), 1 Yokai (demon-like creature) and 1 human Shinja (devotee).
