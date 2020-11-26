@@ -1,8 +1,19 @@
-const units = require('./units.js');
+const {
+  EliteSoldier,
+  FlagBearer,
+  Yuma,
+  Kusarigama,
+  Daisho,
+  Shuriken,
+  Ryu,
+  Yokai,
+  Shinja
+} = require('./units.js');
 
 class Faction {
-  this.units = [];
-  constructor() {}
+  constructor() {
+    this.units = [];
+  }
   // return number of living units in the faction (lose if 0)
   unitsAlive() {
     let alive = 0;
@@ -20,21 +31,32 @@ class Empire extends Faction {
   constructor() {
     super();
     for (let i = 0; i < 6; i++) {
-      this.units.push(new units.EliteSoldier());
+      this.units.push(new EliteSoldier());
     }
-    this.units.push(new units.FlagBearer());
+    this.units.push(new FlagBearer());
   }
 }
 
 class Protectors extends Faction {
   constructor() {
     super();
+    this.units.push(
+      new Yuma(),
+      new Kusarigama(),
+      new Daisho(),
+      new Shuriken()
+    );
   }
 }
 
 class Guardians extends Faction {
   constructor() {
     super();
+    this.units.push(
+      new Ryu(),
+      new Yokai(),
+      new Shinja()
+    );
   }
 }
 
