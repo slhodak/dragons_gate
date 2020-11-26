@@ -31,7 +31,7 @@ class Game {
       let stateData = await fs.readFile(this.stateFilePath, JSON.stringify(this.factions));
       stateData = JSON.parse(stateData);
       this.factions = stateData;
-      return true;
+      return stateData;
     } catch (err) {
       return err;
     }
