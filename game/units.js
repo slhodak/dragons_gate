@@ -1,5 +1,5 @@
 class Unit {
-  constructor(stats) {
+  constructor(stats, name) {
     this.healthPoints = stats.healthPoints;
     this.speed = stats.speed;
     this.meleeRange = stats.meleeRange;
@@ -8,6 +8,7 @@ class Unit {
     this.rangedDamage = stats.rangedDamage;
     this.defenseArmor = stats.defenseArmor;
     this.healthRegen = stats.healthRegen;
+    this.name = name
   }
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
@@ -43,7 +44,7 @@ class EliteSoldier extends Unit {
       meleeDamage: [2, 4],
       defenseArmor: [2, 4],
       healthRegen: 2
-    });
+    }, 'Elite Soldier');
   }
 }
 
@@ -56,7 +57,7 @@ class FlagBearer extends Unit {
       meleeDamage: [2, 4],
       defenseArmor: [2, 4],
       healthRegen: 3
-    });
+    }, 'Imperial Flag-Bearer');
   }
 }
 
@@ -69,7 +70,7 @@ class Yuma extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [5, 6],
       healthRegen: 5
-    });
+    }, 'Yuma');
   }
   
 }
@@ -83,7 +84,7 @@ class Kusarigama extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [5, 5],
       healthRegen: 5
-    });
+    }, 'Kusarigama');
   }
   
 }
@@ -97,7 +98,7 @@ class Daisho extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [5, 5],
       healthRegen: 5
-    });
+    }, 'Daisho');
   }
   
 }
@@ -115,7 +116,7 @@ class Shuriken extends Unit {
       rangedDamage: [6, 4],
       defenseArmor: [5, 5],
       healthRegen: 5
-    });
+    }, 'Shuriken');
   }
   
 }
@@ -131,7 +132,7 @@ class Ryu extends Unit {
       rangedDamage: [4, 4],
       defenseArmor: [4, 4],
       healthRegen: 5
-    });
+    }, 'Ryu');
   }
   
 }
@@ -145,7 +146,7 @@ class Yokai extends Unit {
       meleeDamage: [2, 10],
       defenseArmor: [3, 4],
       healthRegen: 2
-    });
+    }, 'Yokai');
   }
   
 }
@@ -159,7 +160,7 @@ class Shinja extends Unit {
       meleeDamage: [3, 6],
       defenseArmor: [4, 4],
       healthRegen: 0
-    });
+    }, 'Shinja');
   }
 
 }

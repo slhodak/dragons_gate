@@ -11,11 +11,13 @@ export default (props) => {
     rangedRange,
     rangedDamage,
     defenseArmor,
-    healthRegen
+    healthRegen,
+    name
   } = props.unit;
 
   return (
     <div className={style.unit}>
+      <div>{name}</div>
       <div>{`HP: ${healthPoints}`}</div>
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
