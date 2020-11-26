@@ -3,3 +3,6 @@ node_modules
 
 # bundle
 bundle.app.js
+
+# game state
+game/state.json
