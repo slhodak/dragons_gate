@@ -6,6 +6,7 @@ const { Empire, Protectors, Guardians } = require('./factions.js');
 // Interface for users to play the game
 class Game {
   constructor() {
+    this.stateFilePath = path.join(__dirname, './state.json');
     this.factions = {
       empire: new Empire(),
       protectors: new Protectors(),
@@ -18,8 +19,12 @@ class Game {
   }
   // Write game state to file
   async save() {
-    const stateFilePath = path.join(__dirname, './state.json');
-    await fs.writeFile(stateFilePath, JSON.stringify(this.factions));
+    await fs.writeFile(this.stateFilePath, JSON.stringify(this.factions));
+  }
+  async load() {
+    let stateData = await fs.readFile(this.stateFilePath, JSON.stringify(this.factions));
+    stateData = JSON.parse(stateData);
+    this.factions = stateData;
   }
 }
 
