@@ -28,10 +28,9 @@ class Game {
   }
   async load() {
     try {
-      let stateData = await fs.readFile(this.stateFilePath, JSON.stringify(this.factions));
-      stateData = JSON.parse(stateData);
-      this.factions = stateData;
-      return stateData;
+      const json = await fs.readFile(this.stateFilePath);
+      this.factions = JSON.parse(json);
+      return json;
     } catch (err) {
       return err;
     }

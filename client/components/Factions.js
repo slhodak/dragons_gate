@@ -4,5 +4,6 @@ import style from '../style.css';
 
 export default (props) => (
   <div className={style.factions}>
+    {`${Object.keys(props.factions).length} factions loaded`}
   </div>
 );
