@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { Empire, Protectors, Guardians } = require('../game/factions.js');
+const { Empire, Protectors, Guardians } = require(`${process.env.PWD}/server/game/factions.js`);
 const {
   EliteSoldier,
   FlagBearer,
@@ -10,7 +10,7 @@ const {
   Ryu,
   Yokai,
   Shinja
-} = require('../game/units.js');
+} = require(`${process.env.PWD}/server/game/units.js`);
 
 describe('Empire', () => {
   before(() => {

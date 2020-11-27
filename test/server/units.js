@@ -4,7 +4,7 @@ const {
   EliteSoldier, FlagBearer,
   Yuma, Kusarigama, Daisho, Shuriken,
   Ryu, Yokai, Shinja
-} = require('../game/units.js');
+} = require(`${process.env.PWD}/server/game/units.js`);
 
 describe('Unit', () => {
   before(() => {
