@@ -9,7 +9,7 @@ export default class Combat extends React.Component {
     this.doCombat = this.doCombat.bind(this);
   }
   doCombat() {
-    const { attacker, defender } = this.props;
+    const { attacker, defender, attackType } = this.props;
     fetch('doCombat', {
       method: 'POST',
       headers: {
@@ -18,7 +18,7 @@ export default class Combat extends React.Component {
       body: JSON.stringify({
         attackerId: attacker.id,
         defenderId: defender.id,
-        type: 'melee' // keep this in state too
+        type: attackType
       })
     })
       .then(res => {

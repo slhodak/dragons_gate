@@ -43,7 +43,7 @@ class Game {
     if (loss > 0) {
       defender.reduceHP(loss);
     }
-    console.debug(`${attacker.name} did ${loss} damage to ${defender.name}`);
+    console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${type} attack`);
   }
   getUnitById(id) {
     let foundUnit = false; // gotta love that weak typing
