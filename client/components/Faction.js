@@ -1,13 +1,15 @@
 import React from 'react';
 import Unit from './Unit.js';
-import style from '../style.css';
+import '../style.css';
 
 export default (props) => {
   const { faction, name } = props;
   return (
-    <div className={style.faction}>
-      <h2>{name}</h2>
-      {faction.units.map(unit => <Unit unit={unit} />)}
+    <div className="faction">
+      <h2>{name.toUpperCase()}</h2>
+      <div className="units">
+        {faction.units.map(unit => <Unit unit={unit} selectCombatant={props.selectCombatant} />)}
+      </div>
     </div>
   )
 };

@@ -1,13 +1,31 @@
 import React from 'react';
-import style from '../style.css';
+import '../style.css';
 
 export default class Combat extends React.Component {
   constructor(props) {
     super(props);
+
+    this.doCombat = this.doCombat.bind(this);
+  }
+  doCombat() {
+    const { attacker, defender } = this.props;
+
   }
   render() {
+    const { attacker, defender, selectingCombatant, changeSelectingCombatant } = this.props;
     return (
-      <div className={style.combat}>
+      <div className="combat">
+        <h2>Combat</h2>
+        <div>Selecting: {selectingCombatant}</div>
+        <div>
+          <div>Attacker</div><span>{attacker.name || 'none'}, id: {attacker.id || 'n/a'}</span>
+          <button onClick={() => { changeSelectingCombatant('attacker') }}>Select attacker</button>
+        </div>
+        <div>
+          <div>Defender</div><span>{defender.name || 'none'}, id: {defender.id || 'n/a'}</span>
+          <button onClick={() => { changeSelectingCombatant('defender') }}>Select defender</button>
+        </div>
+        <button onClick={this.doCombat} className="fightButton">Fight</button>
       </div>
     )
   }

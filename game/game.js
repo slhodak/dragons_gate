@@ -12,6 +12,17 @@ class Game {
       protectors: new Protectors(),
       guardians: new Guardians()
     }
+    this.assignIds();
+  }
+  // assign IDs
+  assignIds() {
+    let idCounter = 0;
+    Object.keys(this.factions).forEach((faction) => {
+      this.factions[faction].units.forEach((unit) => {
+        unit.id = idCounter;
+        idCounter += 1;
+      });
+    });
   }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
   doCombat(attacker, defender, type) {

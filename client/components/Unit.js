@@ -1,5 +1,5 @@
 import React from 'react';
-import style from '../style.css';
+import '../style.css';
 
 // Unit
 export default (props) => {
@@ -12,12 +12,14 @@ export default (props) => {
     rangedDamage,
     defenseArmor,
     healthRegen,
-    name
+    name,
+    id
   } = props.unit;
 
   return (
-    <div className={style.unit}>
-      <div>{name}</div>
+    <div className="unit" onClick={() => { props.selectCombatant(props.unit) }}>
+      <h3>{name}</h3>
+      <div>{`ID: ${id}`}</div>
       <div>{`HP: ${healthPoints}`}</div>
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
@@ -26,6 +28,7 @@ export default (props) => {
       <div>{`Ranged Damage: ${rangedDamage}`}</div>
       <div>{`Defense Armor: ${defenseArmor}`}</div>
       <div>{`Health Regen: ${healthRegen}`}</div>
+      <div><strong>Immobilized</strong><input type="checkbox" /></div>
     </div>
   )
 }
