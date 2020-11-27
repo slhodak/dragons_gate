@@ -1,4 +1,5 @@
 import React from 'react';
+import { combatantTypes } from '../lib/enums.js';
 import '../style.css';
 
 export default class Combat extends React.Component {
@@ -27,19 +28,23 @@ export default class Combat extends React.Component {
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
   render() {
-    const { attacker, defender, selectingCombatant, changeSelectingCombatant } = this.props;
+    const {
+      attacker,
+      defender,
+      selectingCombatant,
+      toggleCombatantType,
+      attackType,
+      toggleAttackType
+    } = this.props;
     return (
       <div className="combat">
         <h2>Combat</h2>
         <div>Selecting: {selectingCombatant}</div>
-        <div>
-          <div>Attacker</div><span>{attacker.name || 'none'}, id: {attacker.id || 'n/a'}</span>
-          <button onClick={() => { changeSelectingCombatant('attacker') }}>Select attacker</button>
-        </div>
-        <div>
-          <div>Defender</div><span>{defender.name || 'none'}, id: {defender.id || 'n/a'}</span>
-          <button onClick={() => { changeSelectingCombatant('defender') }}>Select defender</button>
-        </div>
+        <button onClick={toggleCombatantType}>Toggle Combatant being Selected</button>
+        <div>Attack Type: {attackType}</div>
+        <button onClick={toggleAttackType}>Toggle Combat Type</button>
+        <div>Attacker</div><span>{attacker.name || 'none'}, id: {attacker.id || 'n/a'}</span>
+        <div>Defender</div><span>{defender.name || 'none'}, id: {defender.id || 'n/a'}</span>
         <button onClick={this.doCombat} className="fightButton">Fight</button>
       </div>
     )

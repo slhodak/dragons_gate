@@ -4,7 +4,7 @@
   "description": "Game",
   "main": "units.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "./node_modules/mocha/bin/mocha --recursive",
     "build": "webpack --config webpack.config.js",
     "react-dev": "webpack --config webpack.config.js --watch",
     "start": "node ./server/server.js",

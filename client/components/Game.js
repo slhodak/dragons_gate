@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Combat from './Combat.js';
 import Factions from './Factions.js';
+import { attackTypes, combatantTypes } from '../lib/enums.js';
 import '../style.css';
 
 export default class Game extends React.Component {
@@ -12,12 +12,15 @@ export default class Game extends React.Component {
       factions: [],
       attacker: {},
       defender: {},
-      selectingCombatant: 'attacker'
+      selectingCombatant: combatantTypes.ATTACKER,
+      attackType: attackTypes.MELEE
     };
+
     this.loadSavedGame = this.loadSavedGame.bind(this);
     this.loadCurrentGame = this.loadCurrentGame.bind(this);
     this.selectCombatant = this.selectCombatant.bind(this);
-    this.changeSelectingCombatant = this.changeSelectingCombatant.bind(this);
+    this.toggleCombatantType = this.toggleCombatantType.bind(this);
+    this.toggleAttackType = this.toggleAttackType.bind(this);
   }
   componentDidMount() {
     this.loadCurrentGame();
@@ -56,18 +59,33 @@ export default class Game extends React.Component {
   }
   selectCombatant(unit) {
     const { selectingCombatant } = this.state;
-    if (selectingCombatant === 'attacker') {
+    if (selectingCombatant === combatantTypes.ATTACKER) {
       this.setState({ attacker: unit });
-    } else {
+    } else if (selectingCombatant === combatantTypes.DEFENDER) {
       this.setState({ defender: unit });
     }
   }
-  // either 'attacker' or 'defender'
-  changeSelectingCombatant(selectingCombatant) {
-    this.setState({ selectingCombatant });
+  // Toggle combatantTypes enum values in state
+  toggleCombatantType() {
+    const { selectingCombatant } = this.state;
+    if (selectingCombatant === combatantTypes.ATTACKER) {
+      this.setState({ selectingCombatant: combatantTypes.DEFENDER });
+    } else if (selectingCombatant === combatantTypes.DEFENDER) {
+      this.setState({ selectingCombatant: combatantTypes.ATTACKER });
+    }
   }
+  // Toggle attackTypes enum values in state
+  toggleAttackType() {
+    const { attackType } = this.state;
+    if (attackType === attackTypes.MELEE) {
+      this.setState({ attackType: attackTypes.RANGED });
+    } else if (attackType === attackTypes.RANGED) {
+      this.setState({ attackType: attackTypes.MELEE });
+    }
+  }
+
   render() {
-    const { factions, attacker, defender, selectingCombatant } = this.state;
+    const { factions, attacker, defender, selectingCombatant, attackType } = this.state;
     return (
       <div>
         <div className="header">
@@ -79,7 +97,9 @@ export default class Game extends React.Component {
           <Combat attacker={attacker}
                   defender={defender}
                   selectingCombatant={selectingCombatant}
-                  changeSelectingCombatant={this.changeSelectingCombatant}
+                  attackType={attackType}
+                  toggleCombatantType={this.toggleCombatantType}
+                  toggleAttackType={this.toggleAttackType}
                   loadCurrentGame={this.loadCurrentGame} />
           <Factions factions={factions} selectCombatant={this.selectCombatant} />
         </div>

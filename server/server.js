@@ -2,7 +2,7 @@ const port = 3456;
 const path = require('path');
 const express = require('express');
 const app = express();
-const game = require('../game/game.js')();
+const game = require('./game/game.js')();
 const bodyParser = require('body-parser');
 
 app.use(express.static(path.resolve(__dirname, '../public')));
