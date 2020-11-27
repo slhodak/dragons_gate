@@ -1,0 +1,11 @@
+units need to track attacks left
+  for special attacks and -1 means immobilized
+  units gain one attack left per turn until reaching a maximum
+game needs to track turns
+  whose turn it is
+  events occur at the end of a turn, such as attacksLeft++
+make lore available in a different page/menu clickable
+
+combat
+  attack type
+  

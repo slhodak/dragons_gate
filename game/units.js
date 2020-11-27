@@ -30,8 +30,8 @@ class Unit {
   rollDefenseArmor() {
     return this.roll(this.defenseArmor);
   }
-  reduceHP(amount) {
-    this.healthPoints -= amount;
+  reduceHP(damage) {
+    this.healthPoints -= damage;
   }
 }
 

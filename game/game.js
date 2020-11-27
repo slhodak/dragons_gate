@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { EliteSoldier } = require('./units.js');
 const { Empire, Protectors, Guardians } = require('./factions.js');
 
 // Tracks the state of factions and their units
@@ -7,18 +8,18 @@ const { Empire, Protectors, Guardians } = require('./factions.js');
 class Game {
   constructor() {
     this.stateFilePath = path.join(__dirname, './state.json');
-    this.factions = {
-      empire: new Empire(),
-      protectors: new Protectors(),
-      guardians: new Guardians()
-    }
+    this.factions = [
+      new Empire(),
+      new Protectors(),
+      new Guardians()
+    ]
     this.assignIds();
   }
   // assign IDs
   assignIds() {
-    let idCounter = 0;
-    Object.keys(this.factions).forEach((faction) => {
-      this.factions[faction].units.forEach((unit) => {
+    let idCounter = 1;
+    this.factions.forEach((faction) => {
+      faction.units.forEach((unit) => {
         unit.id = idCounter;
         idCounter += 1;
       });
@@ -34,10 +35,25 @@ class Game {
     } else if (type === 'ranged') {
       damage = attacker.rollRangedDamage();
     }
-    console.log(damage);
     let defense = defender.rollDefenseArmor();
     let loss = damage - defense;
-    defender.reduceHP(loss);
+    if (loss > 0) {
+      defender.reduceHP(loss);
+    }
+    console.debug(`${attacker.name} did ${loss} damage to ${defender.name}`);
+  }
+  getUnitById(id) {
+    let foundUnit = false; // gotta love that weak typing
+    this.factions.some(faction => {
+      faction.units.some(unit => {
+        if (unit.id === id) {
+          foundUnit = unit;
+        }
+        return foundUnit;
+      });
+      return foundUnit;
+    });
+    return foundUnit;
   }
   // Write game state to file
   async save() {

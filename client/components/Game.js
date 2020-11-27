@@ -9,21 +9,22 @@ export default class Game extends React.Component {
     super(props);
     // get game state from server
     this.state = {
-      factions: {},
+      factions: [],
       attacker: {},
       defender: {},
       selectingCombatant: 'attacker'
     };
-    this.fetchGameState = this.fetchGameState.bind(this);
+    this.loadSavedGame = this.loadSavedGame.bind(this);
+    this.loadCurrentGame = this.loadCurrentGame.bind(this);
     this.selectCombatant = this.selectCombatant.bind(this);
     this.changeSelectingCombatant = this.changeSelectingCombatant.bind(this);
   }
   componentDidMount() {
-    this.openGame();
+    this.loadCurrentGame();
   }
   // Get game data from value in server memory
-  openGame() {
-    console.log("Loading game...");
+  loadCurrentGame() {
+    console.log("Updating game from server memory...");
     fetch('start')
       .then(res => res.json())
       .then(factions => {
@@ -32,8 +33,8 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
   // Get game data from last save on server disk
-  fetchGameState() {
-    console.log("Fetching game state...");
+  loadSavedGame() {
+    console.log("Fetching game from server disk...");
     fetch('load')
       .then(res => res.json())
       .then(factions => {
@@ -71,11 +72,15 @@ export default class Game extends React.Component {
       <div>
         <div className="header">
           <h1>Dragon's Gate</h1>
-          <button onClick={this.fetchGameState}>Load Game</button>
+          <button onClick={this.loadSavedGame}>Load Game</button>
           <button onClick={this.saveGame}>Save Game</button>
         </div>
         <div className="game">
-          <Combat attacker={attacker} defender={defender} changeSelectingCombatant={this.changeSelectingCombatant} selectingCombatant={selectingCombatant} />
+          <Combat attacker={attacker}
+                  defender={defender}
+                  selectingCombatant={selectingCombatant}
+                  changeSelectingCombatant={this.changeSelectingCombatant}
+                  loadCurrentGame={this.loadCurrentGame} />
           <Factions factions={factions} selectCombatant={this.selectCombatant} />
         </div>
       </div>

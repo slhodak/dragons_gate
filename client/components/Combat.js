@@ -9,7 +9,22 @@ export default class Combat extends React.Component {
   }
   doCombat() {
     const { attacker, defender } = this.props;
-
+    fetch('doCombat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        attackerId: attacker.id,
+        defenderId: defender.id,
+        type: 'melee' // keep this in state too
+      })
+    })
+      .then(res => {
+        // this is "heavy" but it is 1 small page of JSON
+        this.props.loadCurrentGame();
+      })
+      .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
   render() {
     const { attacker, defender, selectingCombatant, changeSelectingCombatant } = this.props;

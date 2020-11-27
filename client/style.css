@@ -32,6 +32,11 @@ h1, h2, h3, h4, h5 {
   margin: 5px 0px;
 }
 
+.fightButton:active {
+  background-color: black;
+  color: white;
+}
+
 .factions {
   background-color: rgb(244, 222, 190);
 }

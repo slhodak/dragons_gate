@@ -5,8 +5,9 @@ const {
 } = require('./units.js');
 
 class Faction {
-  constructor() {
+  constructor(name) {
     this.units = [];
+    this.name = name;
   }
   // return number of living units in the faction
   unitsAlive() {
@@ -23,7 +24,7 @@ class Faction {
 
 class Empire extends Faction {
   constructor() {
-    super();
+    super('Empire');
     for (let i = 0; i < 6; i++) {
       this.units.push(new EliteSoldier());
     }
@@ -33,7 +34,7 @@ class Empire extends Faction {
 
 class Protectors extends Faction {
   constructor() {
-    super();
+    super('Protectors');
     this.units.push(
       new Yuma(),
       new Kusarigama(),
@@ -45,7 +46,7 @@ class Protectors extends Faction {
 
 class Guardians extends Faction {
   constructor() {
-    super();
+    super('Guardians');
     this.units.push(
       new Ryu(),
       new Yokai(),

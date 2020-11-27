@@ -17,7 +17,7 @@ export default (props) => {
   } = props.unit;
 
   return (
-    <div className="unit" onClick={() => { props.selectCombatant(props.unit) }}>
+    <div className="unit" onClick={() => { props.selectCombatant({ name, id }) }}>
       <h3>{name}</h3>
       <div>{`ID: ${id}`}</div>
       <div>{`HP: ${healthPoints}`}</div>
