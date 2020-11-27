@@ -1,6 +1,5 @@
 const fs = require('fs').promises;
 const path = require('path');
-const { EliteSoldier } = require('./units.js');
 const { Empire, Protectors, Guardians } = require('./factions.js');
 
 // Tracks the state of factions and their units
