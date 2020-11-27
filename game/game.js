@@ -12,6 +12,10 @@ class Game {
       new Protectors(),
       new Guardians()
     ]
+    this.attackTypes = {
+      MELEE: 'melee',
+      RANGED: 'ranged'
+    }
     this.assignIds();
   }
   // assign IDs
@@ -29,9 +33,9 @@ class Game {
     // reject combatants who are deceased
     let damage = 0;
     // should use constant/enum
-    if (type === 'melee') {
+    if (type === this.attackTypes.MELEE) {
       damage = attacker.rollMeleeDamage();
-    } else if (type === 'ranged') {
+    } else if (type === this.attackTypes.RANGED) {
       damage = attacker.rollRangedDamage();
     }
     let defense = defender.rollDefenseArmor();
@@ -63,6 +67,7 @@ class Game {
       return err;
     }
   }
+  // Read game state from file
   async load() {
     try {
       const json = await fs.readFile(this.stateFilePath);

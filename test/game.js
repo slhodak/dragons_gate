@@ -17,8 +17,7 @@ describe('Game', () => {
       let eliteSoldier = new EliteSoldier();
       const startingHP = eliteSoldier.healthPoints;
       let ryu = new Ryu();
-      this.game.doCombat(ryu, eliteSoldier, 'ranged');
-      console.log(eliteSoldier.healthPoints);
+      this.game.doCombat(ryu, eliteSoldier, this.game.attackTypes.RANGED);
       assert(startingHP > eliteSoldier.healthPoints);
     });
   });
