@@ -61,9 +61,26 @@ html {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.empire {
+  background-color: rgb(20, 80, 2);
+}
+.protectors {
+  background-color: rgb(2, 45, 102);
+}
+.guardians {
+  background-color: rgb(104, 21, 0);
 }
 
 .unit {
   margin: 10px 10px;
+}
+
+.unit .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px;
 }

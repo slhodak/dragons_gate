@@ -19,9 +19,10 @@ export default (props) => {
 
   return (
     <div className="unit" onClick={() => { props.selectCombatant({ name, id }) }}>
-      <h3>{name}</h3>
-      <div>{`ID: ${id}`}</div>
-      <div><strong>{status}</strong></div>
+      <div className="header">
+        <h3>{name}</h3>
+        <span><em>{status}</em></span>
+      </div>
       <div>{`HP: ${healthPoints}`}</div>
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>

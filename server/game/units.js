@@ -75,7 +75,7 @@ class FlagBearer extends Unit {
       meleeDamage: [2, 4],
       defenseArmor: [2, 4],
       healthRegen: 3
-    }, 'Imperial Flag-Bearer');
+    }, 'Flag-Bearer');
   }
 }
 
