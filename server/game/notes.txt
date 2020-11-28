@@ -11,13 +11,18 @@ combat
 
 
 playing notes:
-  load game not working
-  flag-bearer influence
+  turn
   status (immobilized, etc)
+  load game not working
+  stronger soldiers as they die
+  flag-bearer influence
   shuriken distance damage
   random unit select for ryu
-  stronger soldiers as they die
   font size picker
   gate objective -- not just brawl
   hex board
 
+Refactor:
+  Status effects into something that is stored on unit
+    in unit's status with object cloning from status enum?
+    including turns damned, poison damage, rolls for effects
