@@ -9,10 +9,14 @@ class Unit {
     this.meleeEffect = stats.meleeEffect;
     this.rangedRange = stats.rangedRange;
     this.rangedDamage = stats.rangedDamage;
+    this.rangedEffect = stats.rangedEffect;
     this.defenseArmor = stats.defenseArmor;
     this.healthRegen = stats.healthRegen;
     this.status = unitStatuses.HEALTHY;
     this.name = name
+  }
+  isAlive() {
+    return this.healthPoints < 0;
   }
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
@@ -23,12 +27,11 @@ class Unit {
     return total;
   }
   rollMeleeDamage() {
+    if (!this.meleeDamage) { return; }
     return this.roll(this.meleeDamage);
   }
   rollRangedDamage() {
-    if (!this.rangedDamage) {
-      return;
-    }
+    if (!this.rangedDamage) { return; }
     return this.roll(this.rangedDamage);
   }
   rollDefenseArmor() {
@@ -37,8 +40,16 @@ class Unit {
   reduceHP(damage) {
     this.healthPoints -= damage;
   }
-  calculateEffect() {
-    return null;
+  calculateEffect(attackType) {
+    if (attackType === attackTypes.MELEE) {
+      if (!this.meleeEffect) { return; }
+      var { roll, success, effect } = this.meleeEffect;
+    } else if (attackType === attackTypes.RANGED) {
+      if (!this.rangedEffect) { return; }
+      var { roll, success, effect } = this.rangedEffect;
+    }
+    const rollResult = (this.roll(roll));
+    return success.includes(rollResult) ? effect : null;
   }
 }
 
@@ -98,13 +109,6 @@ class Kusarigama extends Unit {
       healthRegen: 5
     }, 'Kusarigama');
   }
-  calculateEffect(attackType) {
-    if (attackType === attackTypes.MELEE) {
-      const { roll, success } = this.meleeEffect;
-      const rollResult = (this.roll(roll));
-      return success.includes(rollResult) ? unitStatuses.IMMOBILIZED : null;
-    }
-  }
 }
 
 class Daisho extends Unit {
@@ -132,14 +136,19 @@ class Shuriken extends Unit {
       // -1 roll per 2cm distance
       // e.g. at 5cm, rangedDamage = [4, 4]
       rangedDamage: [6, 4],
+      rangedEffect: {
+        roll: [1, 6],
+        success: [5, 6],
+        effect: unitStatuses.POISONED
+      },
       defenseArmor: [3, 4],
       healthRegen: 5,
     }, 'Shuriken');
   }
-  rollRangedDamage(distance) {
-    let damage = this.roll(this.rangedDamage);
-    damage -= Math.ceil(distance / 2);
-  }
+  // rollRangedDamage(distance) {
+  //   let damage = this.roll(this.rangedDamage);
+  //   damage -= Math.ceil(distance / 2);
+  // }
 }
 
 class Ryu extends Unit {
@@ -164,6 +173,11 @@ class Yokai extends Unit {
       speed: 5,
       meleeRange: 3,
       meleeDamage: [2, 10],
+      meleeEffect: {
+        roll: [2, 6],
+        success: [7],
+        effect: unitStatuses.DAMNED
+      },
       defenseArmor: [3, 4],
       healthRegen: 2
     }, 'Yokai');
