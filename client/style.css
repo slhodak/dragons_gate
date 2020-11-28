@@ -6,6 +6,7 @@ h1, h2, h3, h4, h5 {
 html {
   background-image: url('images/pexels-adrien-olichon-2931270.jpg');
   color: white;
+  font-size: 1em;
 }
 
 .header {
@@ -58,6 +59,7 @@ html {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .unit {
