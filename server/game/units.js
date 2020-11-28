@@ -10,6 +10,7 @@ class Unit {
     this.rangedDamage = stats.rangedDamage;
     this.defenseArmor = stats.defenseArmor;
     this.healthRegen = stats.healthRegen;
+    this.status = unitStatuses.HEALTHY;
     this.name = name
   }
   roll(rollsSides) {
@@ -118,7 +119,6 @@ class Shuriken extends Unit {
       rangedDamage: [6, 4],
       defenseArmor: [3, 4],
       healthRegen: 5,
-      status: unitStatuses.HEALTHY
     }, 'Shuriken');
   }
   rollRangedDamage(distance) {

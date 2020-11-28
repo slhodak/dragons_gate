@@ -12,6 +12,7 @@ export default (props) => {
     rangedDamage,
     defenseArmor,
     healthRegen,
+    status,
     name,
     id
   } = props.unit;
@@ -20,6 +21,7 @@ export default (props) => {
     <div className="unit" onClick={() => { props.selectCombatant({ name, id }) }}>
       <h3>{name}</h3>
       <div>{`ID: ${id}`}</div>
+      <div><strong>{status}</strong></div>
       <div>{`HP: ${healthPoints}`}</div>
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
@@ -28,7 +30,6 @@ export default (props) => {
       <div>{`Ranged Damage: ${rangedDamage}`}</div>
       <div>{`Defense Armor: ${defenseArmor}`}</div>
       <div>{`Health Regen: ${healthRegen}`}</div>
-      <div><strong>Immobilized</strong><input type="checkbox" /></div>
     </div>
   )
 }
