@@ -1,3 +1,5 @@
+const { unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
+
 class Unit {
   constructor(stats, name) {
     this.healthPoints = stats.healthPoints;
@@ -63,7 +65,7 @@ class FlagBearer extends Unit {
 
 class Yuma extends Unit {
   constructor() {
-    super({ 
+    super({
       healthPoints: 50,
       speed: 3,
       meleeRange: 2,
@@ -72,12 +74,12 @@ class Yuma extends Unit {
       healthRegen: 5
     }, 'Yuma');
   }
-  
+
 }
 
 class Kusarigama extends Unit {
   constructor() {
-    super({ 
+    super({
       healthPoints: 50,
       speed: 3,
       meleeRange: 3,
@@ -86,12 +88,12 @@ class Kusarigama extends Unit {
       healthRegen: 5
     }, 'Kusarigama');
   }
-  
+
 }
 
 class Daisho extends Unit {
   constructor() {
-    super({ 
+    super({
       healthPoints: 50,
       speed: 3,
       meleeRange: 2,
@@ -100,12 +102,12 @@ class Daisho extends Unit {
       healthRegen: 5
     }, 'Daisho');
   }
-  
+
 }
 
 class Shuriken extends Unit {
   constructor() {
-    super({ 
+    super({
       healthPoints: 50,
       speed: 4,
       meleeRange: 2,
@@ -114,11 +116,15 @@ class Shuriken extends Unit {
       // -1 roll per 2cm distance
       // e.g. at 5cm, rangedDamage = [4, 4]
       rangedDamage: [6, 4],
-      defenseArmor: [5, 5],
-      healthRegen: 5
+      defenseArmor: [3, 4],
+      healthRegen: 5,
+      status: unitStatuses.HEALTHY
     }, 'Shuriken');
   }
-  
+  rollRangedDamage(distance) {
+    let damage = this.roll(this.rangedDamage);
+    damage -= Math.ceil(distance / 2);
+  }
 }
 
 class Ryu extends Unit {
@@ -127,19 +133,18 @@ class Ryu extends Unit {
       healthPoints: 100,
       speed: 0,
       meleeRange: 3,
-      meleeDamage: [10, 10],
+      meleeDamage: [5, 4],
       rangedRange: Infinity,
       rangedDamage: [4, 4],
       defenseArmor: [4, 4],
       healthRegen: 5
     }, 'Ryu');
   }
-  
 }
 
 class Yokai extends Unit {
   constructor() {
-    super({ 
+    super({
       healthPoints: 60,
       speed: 5,
       meleeRange: 3,
@@ -148,12 +153,11 @@ class Yokai extends Unit {
       healthRegen: 2
     }, 'Yokai');
   }
-  
 }
 
 class Shinja extends Unit {
   constructor() {
-    super({ 
+    super({
       healthPoints: 20,
       speed: 2,
       meleeRange: 2,
@@ -162,7 +166,6 @@ class Shinja extends Unit {
       healthRegen: 0
     }, 'Shinja');
   }
-
 }
 
 module.exports = {

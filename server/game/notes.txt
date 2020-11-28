@@ -8,4 +8,16 @@ make lore available in a different page/menu clickable
 
 combat
   attack type
-  
+
+
+playing notes:
+  load game not working
+  flag-bearer influence
+  status (immobilized, etc)
+  shuriken distance damage
+  random unit select for ryu
+  stronger soldiers as they die
+  font size picker
+  gate objective -- not just brawl
+  hex board
+

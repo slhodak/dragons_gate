@@ -1,5 +1,5 @@
 import React from 'react';
-import { attackTypes, combatantTypes } from '../lib/enums.js';
+import { attackTypes, combatantTypes } from '../../lib/enums.js';
 import '../style.css';
 
 export default class Combat extends React.Component {

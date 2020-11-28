@@ -1,7 +1,7 @@
 import React from 'react';
 import Combat from './Combat.js';
 import Factions from './Factions.js';
-import { attackTypes, combatantTypes } from '../lib/enums.js';
+import { attackTypes, combatantTypes } from '../../lib/enums.js';
 import '../style.css';
 
 export default class Game extends React.Component {
