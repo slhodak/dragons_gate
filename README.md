@@ -24,12 +24,12 @@
 
 The game requires 3 players. Every combination of players controlling each faction is played. Therefore there are 6 rounds, as follows, where `[1,2,3]` represents each player, and `[E,P,G]` represents each faction.  
 ```
-1E 2P 3G  
-1E 2G 3P  
-1P 2E 3G  
-1P 2G 3E  
-1G 2E 3P  
-1G 2P 3E  
+1E 2P 3G
+1E 2G 3P
+1P 2E 3G
+1P 2G 3E
+1G 2E 3P
+1G 2P 3E
 ```
 The winner of the game is determined by the combined score of all rounds for each player.
 
@@ -50,6 +50,7 @@ The winner of the game is determined by the combined score of all rounds for eac
 ### Shuriken
 - Must choose between ranged and melee attack when fighting
 - Can use ranged weapons on anyone up to 10cm away, but the number of die rolled for Ranged Damage is reduced by 1 for every 2cm in distance to the target.
+- A ranged attack from Shuriken has a chance to leave the defender `POISONED`.
 ---
 ## Guardians
 - These spirits consist of 1 Ryu (dragon), 1 Yokai (demon-like creature) and 1 human Shinja (devotee).
@@ -58,11 +59,19 @@ The winner of the game is determined by the combined score of all rounds for eac
 - Ranged attack: Each piece on the board not belonging to the Guardians must be numbered from 1 to n. Each turn, generate a random number in this range, and the unit for this number will be the target of Ryu's ranged attack. The number generator can produce a 0, in which case no unit was targeted by Ryu's ranged attack this turn.
 ### Yokai
 - Can move twice or attack twice.
-Shinja (Devotee)
-- Every turn while deceased, if S has not already been revived twice, roll `d4` to revive the unit with full health at it's original starting point. A roll of 1 or 2 will revive S.
+- Melee attacks from the Yokai have a chance of leaving the defending unit `DAMNED`.
+### Shinja (Devotee)
+- Every turn while deceased, if S. has not already been revived twice, roll `d4` to revive the unit with full health at it's original starting point. A roll of 1 or 2 will revive S.
 
 # Unit Actions
 Unit statistics include: Health Points (H), Movement Speed (S), Attack Strength (A), Range (R), Armor Defense (D), and Health Regeneration (HR).
+## Unit Statuses
+#### `HEALTHY`
+- Unit is not impaired and functions according to all normal rules. Does not mean the unit is not wounded or low on `HP`.
+#### `POISONED`
+- Unit will lose `1 HP` per turn after being poisoned.
+#### `DAMNED`
+- Unit will die on the 3rd turn after being `DAMNED`, regardless of `HP`.
 ## Movement
 - Each unit can move once per turn, before attacking (unless otherwise specified).
 ## Combat
