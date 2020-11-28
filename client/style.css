@@ -3,6 +3,11 @@ h1, h2, h3, h4, h5 {
   padding: 0px;
 }
 
+html {
+  background-image: url('images/pexels-adrien-olichon-2931270.jpg');
+  color: white;
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -13,46 +18,48 @@ h1, h2, h3, h4, h5 {
 
 .game {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
 .combat {
   display: flex;
   flex-direction: column;
-  background-color: rgb(173, 231, 249);
+  width: 30%;
 }
 
-.fightButton {
-  height: 30px;
-  width: 70px;
-  font-weight: 700;
-  background-color: red;
-  border: 0px;
-  border-radius: 5px;
+.combat button {
+  width: 200px;
+  height: 40px;
+  font-weight: 600;
+  font-size: 1em;
+  border-radius: 3px;
   margin: 5px 0px;
 }
 
-.fightButton:active {
-  background-color: black;
-  color: white;
+.combat button:active {
+  background-color: rgb(179, 247, 179);
+}
+
+.combat .fightButton:active {
+  background-color: rgb(236, 100, 100);
 }
 
 .factions {
-  background-color: rgb(244, 222, 190);
+  display: flex;
+  flex-direction: column;
 }
 
 .faction {
-  background-color: rgb(0, 0, 0);
   color: white;
+  margin: 20px;
 }
 
 .units {
   display: flex;
   flex-direction: row;
-  color: black;
+  flex-wrap: wrap;
 }
 
 .unit {
-  width: 200px;
-  background-color: rgb(217, 174, 242);
+  margin: 10px 10px;
 }

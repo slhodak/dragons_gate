@@ -7,7 +7,6 @@ import '../style.css';
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
-    // get game state from server
     this.state = {
       factions: [],
       attacker: {},

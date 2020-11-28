@@ -1,5 +1,5 @@
 import React from 'react';
-import { combatantTypes } from '../lib/enums.js';
+import { attackTypes, combatantTypes } from '../lib/enums.js';
 import '../style.css';
 
 export default class Combat extends React.Component {
@@ -40,9 +40,9 @@ export default class Combat extends React.Component {
       <div className="combat">
         <h2>Combat</h2>
         <div>Selecting: {selectingCombatant}</div>
-        <button onClick={toggleCombatantType}>Toggle Combatant being Selected</button>
+        <button onClick={toggleCombatantType}>Select {selectingCombatant === combatantTypes.ATTACKER ? combatantTypes.DEFENDER : combatantTypes.ATTACKER}</button>
         <div>Attack Type: {attackType}</div>
-        <button onClick={toggleAttackType}>Toggle Combat Type</button>
+        <button onClick={toggleAttackType}>Attack using {attackType === attackTypes.MELEE ? attackTypes.RANGED : attackTypes.MELEE}</button>
         <div>Attacker</div><span>{attacker.name || 'none'}, id: {attacker.id || 'n/a'}</span>
         <div>Defender</div><span>{defender.name || 'none'}, id: {defender.id || 'n/a'}</span>
         <button onClick={this.doCombat} className="fightButton">Fight</button>
