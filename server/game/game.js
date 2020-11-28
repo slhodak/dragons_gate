@@ -43,6 +43,10 @@ class Game {
     if (loss > 0) {
       defender.reduceHP(loss);
     }
+    let effect = attacker.calculateEffect(type);
+    if (effect) {
+      defender.status = effect;
+    }
     console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${type} attack`);
   }
   getUnitById(id) {

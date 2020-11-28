@@ -1,4 +1,4 @@
-const { unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
   constructor(stats, name) {
@@ -6,6 +6,7 @@ class Unit {
     this.speed = stats.speed;
     this.meleeRange = stats.meleeRange;
     this.meleeDamage = stats.meleeDamage;
+    this.meleeEffect = stats.meleeEffect;
     this.rangedRange = stats.rangedRange;
     this.rangedDamage = stats.rangedDamage;
     this.defenseArmor = stats.defenseArmor;
@@ -35,6 +36,9 @@ class Unit {
   }
   reduceHP(damage) {
     this.healthPoints -= damage;
+  }
+  calculateEffect() {
+    return null;
   }
 }
 
@@ -85,11 +89,22 @@ class Kusarigama extends Unit {
       speed: 3,
       meleeRange: 3,
       meleeDamage: [4, 6],
+      meleeEffect: {
+        roll: [1, 6],
+        success: [4, 5, 6],
+        effect: unitStatuses.IMMOBILIZED
+      },
       defenseArmor: [5, 5],
       healthRegen: 5
     }, 'Kusarigama');
   }
-
+  calculateEffect(attackType) {
+    if (attackType === attackTypes.MELEE) {
+      const { roll, success } = this.meleeEffect;
+      const rollResult = (this.roll(roll));
+      return success.includes(rollResult) ? unitStatuses.IMMOBILIZED : null;
+    }
+  }
 }
 
 class Daisho extends Unit {
