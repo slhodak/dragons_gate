@@ -1,3 +1,7 @@
+/*
+General
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Texturina:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;1,100;1,300;1,400;1,600;1,700;1,800&display=swap');
 
 h1, h2, h3, h4, h5 {
@@ -25,9 +29,14 @@ html {
   flex-direction: row;
 }
 
+/*
+  Combat
+*/
+
 .combat {
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
 .combat button {
@@ -47,6 +56,21 @@ html {
   background-color: rgb(236, 100, 100);
 }
 
+/*
+  Hex Board
+*/
+
+.hexBoard {
+  border: 1px solid white;
+  flex-grow: 1;
+  height: 1000px;
+  margin: 10px;
+}
+
+/*
+  Factions
+*/
+
 .factions {
   display: flex;
   flex-direction: column;
@@ -56,7 +80,7 @@ html {
 
 .faction {
   color: white;
-  margin: 20px;
+  margin: 10px;
 }
 
 .faction .header {

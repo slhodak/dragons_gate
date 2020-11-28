@@ -1,5 +1,6 @@
 import React from 'react';
 import Combat from './Combat.js';
+import HexBoard from './HexBoard.js';
 import Factions from './Factions.js';
 import { attackTypes, combatantTypes } from '../../lib/enums.js';
 import '../style.css';
@@ -100,6 +101,7 @@ export default class Game extends React.Component {
                   toggleCombatantType={this.toggleCombatantType}
                   toggleAttackType={this.toggleAttackType}
                   loadCurrentGame={this.loadCurrentGame} />
+          <HexBoard />
           <Factions factions={factions} selectCombatant={this.selectCombatant} />
         </div>
       </div>
