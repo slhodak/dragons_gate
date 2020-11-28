@@ -4,6 +4,7 @@ node_modules
 # bundle
 bundle.app.js
 public/*.jpg
+public/*.png
 
 # game state
-game/state.json
+state.json
