@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Empire, Protectors, Guardians } = require('./factions.js');
+const { attackTypes } = require('../../lib/enums.js');
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
@@ -12,10 +13,6 @@ class Game {
       new Protectors(),
       new Guardians()
     ]
-    this.attackTypes = {
-      MELEE: 'melee',
-      RANGED: 'ranged'
-    }
     this.turn = 0;
     this.assignIds();
   }
@@ -34,9 +31,9 @@ class Game {
     // reject combatants who are deceased
     let damage = 0;
     // should use constant/enum
-    if (type === this.attackTypes.MELEE) {
+    if (type === attackTypes.MELEE) {
       damage = attacker.rollMeleeDamage();
-    } else if (type === this.attackTypes.RANGED) {
+    } else if (type === attackTypes.RANGED) {
       damage = attacker.rollRangedDamage();
     }
     let defense = defender.rollDefenseArmor();
