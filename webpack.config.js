@@ -11,7 +11,17 @@ module.exports = {
     rules: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.jpg$/, loader: 'file-loader' }
+      {
+        test: /\.(jpg|png)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
+      }
     ]
   }
 };
