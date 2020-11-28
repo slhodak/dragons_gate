@@ -27,8 +27,8 @@ export default (props) => {
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
       <div>{`Melee Damage: ${meleeDamage}`}</div>
-      <div>{`Ranged Range: ${rangedRange}`}</div>
-      <div>{`Ranged Damage: ${rangedDamage}`}</div>
+      {rangedRange ? <div>{`Ranged Range: ${rangedRange}`}</div> : null}
+      {rangedDamage ? <div>{`Ranged Damage: ${rangedDamage}`}</div> : null}
       <div>{`Defense Armor: ${defenseArmor}`}</div>
       <div>{`Health Regen: ${healthRegen}`}</div>
     </div>
