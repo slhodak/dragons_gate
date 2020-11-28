@@ -16,12 +16,22 @@ html {
   font-family: 'Texturina', serif;
 }
 
+body {
+  margin: 0px;
+}
+
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
+}
+
+.header .dragonIcon {
+  height: 35px;
+  position: relative;
+  top: 4px;
 }
 
 .game {
@@ -84,8 +94,18 @@ html {
 }
 
 .faction .header {
-  padding: 10px;
-  display: inline-block;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.faction .header h2 {
+  padding: 0px 10px;
+}
+
+.faction .header .katana {
+  scale: 0.6;
+  padding: 0px 20px 0px 0px;
 }
 
 .units {
@@ -118,4 +138,25 @@ html {
   flex-direction: row;
   justify-content: space-between;
   padding: 0px;
+}
+
+/*
+  Footer
+*/
+
+.footer {
+  background-color:white;
+  color: black;
+  padding: 5px;
+}
+
+.footer a {
+  text-decoration: none;
+  color: rgb(0, 93, 175);
+}
+.footer a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.footer a:visited {
+  color: rgb(0, 93, 175);
 }
