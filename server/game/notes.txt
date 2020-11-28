@@ -11,9 +11,9 @@ combat
 
 
 playing notes:
-  turn
-  status (immobilized, etc)
-  load game not working
+  turn √
+  status (immobilized, etc) √
+  load game not working √
   stronger soldiers as they die
   flag-bearer influence
   shuriken distance damage
