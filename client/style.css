@@ -50,11 +50,18 @@ html {
 .factions {
   display: flex;
   flex-direction: column;
+  /* upgrade to scss to use variables and algebra for this */
+  width: 1056px;
 }
 
 .faction {
   color: white;
   margin: 20px;
+}
+
+.faction .header {
+  padding: 10px;
+  display: inline-block;
 }
 
 .units {
@@ -75,7 +82,11 @@ html {
 }
 
 .unit {
-  margin: 10px 10px;
+  margin: 5px 5px;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3px;
+  width: 220px;
 }
 
 .unit .header {

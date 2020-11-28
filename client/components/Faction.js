@@ -6,7 +6,7 @@ export default (props) => {
   const { faction } = props;
   return (
     <div className={`faction ${faction.name.toLowerCase()}`}>
-      <h2>{faction.name.toUpperCase()}</h2>
+      <h2 className="header">{faction.name.toUpperCase()}</h2>
       <div className="units">
         {faction.units.map(unit => <Unit unit={unit} selectCombatant={props.selectCombatant} />)}
       </div>
