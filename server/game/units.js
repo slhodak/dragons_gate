@@ -1,7 +1,7 @@
-const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses, factions } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
-  constructor(stats, name) {
+  constructor(stats, name, faction) {
     this.healthPoints = stats.healthPoints;
     this.speed = stats.speed;
     this.meleeRange = stats.meleeRange;
@@ -14,7 +14,8 @@ class Unit {
     this.healthRegen = stats.healthRegen;
     this.status = unitStatuses.HEALTHY;
     this.damnedTurns = 0;
-    this.name = name
+    this.name = name,
+    this.faction = faction
   }
   isAlive() {
     return this.healthPoints < 0;
@@ -73,7 +74,7 @@ class Unit {
 }
 
 class EliteSoldier extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 30,
       speed: 3,
@@ -81,7 +82,7 @@ class EliteSoldier extends Unit {
       meleeDamage: [2, 4],
       defenseArmor: [2, 4],
       healthRegen: 2
-    }, 'Elite Soldier');
+    }, 'Elite Soldier', factions.EMPIRE);
   }
 }
 
@@ -94,7 +95,7 @@ class FlagBearer extends Unit {
       meleeDamage: [2, 4],
       defenseArmor: [2, 4],
       healthRegen: 3
-    }, 'Flag-Bearer');
+    }, 'Flag-Bearer', factions.EMPIRE);
   }
 }
 
@@ -107,7 +108,7 @@ class Yuma extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [5, 6],
       healthRegen: 5
-    }, 'Yuma');
+    }, 'Yuma', factions.PROTECTORS);
   }
 
 }
@@ -126,7 +127,7 @@ class Kusarigama extends Unit {
       },
       defenseArmor: [5, 5],
       healthRegen: 5
-    }, 'Kusarigama');
+    }, 'Kusarigama', factions.PROTECTORS);
   }
 }
 
@@ -139,7 +140,7 @@ class Daisho extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [5, 5],
       healthRegen: 5
-    }, 'Daisho');
+    }, 'Daisho', factions.PROTECTORS);
   }
 
 }
@@ -162,7 +163,7 @@ class Shuriken extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 5,
-    }, 'Shuriken');
+    }, 'Shuriken', factions.PROTECTORS);
   }
   // rollRangedDamage(distance) {
   //   let damage = this.roll(this.rangedDamage);
@@ -181,7 +182,7 @@ class Ryu extends Unit {
       rangedDamage: [4, 4],
       defenseArmor: [4, 4],
       healthRegen: 5
-    }, 'Ryu');
+    }, 'Ryu', factions.GUARDIANS);
   }
 }
 
@@ -199,7 +200,7 @@ class Yokai extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 2
-    }, 'Yokai');
+    }, 'Yokai', factions.GUARDIANS);
   }
 }
 
@@ -212,7 +213,7 @@ class Shinja extends Unit {
       meleeDamage: [3, 6],
       defenseArmor: [4, 4],
       healthRegen: 0
-    }, 'Shinja');
+    }, 'Shinja', factions.GUARDIANS);
   }
 }
 
