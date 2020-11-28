@@ -29,8 +29,10 @@ export default class Combat extends React.Component {
   }
   render() {
     const {
+      turn,
       attacker,
       defender,
+      nextTurn,
       selectingCombatant,
       toggleCombatantType,
       attackType,
@@ -38,6 +40,8 @@ export default class Combat extends React.Component {
     } = this.props;
     return (
       <div className="combat">
+        <span>Turn: {turn}</span>
+        <button onClick={nextTurn}>Next Turn</button>
         <h2>Combat</h2>
         <div>Selecting: {selectingCombatant}</div>
         <button onClick={toggleCombatantType}>Select {selectingCombatant === combatantTypes.ATTACKER ? combatantTypes.DEFENDER : combatantTypes.ATTACKER}</button>

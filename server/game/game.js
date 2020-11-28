@@ -29,11 +29,16 @@ class Game {
   // change over control of game to next player
   // calculate turn-based effects
   nextTurn() {
-    this.turn = this.turn + 1 % 3;
-    const turnFaction = this.factions[this.turn];
-    turnFaction.units.forEach((unit) => {
-      unit.beAffected();
-    });
+    try {
+      this.turn = this.turn + 1 % 3;
+      const turnFaction = this.factions[this.turn];
+      turnFaction.units.forEach((unit) => {
+        unit.beAffected();
+      });
+      return 0;
+    } catch (ex) {
+      return ex;
+    }
   }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
   doCombat(attacker, defender, type) {
@@ -72,7 +77,8 @@ class Game {
   // Write game state to file
   async save() {
     try {
-      await fs.writeFile(this.stateFilePath, JSON.stringify(this.factions));
+      const game = { factions: this.factions, turn: this.turn };
+      await fs.writeFile(this.stateFilePath, JSON.stringify(game));
       return true;
     } catch (err) {
       return err;
@@ -82,7 +88,9 @@ class Game {
   async load() {
     try {
       const json = await fs.readFile(this.stateFilePath);
-      this.factions = JSON.parse(json);
+      const { factions, turn } = JSON.parse(json);
+      this.factions = factions;
+      this.turn = turn;
       return json;
     } catch (err) {
       return err;

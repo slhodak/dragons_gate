@@ -10,7 +10,10 @@ app.use(bodyParser.json({ urlencoded: true }));
 
 // Send game data from value in memory
 app.get('/start', async (_req, res) => {
-  let newGame = game.factions;
+  let newGame = {
+    factions: game.factions,
+    turn: game.turn
+  };
   res.send(newGame);
 });
 
@@ -30,6 +33,16 @@ app.post('/save', (_req, res) => {
     res.send(200);
   } else {
     res.status(400).send(`Error saving game: ${saved}`);
+  }
+});
+
+// Increment turn
+app.post('/nextTurn', (_req, res) => {
+  let err = game.nextTurn();
+  if (err) {
+    res.status(500).send(err);
+  } else {
+    res.send(200);
   }
 });
 

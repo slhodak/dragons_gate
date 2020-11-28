@@ -9,6 +9,7 @@ export default class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      turn: 0,
       factions: [],
       attacker: {},
       defender: {},
@@ -16,6 +17,7 @@ export default class Game extends React.Component {
       attackType: attackTypes.MELEE
     };
 
+    this.nextTurn = this.nextTurn.bind(this);
     this.loadSavedGame = this.loadSavedGame.bind(this);
     this.loadCurrentGame = this.loadCurrentGame.bind(this);
     this.selectCombatant = this.selectCombatant.bind(this);
@@ -25,13 +27,26 @@ export default class Game extends React.Component {
   componentDidMount() {
     this.loadCurrentGame();
   }
+  // Change turn
+  nextTurn() {
+    fetch('/nextTurn', {
+      method: 'POST'
+    })
+      .then(_res => {
+        console.debug('Changing turn');
+      })
+      .catch(err => `Error changing turns: ${err}`)
+    this.loadCurrentGame();
+  }
   // Get game data from value in server memory
   loadCurrentGame() {
     console.log("Updating game from server memory...");
     fetch('start')
       .then(res => res.json())
-      .then(factions => {
-        this.setState({ factions });
+      .then(body => {
+        console.log(body);
+        const { factions, turn } = body;
+        this.setState({ factions, turn });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -40,8 +55,9 @@ export default class Game extends React.Component {
     console.log("Fetching game from server disk...");
     fetch('load')
       .then(res => res.json())
-      .then(factions => {
-        this.setState({ factions });
+      .then(body => {
+        const { factions, turn } = body;
+        this.setState({ factions, turn });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -49,6 +65,10 @@ export default class Game extends React.Component {
     console.log('Saving game file...');
     fetch('save', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ factions, turn })
     })
       .then(_res => {
         console.log('Game saved successfully');
@@ -85,7 +105,14 @@ export default class Game extends React.Component {
   }
 
   render() {
-    const { factions, attacker, defender, selectingCombatant, attackType } = this.state;
+    const {
+      turn,
+      factions,
+      attacker,
+      defender,
+      selectingCombatant,
+      attackType
+    } = this.state;
     return (
       <div>
         <div className="header">
@@ -94,10 +121,12 @@ export default class Game extends React.Component {
           <button onClick={this.saveGame}>Save Game</button>
         </div>
         <div className="game">
-          <Combat attacker={attacker}
+          <Combat turn={factions.length > 0 ? factions[turn].name : ''}
+                  attacker={attacker}
                   defender={defender}
                   selectingCombatant={selectingCombatant}
                   attackType={attackType}
+                  nextTurn={this.nextTurn}
                   toggleCombatantType={this.toggleCombatantType}
                   toggleAttackType={this.toggleAttackType}
                   loadCurrentGame={this.loadCurrentGame} />
