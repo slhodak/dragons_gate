@@ -1,7 +1,9 @@
 import React from 'react';
+import Header from './Header.js';
 import Combat from './Combat.js';
 import HexBoard from './HexBoard.js';
 import Factions from './Factions.js';
+import Footer from './Footer.js';
 import { attackTypes, combatantTypes } from '../../lib/enums.js';
 import '../style.css';
 
@@ -110,11 +112,7 @@ export default class Game extends React.Component {
     } = this.state;
     return (
       <div>
-        <div className="header">
-          <h1>Dragon's Gate</h1>
-          <button onClick={this.loadSavedGame}>Load Game</button>
-          <button onClick={this.saveGame}>Save Game</button>
-        </div>
+        <Header loadSavedGame={this.loadSavedGame} saveGame={this.saveGame} />
         <div className="game">
           <Combat turn={factions.length > 0 ? factions[turn].name : ''}
                   attacker={attacker}
@@ -128,6 +126,7 @@ export default class Game extends React.Component {
           <HexBoard />
           <Factions factions={factions} selectCombatant={this.selectCombatant} />
         </div>
+        <Footer />
       </div>
     )
   }
