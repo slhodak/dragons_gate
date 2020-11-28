@@ -16,6 +16,7 @@ class Game {
       MELEE: 'melee',
       RANGED: 'ranged'
     }
+    this.turn = 0;
     this.assignIds();
   }
   // assign IDs
@@ -61,6 +62,9 @@ class Game {
       return foundUnit;
     });
     return foundUnit;
+  }
+  nextTurn() {
+    this.turn = this.turn + 1 % 3;
   }
   // Write game state to file
   async save() {
