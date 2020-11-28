@@ -30,7 +30,7 @@ class Game {
   // calculate turn-based effects
   nextTurn() {
     try {
-      this.turn = this.turn + 1 % 3;
+      this.turn = (this.turn + 1) % 3;
       const turnFaction = this.factions[this.turn];
       turnFaction.units.forEach((unit) => {
         unit.beAffected();

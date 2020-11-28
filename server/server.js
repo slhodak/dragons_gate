@@ -30,7 +30,7 @@ app.get('/load', async (_req, res) => {
 app.post('/save', (_req, res) => {
   let saved = game.save();
   if (saved) {
-    res.send(200);
+    res.sendStatus(200);
   } else {
     res.status(400).send(`Error saving game: ${saved}`);
   }
@@ -42,7 +42,7 @@ app.post('/nextTurn', (_req, res) => {
   if (err) {
     res.status(500).send(err);
   } else {
-    res.send(200);
+    res.sendStatus(200);
   }
 });
 

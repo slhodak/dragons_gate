@@ -34,9 +34,9 @@ export default class Game extends React.Component {
     })
       .then(_res => {
         console.debug('Changing turn');
+        this.loadCurrentGame();
       })
       .catch(err => `Error changing turns: ${err}`)
-    this.loadCurrentGame();
   }
   // Get game data from value in server memory
   loadCurrentGame() {
@@ -44,7 +44,6 @@ export default class Game extends React.Component {
     fetch('start')
       .then(res => res.json())
       .then(body => {
-        console.log(body);
         const { factions, turn } = body;
         this.setState({ factions, turn });
       })
@@ -64,11 +63,7 @@ export default class Game extends React.Component {
   saveGame() {
     console.log('Saving game file...');
     fetch('save', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ factions, turn })
+      method: 'POST'
     })
       .then(_res => {
         console.log('Game saved successfully');
