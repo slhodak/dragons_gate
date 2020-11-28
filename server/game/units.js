@@ -13,6 +13,7 @@ class Unit {
     this.defenseArmor = stats.defenseArmor;
     this.healthRegen = stats.healthRegen;
     this.status = unitStatuses.HEALTHY;
+    this.damnedTurns = 0;
     this.name = name
   }
   isAlive() {
@@ -50,6 +51,24 @@ class Unit {
     }
     const rollResult = (this.roll(roll));
     return success.includes(rollResult) ? effect : null;
+  }
+  beAffected() {
+    if (this.status === unitStatuses.HEALTHY) {
+      return;
+    } else if (this.status === unitStatuses.IMMOBILIZED) {
+      if (this.roll([1, 6]) > 2) {
+        this.status = unitStatuses.HEALTHY;
+      }
+    } else if (this.status === unitStatuses.POISONED) {
+      if (this.roll([1, 6] > 0)) {
+        this.reduceHP(1);
+      }
+    } else if (this.status === unitStatuses.DAMNED) {
+      this.damnedTurns += 1;
+      if (this.damnedTurns === 3) {
+        this.healthPoints = 0;
+      }
+    }
   }
 }
 

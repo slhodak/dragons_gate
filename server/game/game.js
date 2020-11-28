@@ -26,6 +26,15 @@ class Game {
       });
     });
   }
+  // change over control of game to next player
+  // calculate turn-based effects
+  nextTurn() {
+    this.turn = this.turn + 1 % 3;
+    const turnFaction = this.factions[this.turn];
+    turnFaction.units.forEach((unit) => {
+      unit.beAffected();
+    });
+  }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
   doCombat(attacker, defender, type) {
     // reject combatants who are deceased
@@ -59,9 +68,6 @@ class Game {
       return foundUnit;
     });
     return foundUnit;
-  }
-  nextTurn() {
-    this.turn = this.turn + 1 % 3;
   }
   // Write game state to file
   async save() {
