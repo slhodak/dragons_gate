@@ -58,6 +58,7 @@ export default (props) => {
       <DefenseButton  unit={unit}
                       attacker={attacker}
                       defender={defender}
+                      attackTypeUnderway={attackTypeUnderway}
                       confirmAttack={props.confirmAttack}
                       selectDefender={props.selectDefender} />
     </div>
