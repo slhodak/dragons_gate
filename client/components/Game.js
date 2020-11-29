@@ -4,7 +4,6 @@ import Combat from './Combat.js';
 import HexBoard from './HexBoard.js';
 import Factions from './Factions.js';
 import Footer from './Footer.js';
-import { attackTypes } from '../../lib/enums.js';
 import '../style.css';
 
 export default class Game extends React.Component {
@@ -14,7 +13,8 @@ export default class Game extends React.Component {
       turn: 0,
       factions: [],
       attacker: null,
-      defender: null
+      defender: null,
+      attackType: null
     };
 
     this.nextTurn = this.nextTurn.bind(this);
@@ -72,18 +72,24 @@ export default class Game extends React.Component {
         console.error(`Error saving game: ${err}`);
       });
   }
-  selectAttacker(unit, reset) {
+  selectAttacker(unit, attackType, reset) {
     if (reset) {
-      this.setState({ attacker: null })
+      this.setState({
+        attacker: null,
+        attackType: null
+      });
       return;
     }
-    this.setState({ attacker: unit }, () => console.log(unit));
+    this.setState({
+      attacker: unit,
+      attackType: attackType
+    });
   }
   selectDefender(unit) {
-    this.setState({ defender: unit }, () => console.log(unit));
+    this.setState({ defender: unit });
   }
-  confirmAttack(type) {
-    const { attacker, defender } = this.state;
+  confirmAttack() {
+    const { attacker, defender, attackType } = this.state;
     fetch('doCombat', {
       method: 'POST',
       headers: {
@@ -92,13 +98,14 @@ export default class Game extends React.Component {
       body: JSON.stringify({
         attackerId: attacker.id,
         defenderId: defender.id,
-        type
+        attackType
       })
     })
       .then(_res => {
         this.setState({
           attacker: null,
-          defender: null
+          defender: null,
+          attackType: null
         }, () => {
           // this is "heavy" but it is 1 small page of JSON
           this.loadCurrentGame();
@@ -112,7 +119,8 @@ export default class Game extends React.Component {
       turn,
       factions,
       attacker,
-      defender
+      defender,
+      attackType
     } = this.state;
     return (
       <div>
@@ -121,6 +129,7 @@ export default class Game extends React.Component {
           <HexBoard />
           <Factions attacker={attacker}
                     defender={defender}
+                    attackTypeUnderway={attackType}
                     factions={factions}
                     selectAttacker={this.selectAttacker}
                     selectDefender={this.selectDefender}

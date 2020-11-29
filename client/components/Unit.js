@@ -1,11 +1,12 @@
 import React from 'react';
 import { attackTypes } from '../../lib/enums';
 import '../style.css';
-import CombatButton from './CombatButton.js';
+import AttackButton from './AttackButton.js';
+import DefenseButton from './DefenseButton.js';
 
 // Unit
 export default (props) => {
-  const { attacker, defender, unit } = props;
+  const { attacker, defender, unit, attackTypeUnderway } = props;
   const {
     healthPoints,
     speed,
@@ -27,19 +28,36 @@ export default (props) => {
       <div>{`HP: ${healthPoints}`}</div>
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
-      <div>{`Melee Damage: ${meleeDamage}`}
-        <CombatButton unit={unit}
+      <div>
+        {`Melee Damage: ${meleeDamage}`}
+        <AttackButton unit={unit}
                       attacker={attacker}
                       defender={defender}
-                      type={attackTypes.MELEE}
-                      selectAttacker={props.selectAttacker}
-                      selectDefender={props.selectDefender}
-                      confirmAttack={props.confirmAttack}  />
+                      attackTypeUnderway={attackTypeUnderway}
+                      attackType={attackTypes.MELEE}
+                      selectAttacker={props.selectAttacker} />
       </div>
       {rangedRange ? <div>{`Ranged Range: ${rangedRange}`}</div> : null}
-      {rangedDamage ? <div>{`Ranged Damage: ${rangedDamage}`}</div> : null}
+      {(() => {
+        if (rangedDamage) {
+          return <div>
+                  <div>{`Ranged Damage: ${rangedDamage}`}</div>
+                  <AttackButton unit={unit}
+                      attacker={attacker}
+                      defender={defender}
+                      attackTypeUnderway={attackTypeUnderway}
+                      attackType={attackTypes.RANGED}
+                      selectAttacker={props.selectAttacker} />
+                </div>
+        }
+      })()}
       <div>{`Defense Armor: ${defenseArmor}`}</div>
       <div>{`Health Regen: ${healthRegen}`}</div>
+      <DefenseButton  unit={unit}
+                      attacker={attacker}
+                      defender={defender}
+                      confirmAttack={props.confirmAttack}
+                      selectDefender={props.selectDefender} />
     </div>
   )
 }

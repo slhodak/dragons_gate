@@ -48,10 +48,10 @@ app.post('/nextTurn', (_req, res) => {
 
 app.post('/doCombat', (req, res) => {
   const { body } = req;
-  const { attackerId, defenderId, type } = body;
+  const { attackerId, defenderId, attackType } = body;
   const attacker = game.getUnitById(attackerId);
   const defender = game.getUnitById(defenderId);
-  game.doCombat(attacker, defender, type);
+  game.doCombat(attacker, defender, attackType);
   // game.save(); // or leave this up to client to request
   res.sendStatus(200);
 });
