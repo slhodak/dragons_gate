@@ -7,6 +7,7 @@ const {
   Yuma, Kusarigama, Daisho, Shuriken,
   Ryu, Yokai, Shinja
 } = require(`${process.env.PWD}/server/game/units.js`);
+const { attackTypes } = require(`${process.env.PWD}/lib/enums.js`);
 
 describe('Game', () => {
   before(() => {
@@ -17,7 +18,7 @@ describe('Game', () => {
       let eliteSoldier = new EliteSoldier();
       const startingHP = eliteSoldier.healthPoints;
       let ryu = new Ryu();
-      this.game.doCombat(ryu, eliteSoldier, this.game.attackTypes.RANGED);
+      this.game.doCombat(ryu, eliteSoldier, attackTypes.RANGED);
       assert(startingHP > eliteSoldier.healthPoints);
     });
   });

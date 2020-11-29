@@ -23,7 +23,7 @@ class Unit {
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
     let total = 0;
-    for (let i = 0; i < rollsSides[0]; i++) {
+    for (let i = 0; i <= rollsSides[0]; i++) {
       total += Math.ceil(Math.random() * rollsSides[1]);
     }
     return total;
@@ -61,7 +61,7 @@ class Unit {
         this.status = unitStatuses.HEALTHY;
       }
     } else if (this.status === unitStatuses.POISONED) {
-      if (this.roll([1, 6] > 0)) {
+      if (this.roll([1, 6]) > 0) {
         this.reduceHP(1);
       }
     } else if (this.status === unitStatuses.DAMNED) {

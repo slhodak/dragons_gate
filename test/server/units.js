@@ -5,6 +5,7 @@ const {
   Yuma, Kusarigama, Daisho, Shuriken,
   Ryu, Yokai, Shinja
 } = require(`${process.env.PWD}/server/game/units.js`);
+const { unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
 
 describe('Unit', () => {
   before(() => {
@@ -33,10 +34,17 @@ describe('Unit', () => {
       assert(damage <= maxDamage)
     });
   });
+  describe('#beAffected', () => {
+    it('should lose HP when poisoned', () => {
+      this.unit.status = unitStatuses.POISONED;
+      const { healthPoints } = this.unit;
+      this.unit.beAffected();
+      assert.strictEqual(this.unit.healthPoints, healthPoints - 1);
+    });
+  });
   describe('EliteSoldier', () => {
     before(() => {
       this.eliteSoldier = new EliteSoldier();
     });
-    
   });
 });
