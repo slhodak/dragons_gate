@@ -3,10 +3,17 @@ import Faction from './Faction.js';
 import '../style.css';
 
 export default (props) => {
-  const { factions } = props;
+  const { attacker, defender, factions } = props;
   return (
     <div className="factions">
-      {factions.map(faction => <Faction faction={faction} selectCombatant={props.selectCombatant} />)}
+      {factions.map(faction => {
+        return ( <Faction faction={faction}
+                          attacker={attacker}
+                          defender={defender}
+                          selectAttacker={props.selectAttacker}
+                          selectDefender={props.selectDefender}
+                          confirmAttack={props.confirmAttack} /> )
+      })}
     </div>
   )
 }

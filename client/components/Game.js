@@ -4,7 +4,7 @@ import Combat from './Combat.js';
 import HexBoard from './HexBoard.js';
 import Factions from './Factions.js';
 import Footer from './Footer.js';
-import { attackTypes, combatantTypes } from '../../lib/enums.js';
+import { attackTypes } from '../../lib/enums.js';
 import '../style.css';
 
 export default class Game extends React.Component {
@@ -13,18 +13,16 @@ export default class Game extends React.Component {
     this.state = {
       turn: 0,
       factions: [],
-      attacker: {},
-      defender: {},
-      selectingCombatant: combatantTypes.ATTACKER,
-      attackType: attackTypes.MELEE
+      attacker: null,
+      defender: null
     };
 
     this.nextTurn = this.nextTurn.bind(this);
     this.loadSavedGame = this.loadSavedGame.bind(this);
     this.loadCurrentGame = this.loadCurrentGame.bind(this);
-    this.selectCombatant = this.selectCombatant.bind(this);
-    this.toggleCombatantType = this.toggleCombatantType.bind(this);
-    this.toggleAttackType = this.toggleAttackType.bind(this);
+    this.selectAttacker = this.selectAttacker.bind(this);
+    this.selectDefender = this.selectDefender.bind(this);
+    this.confirmAttack = this.confirmAttack.bind(this);
   }
   componentDidMount() {
     this.loadCurrentGame();
@@ -74,31 +72,39 @@ export default class Game extends React.Component {
         console.error(`Error saving game: ${err}`);
       });
   }
-  selectCombatant(unit) {
-    const { selectingCombatant } = this.state;
-    if (selectingCombatant === combatantTypes.ATTACKER) {
-      this.setState({ attacker: unit });
-    } else if (selectingCombatant === combatantTypes.DEFENDER) {
-      this.setState({ defender: unit });
+  selectAttacker(unit, reset) {
+    if (reset) {
+      this.setState({ attacker: null })
+      return;
     }
+    this.setState({ attacker: unit }, () => console.log(unit));
   }
-  // Toggle combatantTypes enum values in state
-  toggleCombatantType() {
-    const { selectingCombatant } = this.state;
-    if (selectingCombatant === combatantTypes.ATTACKER) {
-      this.setState({ selectingCombatant: combatantTypes.DEFENDER });
-    } else if (selectingCombatant === combatantTypes.DEFENDER) {
-      this.setState({ selectingCombatant: combatantTypes.ATTACKER });
-    }
+  selectDefender(unit) {
+    this.setState({ defender: unit }, () => console.log(unit));
   }
-  // Toggle attackTypes enum values in state
-  toggleAttackType() {
-    const { attackType } = this.state;
-    if (attackType === attackTypes.MELEE) {
-      this.setState({ attackType: attackTypes.RANGED });
-    } else if (attackType === attackTypes.RANGED) {
-      this.setState({ attackType: attackTypes.MELEE });
-    }
+  confirmAttack(type) {
+    const { attacker, defender } = this.state;
+    fetch('doCombat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        attackerId: attacker.id,
+        defenderId: defender.id,
+        type
+      })
+    })
+      .then(_res => {
+        this.setState({
+          attacker: null,
+          defender: null
+        }, () => {
+          // this is "heavy" but it is 1 small page of JSON
+          this.loadCurrentGame();
+        });
+      })
+      .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
 
   render() {
@@ -106,25 +112,19 @@ export default class Game extends React.Component {
       turn,
       factions,
       attacker,
-      defender,
-      selectingCombatant,
-      attackType
+      defender
     } = this.state;
     return (
       <div>
         <Header loadSavedGame={this.loadSavedGame} saveGame={this.saveGame} />
         <div className="game">
-          <Combat turn={factions.length > 0 ? factions[turn].name : ''}
-                  attacker={attacker}
-                  defender={defender}
-                  selectingCombatant={selectingCombatant}
-                  attackType={attackType}
-                  nextTurn={this.nextTurn}
-                  toggleCombatantType={this.toggleCombatantType}
-                  toggleAttackType={this.toggleAttackType}
-                  loadCurrentGame={this.loadCurrentGame} />
           <HexBoard />
-          <Factions factions={factions} selectCombatant={this.selectCombatant} />
+          <Factions attacker={attacker}
+                    defender={defender}
+                    factions={factions}
+                    selectAttacker={this.selectAttacker}
+                    selectDefender={this.selectDefender}
+                    confirmAttack={this.confirmAttack} />
         </div>
         <Footer />
       </div>
