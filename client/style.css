@@ -137,9 +137,10 @@ body {
 }
 
 .faction .header .katana {
-  height: 40px;
-  padding: 0px 20px 0px 0px;
-  margin: 0px;
+  height: 31px;
+  margin-left: 20px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 2px 4px white;
 }
 
 .units {

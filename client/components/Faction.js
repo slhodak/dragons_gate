@@ -1,6 +1,6 @@
 import React from 'react';
 import Unit from './Unit.js';
-import katana from '../images/icons8-katana-64.png';
+import katana from '../images/icons8-katana-100.png';
 import '../style.css';
 
 export default (props) => {
@@ -14,6 +14,7 @@ export default (props) => {
       <div className="units">
         {faction.units.map(unit => {
           return (<Unit unit={unit}
+                        myTurn={myTurn}
                         attacker={attacker}
                         attackTypeUnderway={attackTypeUnderway}
                         selectAttacker={props.selectAttacker}

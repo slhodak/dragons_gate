@@ -3,10 +3,13 @@ import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
 export default (props) => {
-  const { unit, attacker, attackType, attackTypeUnderway } = props;
+  const { unit, attacker, attackType, attackTypeUnderway, myTurn } = props;
   return (
     <div className="combatButton">
       {(() => {
+        if (!myTurn) {
+          return null;
+        }
         if (attackTypeUnderway && attackTypeUnderway != attackType) {
           return null;
         }

@@ -6,7 +6,7 @@ import DefenseButton from './DefenseButton.js';
 
 // Unit
 export default (props) => {
-  const { attacker, defender, unit, attackTypeUnderway } = props;
+  const { attacker, defender, unit, attackTypeUnderway, myTurn } = props;
   const {
     healthPoints,
     speed,
@@ -31,6 +31,7 @@ export default (props) => {
       <div>
         {`Melee Damage: ${meleeDamage}`}
         <AttackButton unit={unit}
+                      myTurn={myTurn}
                       attacker={attacker}
                       defender={defender}
                       attackTypeUnderway={attackTypeUnderway}
