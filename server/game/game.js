@@ -16,6 +16,7 @@ class Game {
     this.turn = 0;
     this.combat = {
       attacker: null,
+      defender: null,
       attackType: null
     }
     this.assignIds();
@@ -45,25 +46,24 @@ class Game {
     }
   }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
-  doCombat(attacker, defender, type) {
-    // reject combatants who are deceased
-    let damage = 0;
-    // should use constant/enum
-    if (type === attackTypes.MELEE) {
-      damage = attacker.rollMeleeDamage();
-    } else if (type === attackTypes.RANGED) {
-      damage = attacker.rollRangedDamage();
-    }
-    let defense = defender.rollDefenseArmor();
-    let loss = damage - defense;
-    if (loss > 0) {
-      defender.reduceHP(loss);
-    }
-    let effect = attacker.calculateEffect(type);
+  doCombat() {
+    const { attacker, defender, attackType } = this.combat;
+    const damage = attacker.getDamageFor(attackType);
+    const defense = defender.rollDefenseArmor();
+    const loss = damage - defense;
+    defender.reduceHP(damage - defense);
+    console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`);
+    const effect = attacker.getEffectFor(attackType);
     if (effect) {
       defender.status = effect;
     }
-    console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${type} attack`);
+  }
+  resetCombat() {
+    this.combat = {
+      attacker: null,
+      defender: null,
+      attackType: null
+    };
   }
   getUnitById(id) {
     let foundUnit = false; // gotta love that weak typing
@@ -81,7 +81,7 @@ class Game {
   // Write game state to file
   async save() {
     try {
-      const game = { factions: this.factions, turn: this.turn };
+      const game = { factions: this.factions, turn: this.turn, combat: this.combat };
       await fs.writeFile(this.stateFilePath, JSON.stringify(game));
       return true;
     } catch (err) {
@@ -92,9 +92,10 @@ class Game {
   async load() {
     try {
       const json = await fs.readFile(this.stateFilePath);
-      const { factions, turn } = JSON.parse(json);
+      const { factions, turn, combat } = JSON.parse(json);
       this.factions = factions;
       this.turn = turn;
+      this.combat = combat;
       return json;
     } catch (err) {
       return err;

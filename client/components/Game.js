@@ -39,23 +39,24 @@ export default class Game extends React.Component {
   // Get game data from value in server memory
   loadCurrentGame() {
     console.log("Updating game from server memory...");
-    fetch('start')
+    fetch('load')
       .then(res => res.json())
       .then(body => {
-        const { factions, turn } = body;
-        this.setState({ factions, turn });
+        const { factions, turn, combat } = body;
+        const { attacker, attackType } = combat;
+        this.setState({ factions, turn, attacker, attackType });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
   // Get game data from last save on server disk
   loadSavedGame() {
     console.log("Fetching game from server disk...");
-    fetch('load')
+    fetch('loadSaved')
       .then(res => res.json())
       .then(body => {
-        console.log(body);
-        const { factions, turn } = body;
-        this.setState({ factions, turn });
+        const { factions, turn, combat } = body;
+        const { attacker, attackType } = combat;
+        this.setState({ factions, turn, attacker, attackType });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -95,7 +96,6 @@ export default class Game extends React.Component {
   resetAttack(reload) {
     this.setState({
       attacker: null,
-      defender: null,
       attackType: null
     }, () => {
       if (reload) {
@@ -104,20 +104,15 @@ export default class Game extends React.Component {
     });
   }
   attack(defender) {
-    const { attacker, attackType } = this.state;
     fetch('doCombat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        attackerId: attacker.id,
-        defenderId: defender.id,
-        attackType
-      })
+      body: JSON.stringify({ defender })
     })
       .then(_res => {
-        this.resetAttack(true);
+        this.loadCurrentGame();
       })
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }

@@ -31,6 +31,13 @@ class Unit {
     }
     return total;
   }
+  getDamageFor(attackType) {
+    if (attackType === attackTypes.MELEE) {
+      return this.rollMeleeDamage();
+    } else if (attackType === attackTypes.RANGED) {
+      return this.rollRangedDamage();
+    }
+  }
   rollMeleeDamage() {
     if (!this.meleeDamage) { return; }
     return this.roll(this.meleeDamage);
@@ -43,9 +50,10 @@ class Unit {
     return this.roll(this.defenseArmor);
   }
   reduceHP(damage) {
+    if (damage < 0) { return; }
     this.healthPoints -= damage;
   }
-  calculateEffect(attackType) {
+  getEffectFor(attackType) {
     if (attackType === attackTypes.MELEE) {
       if (!this.meleeEffect) { return; }
       var { roll, success, effect } = this.meleeEffect;

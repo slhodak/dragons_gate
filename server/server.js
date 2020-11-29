@@ -9,21 +9,31 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 app.use(bodyParser.json({ urlencoded: true }));
 
 // Send game data from value in memory
-app.get('/start', async (_req, res) => {
-  let newGame = {
+app.get('/load', async (_req, res) => {
+  res.send({
     factions: game.factions,
-    turn: game.turn
-  };
-  res.send(newGame);
+    turn: game.turn,
+    combat: game.combat
+  });
 });
 
 // Send game data from last save on disk
-app.get('/load', async (_req, res) => {
-  let loaded = await game.load();
-  if (loaded) {
-    res.send(loaded);
+app.get('/loadSaved', async (_req, res) => {
+  let loadedGame = await game.load();
+  if (loadedGame) {
+    res.send(loadedGame);
   } else {
     res.status(400).send(`Error saving game: ${loaded}`);
+  }
+});
+
+// Save game to disk
+app.post('/save', (_req, res) => {
+  let saved = game.save();
+  if (saved) {
+    res.sendStatus(200);
+  } else {
+    res.status(400).send(`Error saving game: ${saved}`);
   }
 });
 
@@ -42,15 +52,6 @@ app.post('/selectAttacker', (req, res) => {
   }
 });
 
-app.post('/save', (_req, res) => {
-  let saved = game.save();
-  if (saved) {
-    res.sendStatus(200);
-  } else {
-    res.status(400).send(`Error saving game: ${saved}`);
-  }
-});
-
 // Increment turn
 app.post('/nextTurn', (_req, res) => {
   let err = game.nextTurn();
@@ -62,12 +63,10 @@ app.post('/nextTurn', (_req, res) => {
 });
 
 app.post('/doCombat', (req, res) => {
-  const { body } = req;
-  const { attackerId, defenderId, attackType } = body;
-  const attacker = game.getUnitById(attackerId);
-  const defender = game.getUnitById(defenderId);
-  game.doCombat(attacker, defender, attackType);
-  // game.save(); // or leave this up to client to request
+  const { defender } = req.body;
+  game.combat.defender = game.getUnitById(defender.id);
+  game.doCombat();
+  game.resetCombat();
   res.sendStatus(200);
 });
 
