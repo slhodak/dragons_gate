@@ -59,8 +59,7 @@ export default (props) => {
                       attacker={attacker}
                       defender={defender}
                       attackTypeUnderway={attackTypeUnderway}
-                      confirmAttack={props.confirmAttack}
-                      selectDefender={props.selectDefender} />
+                      attack={props.attack} />
     </div>
   )
 }

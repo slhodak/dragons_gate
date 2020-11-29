@@ -12,7 +12,6 @@ export default class Game extends React.Component {
       turn: 0,
       factions: [],
       attacker: null,
-      defender: null,
       attackType: null
     };
 
@@ -20,9 +19,8 @@ export default class Game extends React.Component {
     this.loadSavedGame = this.loadSavedGame.bind(this);
     this.loadCurrentGame = this.loadCurrentGame.bind(this);
     this.selectAttacker = this.selectAttacker.bind(this);
-    this.selectDefender = this.selectDefender.bind(this);
+    this.attack = this.attack.bind(this);
     this.resetAttack = this.resetAttack.bind(this);
-    this.confirmAttack = this.confirmAttack.bind(this);
   }
   componentDidMount() {
     this.loadCurrentGame();
@@ -55,6 +53,7 @@ export default class Game extends React.Component {
     fetch('load')
       .then(res => res.json())
       .then(body => {
+        console.log(body);
         const { factions, turn } = body;
         this.setState({ factions, turn });
       })
@@ -78,9 +77,6 @@ export default class Game extends React.Component {
       attackType: attackType
     });
   }
-  selectDefender(unit) {
-    this.setState({ defender: unit });
-  }
   resetAttack(reload) {
     this.setState({
       attacker: null,
@@ -92,8 +88,8 @@ export default class Game extends React.Component {
       }
     });
   }
-  confirmAttack() {
-    const { attacker, defender, attackType } = this.state;
+  attack(defender) {
+    const { attacker, attackType } = this.state;
     fetch('doCombat', {
       method: 'POST',
       headers: {
@@ -132,7 +128,7 @@ export default class Game extends React.Component {
                     attackTypeUnderway={attackType}
                     factions={factions}
                     selectAttacker={this.selectAttacker}
-                    selectDefender={this.selectDefender}
+                    attack={this.attack}
                     resetAttack={this.resetAttack}
                     confirmAttack={this.confirmAttack} />
         </div>

@@ -26,3 +26,7 @@ Refactor:
   Status effects into something that is stored on unit
     in unit's status with object cloning from status enum?
     including turns damned, poison damage, rolls for effects
+
+Bug:
+  Units are loaded as PO objects, not instances of respective classes
+  Must load classes with object data when loading game from file

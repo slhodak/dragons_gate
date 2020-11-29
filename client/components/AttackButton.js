@@ -3,7 +3,7 @@ import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
 export default (props) => {
-  const { unit, attacker, defender, attackType, attackTypeUnderway } = props;
+  const { unit, attacker, attackType, attackTypeUnderway } = props;
   return (
     <div className="combatButton">
       {(() => {
@@ -15,11 +15,6 @@ export default (props) => {
         }
         if (attacker.id === unit.id) {
           return <div>Select enemy or <button className="cancelButton" onClick={props.resetAttack}>Cancel</button></div>;
-        }
-        if (!defender) {
-          if (attacker.faction === unit.faction) {
-            return <div><em>Selecting defender</em></div>;
-          }
         }
       })()}
     </div>
