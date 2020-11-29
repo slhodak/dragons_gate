@@ -39,7 +39,6 @@ app.post('/save', (_req, res) => {
 
 app.post('/selectAttacker', (req, res) => {
   const { attacker, attackType } = req.body;
-  console.log(attacker);
   if (attacker && attackType) {
     const attackerInstance = game.getUnitById(attacker.id);
     game.combat = {
@@ -50,6 +49,14 @@ app.post('/selectAttacker', (req, res) => {
   } else {
     res.status(400).send('Invalid request body; need attacker and attack type');
   }
+});
+
+app.post('/resetAttack', (_req, res) => {
+  game.combat = {
+    attacker: null,
+    attackType: null
+  };
+  res.status(200).send(game.combat);
 });
 
 // Increment turn

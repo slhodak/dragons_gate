@@ -93,15 +93,19 @@ export default class Game extends React.Component {
       })
       .catch(err => console.error(`Error selecting attacker: ${err}`));
   }
-  resetAttack(reload) {
-    this.setState({
-      attacker: null,
-      attackType: null
-    }, () => {
-      if (reload) {
-        this.loadCurrentGame();
-      }
-    });
+  resetAttack() {
+    fetch('/resetAttack', {
+      method: 'POST'
+    })
+      .then(res => res.json())
+      .then(body => {
+        const { attacker, attackType } = body;
+        this.setState({
+          attacker,
+          attackType
+        })
+      })
+      .catch(err => console.error(`Error resetting attack: ${err}`));
   }
   attack(defender) {
     fetch('doCombat', {
