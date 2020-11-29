@@ -121,7 +121,10 @@ export default class Game extends React.Component {
     } = this.state;
     return (
       <div>
-        <Header loadSavedGame={this.loadSavedGame} saveGame={this.saveGame} />
+        <Header turnFaction={factions ? factions[turn] : null}
+                loadSavedGame={this.loadSavedGame}
+                saveGame={this.saveGame}
+                nextTurn={this.nextTurn} />
         <div className="game">
           <HexBoard />
           <Factions attacker={attacker}

@@ -22,21 +22,49 @@ body {
 
 .header {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   padding: 20px;
 }
 
+.header h1 {
+  font-size: 4em;
+}
+
+.turnFaction {
+  margin-right: 100px;
+  align-self: center;
+}
+
 .header .dragonIcon {
-  height: 35px;
+  height: 70px;
   position: relative;
-  top: 4px;
+  top: 10px;
+  margin-right: 10px;
+}
+
+.saveLoadTurn {
+  display: flex;
+  flex-direction: row;
+}
+.saveLoad {
+  display: flex;
+  flex-direction: column;
 }
 
 .game {
   display: flex;
   flex-direction: row;
+}
+
+.gameButton {
+  font-weight: 600;
+  font-size: 1em;
+  border-radius: 3px;
+  margin: 5px;
+}
+.turnButton {
+  font-size: 1.5em;
 }
 
 /*
