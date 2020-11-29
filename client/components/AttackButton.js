@@ -13,7 +13,7 @@ export default (props) => {
           return <button onClick={() => props.selectAttacker(unit, attackType)}>{attackType.toUpperCase()} Attack</button>
         }
         if (attacker.id === unit.id) {
-          return <div>Select enemy or <button onClick={() => props.selectAttacker(null, null, true)}>Cancel</button></div>;
+          return <div>Select enemy or <button onClick={props.resetAttack}>Cancel</button></div>;
         }
         if (!defender) {
           if (attacker.faction === unit.faction) {

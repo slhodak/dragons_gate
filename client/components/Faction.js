@@ -16,6 +16,7 @@ export default (props) => {
                         attackTypeUnderway={attackTypeUnderway}
                         selectAttacker={props.selectAttacker}
                         selectDefender={props.selectDefender}
+                        resetAttack={props.resetAttack}
                         confirmAttack={props.confirmAttack}  />)
         })}
       </div>

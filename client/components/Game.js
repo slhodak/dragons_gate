@@ -22,6 +22,7 @@ export default class Game extends React.Component {
     this.loadCurrentGame = this.loadCurrentGame.bind(this);
     this.selectAttacker = this.selectAttacker.bind(this);
     this.selectDefender = this.selectDefender.bind(this);
+    this.resetAttack = this.resetAttack.bind(this);
     this.confirmAttack = this.confirmAttack.bind(this);
   }
   componentDidMount() {
@@ -72,14 +73,7 @@ export default class Game extends React.Component {
         console.error(`Error saving game: ${err}`);
       });
   }
-  selectAttacker(unit, attackType, reset) {
-    if (reset) {
-      this.setState({
-        attacker: null,
-        attackType: null
-      });
-      return;
-    }
+  selectAttacker(unit, attackType) {
     this.setState({
       attacker: unit,
       attackType: attackType
@@ -87,6 +81,17 @@ export default class Game extends React.Component {
   }
   selectDefender(unit) {
     this.setState({ defender: unit });
+  }
+  resetAttack(reload) {
+    this.setState({
+      attacker: null,
+      defender: null,
+      attackType: null
+    }, () => {
+      if (reload) {
+        this.loadCurrentGame();
+      }
+    });
   }
   confirmAttack() {
     const { attacker, defender, attackType } = this.state;
@@ -102,14 +107,7 @@ export default class Game extends React.Component {
       })
     })
       .then(_res => {
-        this.setState({
-          attacker: null,
-          defender: null,
-          attackType: null
-        }, () => {
-          // this is "heavy" but it is 1 small page of JSON
-          this.loadCurrentGame();
-        });
+        this.resetAttack(true);
       })
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
@@ -133,6 +131,7 @@ export default class Game extends React.Component {
                     factions={factions}
                     selectAttacker={this.selectAttacker}
                     selectDefender={this.selectDefender}
+                    resetAttack={this.resetAttack}
                     confirmAttack={this.confirmAttack} />
         </div>
         <Footer />

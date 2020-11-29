@@ -35,7 +35,8 @@ export default (props) => {
                       defender={defender}
                       attackTypeUnderway={attackTypeUnderway}
                       attackType={attackTypes.MELEE}
-                      selectAttacker={props.selectAttacker} />
+                      selectAttacker={props.selectAttacker}
+                      resetAttack={props.resetAttack} />
       </div>
       {rangedRange ? <div>{`Ranged Range: ${rangedRange}`}</div> : null}
       {(() => {
@@ -47,7 +48,8 @@ export default (props) => {
                       defender={defender}
                       attackTypeUnderway={attackTypeUnderway}
                       attackType={attackTypes.RANGED}
-                      selectAttacker={props.selectAttacker} />
+                      selectAttacker={props.selectAttacker}
+                      resetAttack={props.resetAttack} />
                 </div>
         }
       })()}
