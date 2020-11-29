@@ -20,6 +20,9 @@ class Unit {
   isAlive() {
     return this.healthPoints < 0;
   }
+  canMove() {
+    return this.status != unitStatuses.IMMOBILIZED;
+  }
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
     let total = 0;

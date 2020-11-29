@@ -14,6 +14,10 @@ class Game {
       new Guardians()
     ]
     this.turn = 0;
+    this.combat = {
+      attacker: null,
+      attackType: null
+    }
     this.assignIds();
   }
   // assign IDs

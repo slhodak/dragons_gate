@@ -41,6 +41,13 @@ describe('Unit', () => {
       this.unit.beAffected();
       assert.strictEqual(this.unit.healthPoints, healthPoints - 1);
     });
+    it('should die once affected 3 times when damned', () => {
+      this.unit.status = unitStatuses.DAMNED;
+      for (let i = 0; i < 3; i++) {
+        this.unit.beAffected();
+      }
+      assert.strictEqual(this.unit.isAlive(), false);
+    })
   });
   describe('EliteSoldier', () => {
     before(() => {

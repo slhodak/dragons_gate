@@ -27,6 +27,21 @@ app.get('/load', async (_req, res) => {
   }
 });
 
+app.post('/selectAttacker', (req, res) => {
+  const { attacker, attackType } = req.body;
+  console.log(attacker);
+  if (attacker && attackType) {
+    const attackerInstance = game.getUnitById(attacker.id);
+    game.combat = {
+      attacker: attackerInstance,
+      attackType: attackType
+    };
+    res.status(200).send(game.combat);
+  } else {
+    res.status(400).send('Invalid request body; need attacker and attack type');
+  }
+});
+
 app.post('/save', (_req, res) => {
   let saved = game.save();
   if (saved) {

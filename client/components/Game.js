@@ -71,11 +71,26 @@ export default class Game extends React.Component {
         console.error(`Error saving game: ${err}`);
       });
   }
-  selectAttacker(unit, attackType) {
-    this.setState({
-      attacker: unit,
-      attackType: attackType
-    });
+  selectAttacker(attacker, attackType) {
+    fetch('/selectAttacker', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        attacker,
+        attackType
+      })
+    })
+      .then(res => res.json())
+      .then(body => {
+        const { attacker, attackType } = body;
+        this.setState({
+          attacker,
+          attackType
+        })
+      })
+      .catch(err => console.error(`Error selecting attacker: ${err}`));
   }
   resetAttack(reload) {
     this.setState({
