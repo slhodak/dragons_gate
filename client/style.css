@@ -40,30 +40,32 @@ body {
 }
 
 /*
-  Combat
+  Combat Buttons
 */
 
-.combat {
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-}
-
-.combat button {
-  width: 200px;
-  height: 40px;
+.combatButton button {
+  width: 150px;
+  height: 30px;
   font-weight: 600;
   font-size: 1em;
   border-radius: 3px;
   margin: 5px 0px;
 }
 
-.combat button:active {
-  background-color: rgb(179, 247, 179);
+.combatButton button:active {
+  background-color: rgb(63, 184, 63);
 }
 
-.combat .fightButton:active {
-  background-color: rgb(236, 100, 100);
+.combatButton .confirmDefender:active {
+  background-color: rgb(243, 130, 65);
+}
+
+.combatButton .confirmButton {
+  background-color: white;
+}
+
+.combatButton .confirmButton:active {
+  background-color: rgb(241, 57, 57);
 }
 
 /*

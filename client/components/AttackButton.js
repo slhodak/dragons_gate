@@ -1,16 +1,17 @@
 import React from 'react';
+import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
 export default (props) => {
   const { unit, attacker, defender, attackType, attackTypeUnderway } = props;
   return (
-    <div className="attackButton">
+    <div className="combatButton">
       {(() => {
         if (attackTypeUnderway && attackTypeUnderway != attackType) {
           return null;
         }
         if (!attacker) {
-          return <button onClick={() => props.selectAttacker(unit, attackType)}>{attackType.toUpperCase()} Attack</button>
+          return <button onClick={() => props.selectAttacker(unit, attackType)}>{capitalize(attackType)} Attack</button>
         }
         if (attacker.id === unit.id) {
           return <div>Select enemy or <button onClick={props.resetAttack}>Cancel</button></div>;

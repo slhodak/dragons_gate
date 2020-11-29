@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './Header.js';
-import Combat from './Combat.js';
 import HexBoard from './HexBoard.js';
 import Factions from './Factions.js';
 import Footer from './Footer.js';
