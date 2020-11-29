@@ -176,10 +176,14 @@ class Shuriken extends Unit {
       healthRegen: 5,
     }, 'Shuriken', factions.PROTECTORS);
   }
-  // rollRangedDamage(distance) {
-  //   let damage = this.roll(this.rangedDamage);
-  //   damage -= Math.ceil(distance / 2);
-  // }
+  rollRangedDamage(distance = 10) {
+    const rangedRoll = [
+      this.rangedDamage[0] - Math.ceil(distance / 2),
+      this.rangedDamage[1]
+    ];
+    const damage = this.roll(rangedRoll);
+    return damage;
+  }
 }
 
 class Ryu extends Unit {
