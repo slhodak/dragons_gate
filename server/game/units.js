@@ -164,8 +164,6 @@ class Shuriken extends Unit {
       meleeRange: 2,
       meleeDamage: [4, 6],
       rangedRange: 10,
-      // -1 roll per 2cm distance
-      // e.g. at 5cm, rangedDamage = [4, 4]
       rangedDamage: [6, 4],
       rangedEffect: {
         roll: [1, 6],
@@ -176,6 +174,8 @@ class Shuriken extends Unit {
       healthRegen: 5,
     }, 'Shuriken', factions.PROTECTORS);
   }
+  // -1 roll per 2cm distance
+  // e.g. at 5cm, rangedDamage = [4, 4]
   rollRangedDamage(distance = 10) {
     const rangedRoll = [
       this.rangedDamage[0] - Math.ceil(distance / 2),
