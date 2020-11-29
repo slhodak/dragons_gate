@@ -136,6 +136,7 @@ export default class Game extends React.Component {
           <Factions attacker={attacker}
                     defender={defender}
                     attackTypeUnderway={attackType}
+                    turn={turn}
                     factions={factions}
                     selectAttacker={this.selectAttacker}
                     attack={this.attack}

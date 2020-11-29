@@ -127,6 +127,7 @@ body {
 
 .faction .header {
   padding: 0px;
+  height: 40px;
   display: flex;
   flex-direction: row;
 }
@@ -136,8 +137,9 @@ body {
 }
 
 .faction .header .katana {
-  scale: 0.6;
+  height: 40px;
   padding: 0px 20px 0px 0px;
+  margin: 0px;
 }
 
 .units {

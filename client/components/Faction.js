@@ -4,10 +4,13 @@ import katana from '../images/icons8-katana-64.png';
 import '../style.css';
 
 export default (props) => {
-  const { attacker, attackTypeUnderway, faction } = props;
+  const { attacker, attackTypeUnderway, faction, myTurn } = props;
   return (
     <div className={`faction ${faction.name.toLowerCase()}`}>
-      <div className="header"><h2>{faction.name.toUpperCase()}</h2><img className="katana" src={katana} alt='katana'/></div>
+      <div className="header">
+        <h2>{faction.name.toUpperCase()}</h2>
+        {myTurn ? <img className="katana" src={katana} alt='katana'/> : null}
+      </div>
       <div className="units">
         {faction.units.map(unit => {
           return (<Unit unit={unit}
