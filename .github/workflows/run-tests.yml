@@ -20,6 +20,11 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Run tests
-      run: npm test
+      run: npm run ci-tests
+    - name: Save test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: ci-test-log
+        path: test/ci-test-log.out
       env:
         CI: true

@@ -5,6 +5,7 @@
   "main": "units.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --recursive",
+    "ci-tests": "./node_modules/mocha/bin/mocha --recursive 2>&1 | ./test/ci-test-log.out",
     "build": "webpack --config webpack.config.js",
     "react-dev": "webpack --config webpack.config.js --watch",
     "start": "node ./server/server.js",
