@@ -4,9 +4,11 @@ class Unit {
   constructor(stats, name, faction) {
     this.healthPoints = stats.healthPoints;
     this.speed = stats.speed;
+    this.meleeAttacks = stats.meleeAttacks;
     this.meleeRange = stats.meleeRange;
     this.meleeDamage = stats.meleeDamage;
     this.meleeEffect = stats.meleeEffect;
+    this.rangedAttacks = stats.rangedAttacks;
     this.rangedRange = stats.rangedRange;
     this.rangedDamage = stats.rangedDamage;
     this.rangedEffect = stats.rangedEffect;
@@ -40,10 +42,12 @@ class Unit {
   }
   rollMeleeDamage() {
     if (!this.meleeDamage) { return; }
+    this.meleeAttacks -= 1;
     return this.roll(this.meleeDamage);
   }
   rollRangedDamage() {
     if (!this.rangedDamage) { return; }
+    this.rangedAttacks -= 1;
     return this.roll(this.rangedDamage);
   }
   rollDefenseArmor() {
@@ -85,12 +89,13 @@ class Unit {
 }
 
 class EliteSoldier extends Unit {
-  constructor(faction) {
+  constructor() {
     super({
       healthPoints: 30,
       speed: 3,
+      meleeAttacks: 1,
       meleeRange: 2,
-      meleeDamage: [2, 4],
+      meleeDamage: [3, 4],
       defenseArmor: [2, 4],
       healthRegen: 2
     }, 'Elite Soldier', factions.EMPIRE);
@@ -102,8 +107,9 @@ class FlagBearer extends Unit {
     super({
       healthPoints: 35,
       speed: 2,
+      meleeAttacks: 1,
       meleeRange: 1,
-      meleeDamage: [2, 4],
+      meleeDamage: [3, 4],
       defenseArmor: [2, 4],
       healthRegen: 3
     }, 'Flag-Bearer', factions.EMPIRE);
@@ -117,11 +123,10 @@ class Yuma extends Unit {
       speed: 3,
       meleeRange: 2,
       meleeDamage: [4, 6],
-      defenseArmor: [5, 6],
+      defenseArmor: [3, 6],
       healthRegen: 5
     }, 'Yuma', factions.PROTECTORS);
   }
-
 }
 
 class Kusarigama extends Unit {
@@ -129,6 +134,7 @@ class Kusarigama extends Unit {
     super({
       healthPoints: 50,
       speed: 3,
+      meleeAttacks: 1,
       meleeRange: 3,
       meleeDamage: [4, 6],
       meleeEffect: {
@@ -136,7 +142,7 @@ class Kusarigama extends Unit {
         success: [4, 5, 6],
         effect: unitStatuses.IMMOBILIZED
       },
-      defenseArmor: [5, 5],
+      defenseArmor: [3, 4],
       healthRegen: 5
     }, 'Kusarigama', factions.PROTECTORS);
   }
@@ -147,13 +153,13 @@ class Daisho extends Unit {
     super({
       healthPoints: 50,
       speed: 3,
+      meleeAttacks: 2,
       meleeRange: 2,
       meleeDamage: [4, 6],
-      defenseArmor: [5, 5],
+      defenseArmor: [2, 4],
       healthRegen: 5
     }, 'Daisho', factions.PROTECTORS);
   }
-
 }
 
 class Shuriken extends Unit {
@@ -161,8 +167,10 @@ class Shuriken extends Unit {
     super({
       healthPoints: 50,
       speed: 4,
+      meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [4, 6],
+      rangedAttacks: 1,
       rangedRange: 10,
       rangedDamage: [6, 4],
       rangedEffect: {
@@ -175,7 +183,6 @@ class Shuriken extends Unit {
     }, 'Shuriken', factions.PROTECTORS);
   }
   // -1 roll per 2cm distance
-  // e.g. at 5cm, rangedDamage = [4, 4]
   rollRangedDamage(distance = 10) {
     const rangedRoll = [
       this.rangedDamage[0] - Math.ceil(distance / 2),
@@ -191,8 +198,10 @@ class Ryu extends Unit {
     super({
       healthPoints: 100,
       speed: 0,
+      meleeAttacks: 1,
       meleeRange: 3,
       meleeDamage: [5, 4],
+      rangedAttacks: 1,
       rangedRange: Infinity,
       rangedDamage: [4, 4],
       defenseArmor: [4, 4],
@@ -206,6 +215,7 @@ class Yokai extends Unit {
     super({
       healthPoints: 60,
       speed: 5,
+      meleeAttacks: 1,
       meleeRange: 3,
       meleeDamage: [2, 10],
       meleeEffect: {
@@ -224,11 +234,13 @@ class Shinja extends Unit {
     super({
       healthPoints: 20,
       speed: 2,
+      meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [3, 6],
       defenseArmor: [4, 4],
       healthRegen: 0
     }, 'Shinja', factions.GUARDIANS);
+    this.deaths = 2;
   }
 }
 
