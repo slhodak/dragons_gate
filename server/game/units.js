@@ -56,8 +56,12 @@ class Unit {
     return this.roll(this.defenseArmor);
   }
   reduceHP(damage) {
+    // this could be checked before this point
     if (damage < 0) { return; }
     this.healthPoints -= damage;
+    if (this.healthPoints < 0) {
+      this.healthPoints = 0;
+    }
   }
   getEffectFor(attackType) {
     if (attackType === attackTypes.MELEE) {
@@ -109,7 +113,7 @@ class EliteSoldier extends Unit {
       speed: 3,
       meleeAttacks: 1,
       meleeRange: 2,
-      meleeDamage: [3, 4],
+      meleeDamage: [4, 4],
       defenseArmor: [2, 4],
       healthRegen: 2
     }, 'Elite Soldier', faction);
@@ -129,7 +133,11 @@ class FlagBearer extends Unit {
     }, 'Flag-Bearer', faction);
   }
   die() {
-    // reduce EliteSoldier TBD stat
+    this.faction.units.forEach(unit => {
+      if (unit != this) {
+        unit.meleeDamage[0] -= 1;
+      }
+    });
   }
 }
 

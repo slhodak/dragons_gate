@@ -13,7 +13,7 @@ app.get('/load', async (_req, res) => {
   res.send({
     factions: game.factionsWithoutCircularReference(),
     turn: game.turn,
-    combat: game.combat
+    combat: game.combatWithoutCircularReference()
   });
 });
 
@@ -45,7 +45,7 @@ app.post('/selectAttacker', (req, res) => {
       attacker: attackerInstance,
       attackType: attackType
     };
-    res.status(200).send(game.combat);
+    res.status(200).send(game.combatWithoutCircularReference());
   } else {
     res.status(400).send('Invalid request body; need attacker and attack type');
   }

@@ -54,6 +54,9 @@ class Game {
     const defense = defender.rollDefenseArmor();
     const loss = damage - defense;
     defender.reduceHP(damage - defense);
+    if (!defender.isAlive()) {
+      defender.die(); // can I call overloaded method from base class? within reduceHP or a 'handleHit'?
+    }
     console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`);
     const effect = attacker.getEffectFor(attackType);
     if (effect) {
@@ -107,14 +110,13 @@ class Game {
   }
   // Replace faction reference on unit with faction name
   factionsWithoutCircularReference() {
-    const factionsWoCR = this.factions.map(faction => {
+    return this.factions.map(faction => {
       let factionCopy = {};
       Object.assign(factionCopy, faction);
       const { units } = factionCopy;
       factionCopy.units = this.unitsWithoutCircularReference(units);
       return factionCopy;
     });
-    return factionsWoCR;
   }
   unitsWithoutCircularReference(units) {
     return units.map(unit => {
@@ -123,6 +125,22 @@ class Game {
       unitCopy.faction = unit.faction.name;
       return unitCopy;
     });
+  }
+  combatWithoutCircularReference() {
+    const { attacker, defender, attackType } = this.combat;
+    if (attacker) {
+      var attackerCopy = Object.assign({}, attacker)
+      attackerCopy.faction = attacker.faction.name;
+    }
+    if (defender) {
+      var defenderCopy = Object.assign({}, defender)
+      defenderCopy.faction = defender.faction.name;
+    }
+    return {
+      attacker: attackerCopy,
+      defender: defenderCopy,
+      attackType
+    };
   }
 }
 
