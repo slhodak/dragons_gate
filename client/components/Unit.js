@@ -10,8 +10,10 @@ export default (props) => {
   const {
     healthPoints,
     speed,
+    meleeAttacks,
     meleeRange,
     meleeDamage,
+    rangedAttacks,
     rangedRange,
     rangedDamage,
     defenseArmor,
@@ -30,28 +32,34 @@ export default (props) => {
       <div>{`Melee Range: ${meleeRange}`}</div>
       <div>
         {`Melee Damage: ${meleeDamage}`}
-        <AttackButton unit={unit}
-                      myTurn={myTurn}
-                      attacker={attacker}
-                      defender={defender}
-                      attackTypeUnderway={attackTypeUnderway}
-                      attackType={attackTypes.MELEE}
-                      selectAttacker={props.selectAttacker}
-                      resetAttack={props.resetAttack} />
+        {meleeAttacks > 0 ?
+          <AttackButton unit={unit}
+                        myTurn={myTurn}
+                        attacker={attacker}
+                        defender={defender}
+                        attackTypeUnderway={attackTypeUnderway}
+                        attackType={attackTypes.MELEE}
+                        selectAttacker={props.selectAttacker}
+                        resetAttack={props.resetAttack} /> :
+          null}
       </div>
-      {rangedRange ? <div>{`Ranged Range: ${rangedRange}`}</div> : null}
       {(() => {
         if (rangedDamage) {
-          return <div>
-                  <div>{`Ranged Damage: ${rangedDamage}`}</div>
-                  <AttackButton unit={unit}
-                      attacker={attacker}
-                      defender={defender}
-                      attackTypeUnderway={attackTypeUnderway}
-                      attackType={attackTypes.RANGED}
-                      selectAttacker={props.selectAttacker}
-                      resetAttack={props.resetAttack} />
-                </div>
+          return (
+            <div>
+              <div>{`Ranged Range: ${rangedRange}`}</div>
+              <div>{`Ranged Damage: ${rangedDamage}`}</div>
+              {rangedAttacks > 0 ?
+                <AttackButton unit={unit}
+                              attacker={attacker}
+                              defender={defender}
+                              attackTypeUnderway={attackTypeUnderway}
+                              attackType={attackTypes.RANGED}
+                              selectAttacker={props.selectAttacker}
+                              resetAttack={props.resetAttack} /> :
+                  null}
+            </div>
+          )
         }
       })()}
       <div>{`Defense Armor: ${defenseArmor}`}</div>
