@@ -17,8 +17,12 @@ describe('Game', () => {
     it("should reduce the defender's health points", () => {
       let eliteSoldier = new EliteSoldier();
       const startingHP = eliteSoldier.healthPoints;
-      let ryu = new Ryu();
-      this.game.doCombat(ryu, eliteSoldier, attackTypes.RANGED);
+      this.game.combat = {
+        attacker: new Ryu(),
+        defender: eliteSoldier,
+        attackType: attackTypes.MELEE
+      }
+      this.game.doCombat();
       assert(startingHP > eliteSoldier.healthPoints);
     });
   });
