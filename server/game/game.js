@@ -38,7 +38,10 @@ class Game {
       this.turn = (this.turn + 1) % 3;
       const turnFaction = this.factions[this.turn];
       turnFaction.units.forEach((unit) => {
-        unit.beAffected();
+        if (unit.isAlive()) {
+          unit.beAffected();
+          unit.replenishAttacks();
+        }
       });
       return 0;
     } catch (ex) {
@@ -56,7 +59,9 @@ class Game {
     const effect = attacker.getEffectFor(attackType);
     if (effect) {
       defender.status = effect;
+      console.debug(`${defender.name} is now ${effect}`);
     }
+    return { damage, effect };
   }
   resetCombat() {
     this.combat = {

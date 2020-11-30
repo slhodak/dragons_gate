@@ -5,10 +5,12 @@ class Unit {
     this.healthPoints = stats.healthPoints;
     this.speed = stats.speed;
     this.meleeAttacks = stats.meleeAttacks;
+    this.maxMeleeAttacks = stats.maxMeleeAttacks,
     this.meleeRange = stats.meleeRange;
     this.meleeDamage = stats.meleeDamage;
     this.meleeEffect = stats.meleeEffect;
     this.rangedAttacks = stats.rangedAttacks;
+    this.maxRangedAttacks = stats.maxRangedAttacks,
     this.rangedRange = stats.rangedRange;
     this.rangedDamage = stats.rangedDamage;
     this.rangedEffect = stats.rangedEffect;
@@ -86,6 +88,14 @@ class Unit {
       }
     }
   }
+  replenishAttacks() {
+    if (this.meleeDamage) {
+      this.meleeAttacks = this.maxMeleeAttacks || 1;
+    }
+    if (this.rangedDamage) {
+      this.rangedAttacks = this.maxRangedAttacks || 1;
+    }
+  }
 }
 
 class EliteSoldier extends Unit {
@@ -121,6 +131,7 @@ class Yuma extends Unit {
     super({
       healthPoints: 50,
       speed: 3,
+      meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [4, 6],
       defenseArmor: [3, 6],
@@ -154,6 +165,7 @@ class Daisho extends Unit {
       healthPoints: 50,
       speed: 3,
       meleeAttacks: 2,
+      maxMeleeAttacks: 2,
       meleeRange: 2,
       meleeDamage: [4, 6],
       defenseArmor: [2, 4],
@@ -171,6 +183,7 @@ class Shuriken extends Unit {
       meleeRange: 2,
       meleeDamage: [4, 6],
       rangedAttacks: 1,
+      maxRangedAttacks: 2,
       rangedRange: 10,
       rangedDamage: [6, 4],
       rangedEffect: {
