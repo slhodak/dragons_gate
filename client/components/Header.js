@@ -1,5 +1,6 @@
 import React from 'react';
 import dragonIcon from '../images/icons8-dragon-96.png';
+import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
 export default (props) => {
@@ -11,7 +12,7 @@ export default (props) => {
         Dragon's Gate
       </h1>
       <div className="saveLoadTurn">
-        <h2 className="turnFaction">Current Turn: {turnFaction ? turnFaction.name : null}</h2>
+        <h2 className="turnFaction">Current Turn: {turnFaction ? capitalize(turnFaction.name) : null}</h2>
         <button className="gameButton turnButton" onClick={nextTurn}>Next Turn</button>
         <div className="saveLoad">
           <button className="gameButton" onClick={loadSavedGame}>Load Game</button>

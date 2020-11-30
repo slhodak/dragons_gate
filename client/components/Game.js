@@ -63,9 +63,7 @@ export default class Game extends React.Component {
   }
   // Change turn
   nextTurn() {
-    fetch('/nextTurn', {
-      method: 'POST'
-    })
+    fetch('/nextTurn')
       .then(_res => {
         console.debug('Changing turn');
         this.loadCurrentGame();

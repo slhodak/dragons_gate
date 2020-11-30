@@ -1,4 +1,4 @@
-const { attackTypes, unitStatuses, factions } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -96,10 +96,14 @@ class Unit {
       this.rangedAttacks = this.maxRangedAttacks || 1;
     }
   }
+  die() {
+    // consider me abstract
+    return null;
+  }
 }
 
 class EliteSoldier extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 30,
       speed: 3,
@@ -108,12 +112,12 @@ class EliteSoldier extends Unit {
       meleeDamage: [3, 4],
       defenseArmor: [2, 4],
       healthRegen: 2
-    }, 'Elite Soldier', factions.EMPIRE);
+    }, 'Elite Soldier', faction);
   }
 }
 
 class FlagBearer extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 35,
       speed: 2,
@@ -122,12 +126,15 @@ class FlagBearer extends Unit {
       meleeDamage: [3, 4],
       defenseArmor: [2, 4],
       healthRegen: 3
-    }, 'Flag-Bearer', factions.EMPIRE);
+    }, 'Flag-Bearer', faction);
+  }
+  die() {
+    // reduce EliteSoldier TBD stat
   }
 }
 
 class Yuma extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 50,
       speed: 3,
@@ -136,12 +143,12 @@ class Yuma extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [3, 6],
       healthRegen: 5
-    }, 'Yuma', factions.PROTECTORS);
+    }, 'Yuma', faction);
   }
 }
 
 class Kusarigama extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 50,
       speed: 3,
@@ -155,12 +162,12 @@ class Kusarigama extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 5
-    }, 'Kusarigama', factions.PROTECTORS);
+    }, 'Kusarigama', faction);
   }
 }
 
 class Daisho extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 50,
       speed: 3,
@@ -170,12 +177,12 @@ class Daisho extends Unit {
       meleeDamage: [4, 6],
       defenseArmor: [2, 4],
       healthRegen: 5
-    }, 'Daisho', factions.PROTECTORS);
+    }, 'Daisho', faction);
   }
 }
 
 class Shuriken extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 50,
       speed: 4,
@@ -193,7 +200,7 @@ class Shuriken extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 5,
-    }, 'Shuriken', factions.PROTECTORS);
+    }, 'Shuriken', faction);
   }
   // -1 roll per 2cm distance
   rollRangedDamage(distance = 10) {
@@ -207,7 +214,7 @@ class Shuriken extends Unit {
 }
 
 class Ryu extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 100,
       speed: 0,
@@ -219,12 +226,12 @@ class Ryu extends Unit {
       rangedDamage: [4, 4],
       defenseArmor: [4, 4],
       healthRegen: 5
-    }, 'Ryu', factions.GUARDIANS);
+    }, 'Ryu', faction);
   }
 }
 
 class Yokai extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 60,
       speed: 5,
@@ -238,12 +245,12 @@ class Yokai extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 2
-    }, 'Yokai', factions.GUARDIANS);
+    }, 'Yokai', faction);
   }
 }
 
 class Shinja extends Unit {
-  constructor() {
+  constructor(faction) {
     super({
       healthPoints: 20,
       speed: 2,
@@ -252,7 +259,7 @@ class Shinja extends Unit {
       meleeDamage: [3, 6],
       defenseArmor: [4, 4],
       healthRegen: 0
-    }, 'Shinja', factions.GUARDIANS);
+    }, 'Shinja', faction);
     this.deaths = 2;
   }
 }

@@ -1,7 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Empire, Protectors, Guardians } = require('./factions.js');
-const { attackTypes } = require('../../lib/enums.js');
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
@@ -105,6 +104,25 @@ class Game {
     } catch (err) {
       return err;
     }
+  }
+  // Replace faction reference on unit with faction name
+  factionsWithoutCircularReference() {
+    const factionsWoCR = this.factions.map(faction => {
+      let factionCopy = {};
+      Object.assign(factionCopy, faction);
+      const { units } = factionCopy;
+      factionCopy.units = this.unitsWithoutCircularReference(units);
+      return factionCopy;
+    });
+    return factionsWoCR;
+  }
+  unitsWithoutCircularReference(units) {
+    return units.map(unit => {
+      let unitCopy = {};
+      Object.assign(unitCopy, unit);
+      unitCopy.faction = unit.faction.name;
+      return unitCopy;
+    });
   }
 }
 

@@ -11,7 +11,7 @@ app.use(bodyParser.json({ urlencoded: true }));
 // Send game data from value in memory
 app.get('/load', async (_req, res) => {
   res.send({
-    factions: game.factions,
+    factions: game.factionsWithoutCircularReference(),
     turn: game.turn,
     combat: game.combat
   });
@@ -60,7 +60,7 @@ app.post('/resetAttack', (_req, res) => {
 });
 
 // Increment turn
-app.post('/nextTurn', (_req, res) => {
+app.get('/nextTurn', (_req, res) => {
   let err = game.nextTurn();
   if (err) {
     res.status(500).send(err);
