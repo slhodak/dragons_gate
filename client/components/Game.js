@@ -25,17 +25,6 @@ export default class Game extends React.Component {
   componentDidMount() {
     this.loadCurrentGame();
   }
-  // Change turn
-  nextTurn() {
-    fetch('/nextTurn', {
-      method: 'POST'
-    })
-      .then(_res => {
-        console.debug('Changing turn');
-        this.loadCurrentGame();
-      })
-      .catch(err => `Error changing turns: ${err}`)
-  }
   // Get game data from value in server memory
   loadCurrentGame() {
     console.log("Updating game from server memory...");
@@ -71,6 +60,17 @@ export default class Game extends React.Component {
       .catch(err => {
         console.error(`Error saving game: ${err}`);
       });
+  }
+  // Change turn
+  nextTurn() {
+    fetch('/nextTurn', {
+      method: 'POST'
+    })
+      .then(_res => {
+        console.debug('Changing turn');
+        this.loadCurrentGame();
+      })
+      .catch(err => `Error changing turns: ${err}`)
   }
   selectAttacker(attacker, attackType) {
     fetch('/selectAttacker', {
@@ -115,9 +115,7 @@ export default class Game extends React.Component {
       },
       body: JSON.stringify({ defender })
     })
-      .then(_res => {
-        this.loadCurrentGame();
-      })
+      .then(_res => this.loadCurrentGame())
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
 
