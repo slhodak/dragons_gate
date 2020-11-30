@@ -22,7 +22,7 @@ class Unit {
     this.faction = faction
   }
   isAlive() {
-    return this.healthPoints < 0;
+    return this.healthPoints > 0;
   }
   canMove() {
     return this.status != unitStatuses.IMMOBILIZED;
@@ -90,7 +90,6 @@ class Unit {
   }
   replenishAttacks() {
     if (this.meleeDamage) {
-      console.log('hi')
       this.meleeAttacks = this.maxMeleeAttacks || 1;
     }
     if (this.rangedDamage) {

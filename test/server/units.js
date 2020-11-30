@@ -21,6 +21,15 @@ describe('Unit', () => {
     };
     this.unit = new Unit(stats);
   });
+  describe('#isAlive', () => {
+    it('should return true when the unit has HP left', () => {
+      assert(this.unit.isAlive());
+    });
+    it('should return false when the unit has no HP left', () => {
+      this.unit.healthPoints = 0;
+      assert.strictEqual(this.unit.isAlive(), false);
+    });
+  });
   describe('#roll', () => {
     it('should return an integer', () => {
       let { meleeDamage } = this.unit;
