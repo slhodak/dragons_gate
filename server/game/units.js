@@ -30,7 +30,7 @@ class Unit {
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
     let total = 0;
-    for (let i = 0; i <= rollsSides[0]; i++) {
+    for (let i = 0; i < rollsSides[0]; i++) {
       total += Math.ceil(Math.random() * rollsSides[1]);
     }
     return total;
@@ -90,6 +90,7 @@ class Unit {
   }
   replenishAttacks() {
     if (this.meleeDamage) {
+      console.log('hi')
       this.meleeAttacks = this.maxMeleeAttacks || 1;
     }
     if (this.rangedDamage) {

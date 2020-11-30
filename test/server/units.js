@@ -8,7 +8,7 @@ const {
 const { unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
 
 describe('Unit', () => {
-  before(() => {
+  beforeEach(() => {
     let stats = {
         healthPoints: 10,
         speed: 5,
@@ -31,7 +31,7 @@ describe('Unit', () => {
       let { meleeDamage } = this.unit;
       let maxDamage = meleeDamage[0] * meleeDamage[1];
       let damage = this.unit.roll(meleeDamage);
-      assert(damage >= 0);
+      assert(damage > 0);
       assert(damage <= maxDamage)
     });
   });
@@ -56,5 +56,14 @@ describe('Unit', () => {
       this.unit.rollMeleeDamage();
       assert.strictEqual(this.unit.meleeAttacks, startingAttacks - 1);
     });
-  })
+  });
+  describe('#replenishAttacks', () => {
+    it('should bring remaining attacks back to the unit maximum', () => {
+      const startingAttacks = this.unit.meleeAttacks;
+      this.unit.rollMeleeDamage();
+      assert.strictEqual(this.unit.meleeAttacks, startingAttacks - 1);
+      this.unit.replenishAttacks();
+      assert.strictEqual(this.unit.meleeAttacks, startingAttacks);
+    })
+  });
 });
