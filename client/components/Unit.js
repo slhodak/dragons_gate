@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { attackTypes } from '../../lib/enums';
 import '../style.css';
 import AttackButton from './AttackButton.js';
 import DefenseButton from './DefenseButton.js';
+import Loss from './Loss.js';
 
 // Unit
 export default (props) => {
@@ -21,13 +22,21 @@ export default (props) => {
     status,
     name
   } = unit;
+
+  // Keep last HP to calculate loss if HP changes during update
+  const hpRef = useRef();
+  useEffect(() => {
+    hpRef.current = healthPoints;
+  });
+  const loss = hpRef.current - healthPoints;
+
   return (
     <div className="unit">
       <div className="header">
         <h3>{name}</h3>
         <span><em>{status}</em></span>
       </div>
-      <div>{`HP: ${healthPoints}`}</div>
+      <div>{`HP: ${healthPoints}`}<Loss loss={loss}/></div>
       <div>{`Speed: ${speed}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
       <div>
@@ -51,6 +60,7 @@ export default (props) => {
               <div>{`Ranged Damage: ${rangedDamage}`}</div>
               {rangedAttacks > 0 ?
                 <AttackButton unit={unit}
+                              myTurn={myTurn}
                               attacker={attacker}
                               defender={defender}
                               attackTypeUnderway={attackTypeUnderway}

@@ -160,6 +160,10 @@ body {
   background-color: rgb(104, 21, 0);
 }
 
+/*
+  Unit
+*/
+
 .unit {
   margin: 5px 5px;
   padding: 10px;
@@ -173,6 +177,15 @@ body {
   flex-direction: row;
   justify-content: space-between;
   padding: 0px;
+}
+
+.loss {
+  font-weight: 700;
+  color: red;
+  transition: opacity 7s;
+}
+.disappearing {
+  opacity: 0;
 }
 
 /*
