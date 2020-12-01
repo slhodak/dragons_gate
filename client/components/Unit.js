@@ -41,16 +41,15 @@ export default (props) => {
       <div>{`Melee Range: ${meleeRange}`}</div>
       <div>
         {`Melee Damage: ${meleeDamage}`}
-        {meleeAttacks > 0 ?
-          <AttackButton unit={unit}
-                        myTurn={myTurn}
-                        attacker={attacker}
-                        defender={defender}
-                        attackTypeUnderway={attackTypeUnderway}
-                        attackType={attackTypes.MELEE}
-                        selectAttacker={props.selectAttacker}
-                        resetAttack={props.resetAttack} /> :
-          null}
+        <AttackButton unit={unit}
+                      myTurn={myTurn}
+                      meleeAttacks={meleeAttacks}
+                      attacker={attacker}
+                      defender={defender}
+                      attackTypeUnderway={attackTypeUnderway}
+                      attackType={attackTypes.MELEE}
+                      selectAttacker={props.selectAttacker}
+                      resetAttack={props.resetAttack} />
       </div>
       {(() => {
         if (rangedDamage) {
@@ -58,16 +57,15 @@ export default (props) => {
             <div>
               <div>{`Ranged Range: ${rangedRange}`}</div>
               <div>{`Ranged Damage: ${rangedDamage}`}</div>
-              {rangedAttacks > 0 ?
-                <AttackButton unit={unit}
-                              myTurn={myTurn}
-                              attacker={attacker}
-                              defender={defender}
-                              attackTypeUnderway={attackTypeUnderway}
-                              attackType={attackTypes.RANGED}
-                              selectAttacker={props.selectAttacker}
-                              resetAttack={props.resetAttack} /> :
-                  null}
+              <AttackButton unit={unit}
+                            myTurn={myTurn}
+                            rangedAttacks={rangedAttacks}
+                            attacker={attacker}
+                            defender={defender}
+                            attackTypeUnderway={attackTypeUnderway}
+                            attackType={attackTypes.RANGED}
+                            selectAttacker={props.selectAttacker}
+                            resetAttack={props.resetAttack} />
             </div>
           )
         }
