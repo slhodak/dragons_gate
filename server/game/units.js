@@ -71,7 +71,7 @@ class Unit {
       if (!this.rangedEffect) { return; }
       var { roll, success, effect } = this.rangedEffect;
     }
-    const rollResult = (this.roll(roll));
+    const rollResult = this.roll(roll);
     return success.includes(rollResult) ? effect : null;
   }
   beAffected() {
@@ -206,7 +206,7 @@ class Shuriken extends Unit {
       meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [4, 6],
-      rangedAttacks: 1,
+      rangedAttacks: 2,
       maxRangedAttacks: 2,
       rangedRange: 10,
       rangedDamage: [6, 4],
@@ -226,6 +226,7 @@ class Shuriken extends Unit {
       this.rangedDamage[1]
     ];
     const damage = this.roll(rangedRoll);
+    this.rangedAttacks -= 1;
     return damage;
   }
 }

@@ -41,10 +41,7 @@ app.post('/selectAttacker', (req, res) => {
   const { attacker, attackType } = req.body;
   if (attacker && attackType) {
     const attackerInstance = game.getUnitById(attacker.id);
-    game.combat = {
-      attacker: attackerInstance,
-      attackType: attackType
-    };
+    game.setAttacker(attackerInstance, attackType);
     res.status(200).send(game.combatWithoutCircularReference());
   } else {
     res.status(400).send('Invalid request body; need attacker and attack type');

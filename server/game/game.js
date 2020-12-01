@@ -47,6 +47,11 @@ class Game {
       return ex;
     }
   }
+  // Technically defender should never be set when this is called
+  setAttacker(attacker, attackType) {
+    this.combat.attacker = attacker;
+    this.combat.attackType = attackType;
+  }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
   doCombat() {
     const { attacker, defender, attackType } = this.combat;

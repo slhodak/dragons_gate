@@ -1,5 +1,5 @@
 import React from 'react';
-import { unitStatuses } from '../../lib/enums.js';
+import { attackTypes, unitStatuses } from '../../lib/enums.js';
 import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
@@ -9,10 +9,15 @@ export default (props) => {
   return (
     <div className="combatButton">
       {(() => {
-        if (!myTurn || status === unitStatuses.DECEASED || meleeAttacks < 1) {
+        if (!myTurn || status === unitStatuses.DECEASED) {
           return null;
         }
         if (attackTypeUnderway && attackTypeUnderway != attackType) {
+          return null;
+        }
+        if (attackType === attackTypes.MELEE && meleeAttacks < 1) {
+          return null;
+        } else if (attackType === attackTypes.RANGED && rangedAttacks < 1) {
           return null;
         }
         if (!attacker) {
