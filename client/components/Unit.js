@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { attackTypes, unitStatuses } from '../../lib/enums';
+import React, { useEffect, useRef } from 'react';
+import { attackTypes } from '../../lib/enums';
 import '../style.css';
 import AttackButton from './AttackButton.js';
 import DefenseButton from './DefenseButton.js';
