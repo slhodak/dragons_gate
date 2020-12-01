@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { attackTypes } from '../../lib/enums';
+import { attackTypes, unitStatuses } from '../../lib/enums';
 import '../style.css';
 import AttackButton from './AttackButton.js';
 import DefenseButton from './DefenseButton.js';
@@ -34,7 +34,7 @@ export default (props) => {
     <div className="unit">
       <div className="header">
         <h3>{name}</h3>
-        <span><em>{status}</em></span>
+        <span className={status}><em>{status}</em></span>
       </div>
       <div>{`HP: ${healthPoints}`}<Loss loss={loss}/></div>
       <div>{`Speed: ${speed}`}</div>

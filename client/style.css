@@ -179,6 +179,19 @@ body {
   padding: 0px;
 }
 
+.deceased {
+  color: rgb(199, 11, 11);
+}
+.poisoned {
+  color: rgb(152, 207, 49);
+}
+.immobilized {
+  color: rgb(134, 134, 134);
+}
+.healthy {
+  color: white;
+}
+
 .loss {
   font-weight: 700;
   color: red;
