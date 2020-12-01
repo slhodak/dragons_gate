@@ -25,7 +25,7 @@ class Unit {
     return this.healthPoints > 0;
   }
   canMove() {
-    return this.status != unitStatuses.IMMOBILIZED;
+    return this.isAlive() && this.status != unitStatuses.IMMOBILIZED;
   }
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
@@ -101,7 +101,7 @@ class Unit {
     }
   }
   die() {
-    // consider me abstract
+    this.status = unitStatuses.DECEASED;
     return null;
   }
 }
@@ -117,6 +117,14 @@ class EliteSoldier extends Unit {
       defenseArmor: [2, 4],
       healthRegen: 2
     }, 'Elite Soldier', faction);
+  }
+  die() {
+    this.faction.units.forEach(unit => {
+      if (unit != this && unit.isAlive()) {
+        unit.meleeDamage[1] += 2;
+      }
+    });
+    this.status = unitStatuses.DECEASED;
   }
 }
 
@@ -134,10 +142,11 @@ class FlagBearer extends Unit {
   }
   die() {
     this.faction.units.forEach(unit => {
-      if (unit != this) {
+      if (unit != this && unit.isAlive()) {
         unit.meleeDamage[0] -= 1;
       }
     });
+    this.status = unitStatuses.DECEASED;
   }
 }
 

@@ -15,7 +15,7 @@ playing notes:
   status (immobilized, etc) √
   load game not working
   stronger soldiers as they die
-  flag-bearer influence
+  flag-bearer influence √
   shuriken distance damage √
   random unit select for ryu
   font size picker
