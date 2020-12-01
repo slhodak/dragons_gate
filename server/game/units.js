@@ -59,7 +59,7 @@ class Unit {
     // this could be checked before this point
     if (damage < 0) { return; }
     this.healthPoints -= damage;
-    if (this.healthPoints < 0) {
+    if (this.healthPoints <= 0) {
       this.healthPoints = 0;
       this.die();
     }
@@ -76,23 +76,28 @@ class Unit {
     return success.includes(rollResult) ? effect : null;
   }
   beAffected() {
+    let effect;
     if (this.status === unitStatuses.HEALTHY) {
       return;
     } else if (this.status === unitStatuses.IMMOBILIZED) {
+      effect = unitStatuses.IMMOBILIZED;
       if (this.roll([1, 6]) > 2) {
         this.status = unitStatuses.HEALTHY;
       }
     } else if (this.status === unitStatuses.POISONED) {
+      effect = unitStatuses.POISONED;
       if (this.roll([1, 6]) > 0) {
         this.reduceHP(1);
       }
     } else if (this.status === unitStatuses.DAMNED) {
+      effect = unitStatuses.DAMNED;
       this.damnedTurns += 1;
       if (this.damnedTurns === 3) {
         this.healthPoints = 0;
         this.die();
       }
     }
+    if (effect) console.debug(`${this.name} (id:${this.id}) suffered from being ${effect}`);
   }
   replenishAttacks() {
     if (this.meleeDamage) {
@@ -104,7 +109,7 @@ class Unit {
   }
   die() {
     this.status = unitStatuses.DECEASED;
-    return null;
+    console.debug(`${this.name} (id:${this.id}) died`);
   }
 }
 
@@ -126,7 +131,7 @@ class EliteSoldier extends Unit {
         unit.meleeDamage[1] += 2;
       }
     });
-    this.status = unitStatuses.DECEASED;
+    Unit.prototype.die.call(this);
   }
 }
 
@@ -148,7 +153,7 @@ class FlagBearer extends Unit {
         unit.meleeDamage[0] -= 1;
       }
     });
-    this.status = unitStatuses.DECEASED;
+    Unit.prototype.die.call(this);
   }
 }
 

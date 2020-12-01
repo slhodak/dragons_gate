@@ -62,12 +62,13 @@ class Game {
     const loss = damage - defense;
     defender.reduceHP(damage - defense);
     console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`);
-    const effect = attacker.getEffectFor(attackType);
-    if (effect) {
-      defender.status = effect;
-      console.debug(`${defender.name} is now ${effect}`);
+    if (defender.isAlive()) {
+      const effect = attacker.getEffectFor(attackType);
+      if (effect) {
+        defender.status = effect;
+        console.debug(`${defender.name} is now ${effect}`);
+      }
     }
-    return { damage, effect };
   }
   resetCombat() {
     this.combat = {
