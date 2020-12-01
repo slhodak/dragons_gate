@@ -56,7 +56,9 @@ class Game {
   doCombat() {
     const { attacker, defender, attackType } = this.combat;
     const damage = attacker.getDamageFor(attackType);
+    console.debug(`${attacker.name} (id:${attacker.id}) rolled ${damage} ${attackType} damage`);
     const defense = defender.rollDefenseArmor();
+    console.debug(`${defender.name} (id:${defender.id}) rolled ${defense} defense`);
     const loss = damage - defense;
     defender.reduceHP(damage - defense);
     if (!defender.isAlive()) {
