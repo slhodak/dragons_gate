@@ -182,6 +182,9 @@ body {
 .deceased {
   color: rgb(199, 11, 11);
 }
+.damned {
+  color: rgb(146, 36, 168);
+}
 .poisoned {
   color: rgb(152, 207, 49);
 }
