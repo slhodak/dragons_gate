@@ -61,9 +61,6 @@ class Game {
     console.debug(`${defender.name} (id:${defender.id}) rolled ${defense} defense`);
     const loss = damage - defense;
     defender.reduceHP(damage - defense);
-    if (!defender.isAlive()) {
-      defender.die(); // can I call overloaded method from base class? within reduceHP or a 'handleHit'?
-    }
     console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`);
     const effect = attacker.getEffectFor(attackType);
     if (effect) {
