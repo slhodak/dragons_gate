@@ -61,6 +61,7 @@ class Unit {
     this.healthPoints -= damage;
     if (this.healthPoints < 0) {
       this.healthPoints = 0;
+      this.die();
     }
   }
   getEffectFor(attackType) {
@@ -89,6 +90,7 @@ class Unit {
       this.damnedTurns += 1;
       if (this.damnedTurns === 3) {
         this.healthPoints = 0;
+        this.die();
       }
     }
   }
