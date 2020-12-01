@@ -13,22 +13,32 @@ combat
 playing notes:
   turn √
   status (immobilized, etc) √
-  load game not working
-  stronger soldiers as they die
+  stronger soldiers as they die √
   flag-bearer influence √
   shuriken distance damage √
-  random unit select for ryu
+  random unit select for ryu (bad idea? branch?)
   font size picker
-  gate objective -- not just brawl
+  gate objective -- not just brawl (pretty fun as brawl)
   hex board
   UI simplify √
 
 
 Refactor:
-  Status effects into something that is stored on unit
-    in unit's status with object cloning from status enum?
+  Status effects into hash that is copied to unit
     including turns damned, poison damage, rolls for effects
 
 Bug:
   Units are loaded as PO objects, not instances of respective classes
-  Must load classes with object data when loading game from file
+    Load classes from object data when loading game from file
+
+Notes from Play-Through:
+  It was fun!
+  DO NOT CHANGE STATS!
+    if you do, keep a copy of the old ones
+  automatic next turn when no moves left
+  shinja revive
+  damned didn't remove attack button
+  poisoned death didn't remove attack button
+  deceased/HP 0 have defense buttons
+  skip faction if all units deceassed (what about shinja?)
+  is immobilized working? (I think so...)
