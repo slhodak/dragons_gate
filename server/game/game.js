@@ -147,6 +147,16 @@ class Game {
       attackType
     };
   }
+  // Determine whether the attacker's faction has moves left
+  attackerFactionHasNoMoves() {
+    // do any units still have attacks left?
+    const { attacker } = this.combat;
+    const { faction } = attacker;
+    if (faction.units.find(unit => unit.hasAttacksLeft())) {
+      return false;
+    }
+    return true;
+  }
 }
 
 module.exports = () => new Game();

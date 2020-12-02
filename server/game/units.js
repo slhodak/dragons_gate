@@ -107,6 +107,13 @@ class Unit {
       this.rangedAttacks = this.maxRangedAttacks || 1;
     }
   }
+  hasAttacksLeft() {
+    if (this.meleeDamage) {
+      return this.meleeAttacks > 0;
+    } else if (this.rangedDamage) {
+      return this.rangedAttacks > 0;
+    }
+  }
   die() {
     this.status = unitStatuses.DECEASED;
     console.debug(`${this.name} (id:${this.id}) died`);
