@@ -8,3 +8,6 @@ public/*.png
 
 # game state
 state.json
+
+# code coverage
+coverage/
