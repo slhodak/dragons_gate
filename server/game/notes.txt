@@ -26,6 +26,7 @@ playing notes:
 Refactor:
   Status effects into hash that is copied to unit
     including turns damned, poison damage, rolls for effects
+  Attacks belong in an object? Premature optimization while there are only 2 kinds.
 
 Bug:
   Units are loaded as PO objects, not instances of respective classes

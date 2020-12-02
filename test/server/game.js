@@ -69,5 +69,19 @@ describe('Game', () => {
       assert.strictEqual(units[0].faction, this.empire);
     });
   });
+  describe('#attackerFactionHasNoMoves', () => {
+    it('should return false when the faction has moves left', () => {
+      const { combat } = this.game;
+      combat.attacker = this.empire.units[0];
+      assert.strictEqual(this.game.attackerFactionHasNoMoves(), false);
+    });
+    it('should return true when the faction has no moves left', () => {
+      const { combat } = this.game;
+      combat.attacker = this.empire.units[0];
+      // Currently assumed no Imperial units have ranged attacks
+      this.empire.units.forEach(unit => unit.meleeAttacks = 0);
+      assert(this.game.attackerFactionHasNoMoves());
+    });
+  });
 });
 
