@@ -70,10 +70,10 @@ app.post('/doCombat', (req, res) => {
   const { defender } = req.body;
   game.combat.defender = game.getUnitById(defender.id);
   game.doCombat();
-  game.resetCombat();
   if (game.attackerFactionHasNoMoves()) {
     game.nextTurn();
   }
+  game.resetCombat();
   res.sendStatus(200);
 });
 
