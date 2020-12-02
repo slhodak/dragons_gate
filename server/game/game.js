@@ -47,8 +47,12 @@ class Game {
       return ex;
     }
   }
-  // Technically defender should never be set when this is called
-  setAttacker(attacker, attackType) {
+  /*
+   Technically defender should never be set when this is called
+   (so therse don't *need* to be set individually,
+    but that's why they are)
+  */
+   setAttacker(attacker, attackType) {
     this.combat.attacker = attacker;
     this.combat.attackType = attackType;
   }
