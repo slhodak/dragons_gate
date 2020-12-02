@@ -37,8 +37,8 @@ Notes from Play-Through:
     if you do, keep a copy of the old ones
   automatic next turn when no moves left
   shinja revive
-  damned didn't remove attack button
-  poisoned death didn't remove attack button
-  deceased/HP 0 have defense buttons
+  damned didn't remove attack button √
+  poisoned death didn't remove attack button √
+  deceased/HP 0 have defense buttons √
   skip faction if all units deceassed (what about shinja?)
   is immobilized working? (I think so...)
