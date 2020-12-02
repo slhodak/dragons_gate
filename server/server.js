@@ -71,6 +71,9 @@ app.post('/doCombat', (req, res) => {
   game.combat.defender = game.getUnitById(defender.id);
   game.doCombat();
   game.resetCombat();
+  if (game.attackerFactionHasNoMoves()) {
+    game.nextTurn();
+  }
   res.sendStatus(200);
 });
 
