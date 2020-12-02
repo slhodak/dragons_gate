@@ -25,37 +25,34 @@ class Faction {
 
 class Empire extends Faction {
   constructor() {
-    super('Empire');
+    super(factionNames.EMPIRE);
     for (let i = 0; i < 6; i++) {
       this.units.push(new EliteSoldier(this));
     }
     this.units.push(new FlagBearer(this));
-    this.name = factionNames.EMPIRE;
   }
 }
 
 class Protectors extends Faction {
   constructor() {
-    super('Protectors');
+    super(factionNames.PROTECTORS);
     this.units.push(
       new Yuma(this),
       new Kusarigama(this),
       new Daisho(this),
       new Shuriken(this)
     );
-    this.name = factionNames.PROTECTORS;
   }
 }
 
 class Guardians extends Faction {
   constructor() {
-    super('Guardians');
+    super(factionNames.GUARDIANS);
     this.units.push(
       new Ryu(this),
       new Yokai(this),
       new Shinja(this)
     );
-    this.name = factionNames.GUARDIANS;
   }
 }
 
