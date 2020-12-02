@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it should render correctly 1`] = `
+<div
+  className="unit"
+>
+  <div
+    className="header"
+  >
+    <h3>
+      Elite Soldier
+    </h3>
+    <span
+      className="healthy"
+    >
+      <em>
+        healthy
+      </em>
+    </span>
+  </div>
+  <div>
+    HP: 30
+    <span
+      className="loss false"
+    />
+  </div>
+  <div>
+    Speed: 3
+  </div>
+  <div>
+    Melee Range: 2
+  </div>
+  <div>
+    Melee Damage: 4,4
+    <div
+      className="combatButton"
+    />
+  </div>
+  <div>
+    Defense Armor: 2,4
+  </div>
+  <div>
+    Health Regen: 2
+  </div>
+  <div
+    className="combatButton"
+  />
+</div>
+`;
