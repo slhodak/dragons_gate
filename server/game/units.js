@@ -1,3 +1,4 @@
+const { RNG } = require('rot-js');
 const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
@@ -31,7 +32,7 @@ class Unit {
     // parse rolls-d-sides string and calculate resulting damage
     let total = 0;
     for (let i = 0; i < rollsSides[0]; i++) {
-      total += Math.ceil(Math.random() * rollsSides[1]);
+      total += Math.ceil(RNG.getUniform() * rollsSides[1]);
     }
     return total;
   }

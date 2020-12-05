@@ -39,9 +39,11 @@ describe('Unit', () => {
     it('should return a valid roll value based on the input', () => {
       let { meleeDamage } = this.unit;
       let maxDamage = meleeDamage[0] * meleeDamage[1];
-      let damage = this.unit.roll(meleeDamage);
-      assert(damage > 0);
-      assert(damage <= maxDamage)
+      for (let i = 0; i < 1000; i++) {
+        let damage = this.unit.roll(meleeDamage);
+        assert(damage > 0);
+        assert(damage <= maxDamage)
+      }
     });
   });
   describe('#beAffected', () => {
