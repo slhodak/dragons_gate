@@ -1,6 +1,5 @@
 import React from 'react';
 import dragonIcon from '../images/icons8-dragon-96.png';
-import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
 export default (props) => {
