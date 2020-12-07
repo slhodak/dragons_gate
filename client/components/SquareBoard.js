@@ -11,4 +11,4 @@ export default class HexBoard extends React.Component {
       </div>
     )
   }
-}
+}2
