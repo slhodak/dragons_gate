@@ -43,3 +43,14 @@ Notes from Play-Through:
   deceased/HP 0 have defense buttons √
   skip faction if all units deceassed (what about shinja?)
   is immobilized working? (I think so...)
+
+
+Square Board
+
+  only contains id of each unit in a square--not a reference
+  save position data on unit?
+     checking unit position with board much faster than scanning units--only practical way
+     but doing movement you have to know "my distance"--this is okay, unit is loaded by id when calculated
+  do not store location info on Unit
+
+

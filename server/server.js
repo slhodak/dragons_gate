@@ -11,6 +11,7 @@ app.use(bodyParser.json({ urlencoded: true }));
 // Send game data from value in memory
 app.get('/load', async (_req, res) => {
   res.send({
+    board: game.board.data,
     factions: game.factionsWithoutCircularReference(),
     turn: game.turn,
     combat: game.combatWithoutCircularReference()

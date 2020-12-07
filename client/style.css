@@ -20,6 +20,10 @@ body {
   margin: 0px;
 }
 
+/*
+  Header
+*/
+
 .header {
   display: flex;
   align-items: center;
@@ -47,10 +51,17 @@ body {
   display: flex;
   flex-direction: row;
 }
+.turnButton {
+  font-size: 1.5em;
+}
 .saveLoad {
   display: flex;
   flex-direction: column;
 }
+
+/*
+  Game
+*/
 
 .game {
   display: flex;
@@ -63,8 +74,33 @@ body {
   border-radius: 3px;
   margin: 5px;
 }
-.turnButton {
-  font-size: 1.5em;
+
+/*
+  Board
+*/
+
+.board {
+  height: 100%;
+  border-bottom: 1px solid white;
+  margin: 10px;
+}
+
+.squareRow {
+  display: flex;
+}
+
+.squareCell {
+  height: 40px;
+  width: 40px;
+  border: 1px solid white;
+  border-bottom: none;
+  margin: 0px;
+  padding: 0px;
+  background-color: black;
+}
+
+.squareCell:hover {
+  background-color: gray;
 }
 
 /*

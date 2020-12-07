@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header.js';
-import HexBoard from './HexBoard.js';
+import SquareBoard from './SquareBoard.js';
 import Factions from './Factions.js';
 import Footer from './Footer.js';
 import '../style.css';
@@ -10,6 +10,7 @@ export default class Game extends React.Component {
     super(props);
     this.state = {
       turn: 0,
+      board: [],
       factions: [],
       attacker: null,
       attackType: null
@@ -31,9 +32,9 @@ export default class Game extends React.Component {
     fetch('load')
       .then(res => res.json())
       .then(body => {
-        const { factions, turn, combat } = body;
+        const { board, factions, turn, combat } = body;
         const { attacker, attackType } = combat;
-        this.setState({ factions, turn, attacker, attackType });
+        this.setState({ board, factions, turn, attacker, attackType });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -120,6 +121,7 @@ export default class Game extends React.Component {
   render() {
     const {
       turn,
+      board,
       factions,
       attacker,
       defender,
@@ -132,7 +134,7 @@ export default class Game extends React.Component {
                 saveGame={this.saveGame}
                 nextTurn={this.nextTurn} />
         <div className="game">
-          <HexBoard />
+          <SquareBoard board={board} />
           <Factions attacker={attacker}
                     defender={defender}
                     attackTypeUnderway={attackType}

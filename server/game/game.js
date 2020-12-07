@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Empire, Protectors, Guardians } = require('./factions.js');
+const board = require('./board.js')(8, 8);
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
@@ -13,6 +14,7 @@ class Game {
       new Guardians()
     ]
     this.turn = 0;
+    this.board = board;
     this.combat = {
       attacker: null,
       defender: null,
