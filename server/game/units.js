@@ -20,6 +20,7 @@ class Unit {
     this.damnedTurns = 0;
     this.name = name,
     this.faction = faction
+    this.id = null; // Assigned at game initialization
   }
   isAlive() {
     return this.healthPoints > 0;
