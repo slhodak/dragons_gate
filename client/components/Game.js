@@ -10,7 +10,7 @@ export default class Game extends React.Component {
     super(props);
     this.state = {
       turn: 0,
-      board: [],
+      board: null,
       factions: [],
       attacker: null,
       attackType: null
