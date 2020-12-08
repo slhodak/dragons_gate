@@ -23,6 +23,37 @@ export default class Game extends React.Component {
     this.attack = this.attack.bind(this);
     this.resetAttack = this.resetAttack.bind(this);
   }
+  render() {
+    const {
+      turn,
+      board,
+      factions,
+      attacker,
+      defender,
+      attackType
+    } = this.state;
+    return (
+      <div>
+        <Header turnFaction={factions ? factions[turn] : null}
+                loadSavedGame={this.loadSavedGame}
+                saveGame={this.saveGame}
+                nextTurn={this.nextTurn} />
+        <div className="game">
+          <SquareBoard board={board} />
+          <Factions attacker={attacker}
+                    defender={defender}
+                    attackTypeUnderway={attackType}
+                    turn={turn}
+                    factions={factions}
+                    selectAttacker={this.selectAttacker}
+                    attack={this.attack}
+                    resetAttack={this.resetAttack}
+                    confirmAttack={this.confirmAttack} />
+        </div>
+        <Footer />
+      </div>
+    )
+  }
   componentDidMount() {
     this.loadCurrentGame();
   }
@@ -116,37 +147,5 @@ export default class Game extends React.Component {
     })
       .then(_res => this.loadCurrentGame())
       .catch(err => console.error(`Error calculating combat result: ${err}`));
-  }
-
-  render() {
-    const {
-      turn,
-      board,
-      factions,
-      attacker,
-      defender,
-      attackType
-    } = this.state;
-    return (
-      <div>
-        <Header turnFaction={factions ? factions[turn] : null}
-                loadSavedGame={this.loadSavedGame}
-                saveGame={this.saveGame}
-                nextTurn={this.nextTurn} />
-        <div className="game">
-          <SquareBoard board={board} />
-          <Factions attacker={attacker}
-                    defender={defender}
-                    attackTypeUnderway={attackType}
-                    turn={turn}
-                    factions={factions}
-                    selectAttacker={this.selectAttacker}
-                    attack={this.attack}
-                    resetAttack={this.resetAttack}
-                    confirmAttack={this.confirmAttack} />
-        </div>
-        <Footer />
-      </div>
-    )
   }
 }
