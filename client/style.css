@@ -20,6 +20,10 @@ body {
   margin: 0px;
 }
 
+/*
+  Header
+*/
+
 .header {
   display: flex;
   align-items: center;
@@ -47,14 +51,21 @@ body {
   display: flex;
   flex-direction: row;
 }
+.turnButton {
+  font-size: 1.5em;
+}
 .saveLoad {
   display: flex;
   flex-direction: column;
 }
 
+/*
+  Game
+*/
+
 .game {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .gameButton {
@@ -63,8 +74,63 @@ body {
   border-radius: 3px;
   margin: 5px;
 }
-.turnButton {
-  font-size: 1.5em;
+.gameButton:hover {
+  background-color: rgb(177, 177, 177);
+}
+
+/*
+  Board
+*/
+
+.board {
+  border-bottom: 1px solid white;
+  margin: 10px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.squareRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.squareCell {
+  height: 85px;
+  width: 85px;
+  border: 1px solid white;
+  border-bottom: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.cellContents {
+  display: flex;
+  flex-direction: column;
+}
+
+.squareCell .cellName {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+}
+
+.squareRow .Guardians {
+  color: rgb(119, 47, 29);
+}
+.squareRow .Protectors {
+  color: rgb(28, 68, 121);
+}
+.squareRow .Empire {
+  color: rgb(20, 80, 2);
+}
+
+.squareCell:hover {
+  background-color: gray;
+}
+
+.isValidMove {
+  background-color: rgba(0, 255, 55, 0.445);
 }
 
 /*

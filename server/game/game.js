@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Empire, Protectors, Guardians } = require('./factions.js');
+const Board = require('./board.js');
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
@@ -11,14 +12,16 @@ class Game {
       new Empire(),
       new Protectors(),
       new Guardians()
-    ]
+    ];
+    this.assignIds();
     this.turn = 0;
+    this.board = new Board(10, 10, this.factions);
+    this.mover = null;
     this.combat = {
       attacker: null,
       defender: null,
       attackType: null
-    }
-    this.assignIds();
+    };
   }
   // assign IDs
   assignIds() {
@@ -40,6 +43,7 @@ class Game {
         if (unit.isAlive()) {
           unit.beAffected();
           unit.replenishAttacks();
+          unit.replenishSteps();
         }
       });
       return 0;
@@ -47,12 +51,30 @@ class Game {
       return ex;
     }
   }
+  setMover(unitId, coordinates) {
+    if (unitId == null) {
+      this.mover = null;
+    } else {
+      const unit = this.getUnitById(unitId);
+      unit.coordinates = coordinates;
+      this.mover = unit;
+    }
+  }
+  // Change coordinates of mover in board
+  moveMoverTo(coordinates) {
+    const { mover, board } = this;
+    const movingUnit = this.getUnitById(mover.id);
+    board.addUnitTo(coordinates, movingUnit);
+    board.removeUnitFrom(mover.coordinates);
+    // reduce steps to 0 (regardless of steps taken)
+    movingUnit.steps = 0;
+    this.mover = null;
+  }
   /*
    Technically defender should never be set when this is called
-   (so therse don't *need* to be set individually,
-    but that's why they are)
+   (so these don't *need* to be set individually, but that's why they are)
   */
-   setAttacker(attacker, attackType) {
+  setAttacker(attacker, attackType) {
     this.combat.attacker = attacker;
     this.combat.attackType = attackType;
   }
@@ -129,11 +151,17 @@ class Game {
   }
   unitsWithoutCircularReference(units) {
     return units.map(unit => {
-      let unitCopy = {};
-      Object.assign(unitCopy, unit);
-      unitCopy.faction = unit.faction.name;
-      return unitCopy;
+      return this.unitWithoutCircularReference(unit);
     });
+  }
+  unitWithoutCircularReference(unit) {
+    if (!unit) {
+      return null;
+    }
+    let unitCopy = {};
+    Object.assign(unitCopy, unit);
+    unitCopy.faction = unit.faction.name;
+    return unitCopy;
   }
   combatWithoutCircularReference() {
     const { attacker, defender, attackType } = this.combat;
