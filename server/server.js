@@ -41,10 +41,25 @@ app.post('/save', (_req, res) => {
 });
 
 app.post('/setMover', (req, res) => {
-  const { mover, coordinates } = req.body;
-  game.setMover(mover, coordinates);
-  res.sendStatus(200);
-})
+  try {
+    const { mover, coordinates } = req.body;
+    game.setMover(mover, coordinates);
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.post('/moveMoverTo', (req, res) => {
+  try {
+    const { coordinates } = req.body;
+    game.moveMoverTo(coordinates);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(`Error moving unit ${err}`);
+    res.status(500).send(err);
+  }
+});
 
 app.post('/selectAttacker', (req, res) => {
   const { attacker, attackType } = req.body;

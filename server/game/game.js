@@ -43,6 +43,7 @@ class Game {
         if (unit.isAlive()) {
           unit.beAffected();
           unit.replenishAttacks();
+          unit.replenishSteps();
         }
       });
       return 0;
@@ -59,12 +60,21 @@ class Game {
       this.mover = unit;
     }
   }
+  // Change coordinates of mover in board
+  moveMoverTo(coordinates) {
+    const { mover, board } = this;
+    const movingUnit = this.getUnitById(mover.id);
+    board.addUnitTo(coordinates, movingUnit);
+    board.removeUnitFrom(mover.coordinates);
+    // reduce steps to 0 (regardless of steps taken)
+    movingUnit.steps = 0;
+    this.mover = null;
+  }
   /*
    Technically defender should never be set when this is called
-   (so therse don't *need* to be set individually,
-    but that's why they are)
+   (so these don't *need* to be set individually, but that's why they are)
   */
-   setAttacker(attacker, attackType) {
+  setAttacker(attacker, attackType) {
     this.combat.attacker = attacker;
     this.combat.attackType = attackType;
   }

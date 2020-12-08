@@ -4,13 +4,14 @@ class Unit {
   constructor(stats, name, faction) {
     this.healthPoints = stats.healthPoints;
     this.steps = stats.steps;
+    this.maxSteps = stats.steps;
     this.meleeAttacks = stats.meleeAttacks;
-    this.maxMeleeAttacks = stats.maxMeleeAttacks,
+    this.maxMeleeAttacks = stats.meleeAttacks,
     this.meleeRange = stats.meleeRange;
     this.meleeDamage = stats.meleeDamage;
     this.meleeEffect = stats.meleeEffect;
     this.rangedAttacks = stats.rangedAttacks;
-    this.maxRangedAttacks = stats.maxRangedAttacks,
+    this.maxRangedAttacks = stats.rangedAttacks,
     this.rangedRange = stats.rangedRange;
     this.rangedDamage = stats.rangedDamage;
     this.rangedEffect = stats.rangedEffect;
@@ -115,6 +116,9 @@ class Unit {
       return this.rangedAttacks > 0;
     }
   }
+  replenishSteps() {
+    this.steps = this.maxSteps;
+  }
   die() {
     this.status = unitStatuses.DECEASED;
     console.debug(`${this.name} (id:${this.id}) died`);
@@ -204,7 +208,6 @@ class Daisho extends Unit {
       healthPoints: 50,
       steps: 3,
       meleeAttacks: 2,
-      maxMeleeAttacks: 2,
       meleeRange: 2,
       meleeDamage: [4, 6],
       defenseArmor: [2, 4],
@@ -222,7 +225,6 @@ class Shuriken extends Unit {
       meleeRange: 2,
       meleeDamage: [4, 6],
       rangedAttacks: 2,
-      maxRangedAttacks: 2,
       rangedRange: 10,
       rangedDamage: [6, 4],
       rangedEffect: {

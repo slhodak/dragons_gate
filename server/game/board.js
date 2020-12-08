@@ -51,6 +51,12 @@ module.exports = class Board {
       });
     }
   }
+  addUnitTo(coordinates, unit) {
+    this.data[coordinates[0]][coordinates[1]] = this.cellDataFor(unit);
+  }
+  removeUnitFrom(coordinates) {
+    this.data[coordinates[0]][coordinates[1]] = null;
+  }
   cellDataFor(unit) {
     return {
       id: unit.id,

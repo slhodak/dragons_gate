@@ -86,10 +86,13 @@ body {
   border-bottom: 1px solid white;
   margin: 10px;
   background-color: black;
+  display: flex;
+  flex-direction: column;
 }
 
 .squareRow {
   display: flex;
+  flex-direction: row;
 }
 
 .squareCell {

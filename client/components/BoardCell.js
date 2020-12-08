@@ -3,7 +3,17 @@ import MoveButton from './MoveButton.js';
 import '../style.css';
 
 export default (props) => {
-  const { unitId, unitName, unitFaction, coordinates, myTurn, setMover, mover, isValidMove } = props;
+  const {
+    unitId,
+    unitName,
+    unitFaction,
+    coordinates,
+    myTurn,
+    setMover,
+    mover,
+    isValidMove,
+    moveMoverTo
+  } = props;
   // refactor later depending on final layout of each version
   if (unitId) {
     if (myTurn) {
@@ -31,7 +41,7 @@ export default (props) => {
   } else if (isValidMove) {
     return (
       <div className="squareCell isValidMove"
-           onClick={() => moveTo(coordinates)}>
+           onClick={() => moveMoverTo(coordinates)}>
       </div>
     )
   } else {

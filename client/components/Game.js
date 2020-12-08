@@ -25,6 +25,7 @@ export default class Game extends React.Component {
     this.resetAttack = this.resetAttack.bind(this);
     this.setMover = this.setMover.bind(this);
     this.moverCanMoveTo = this.moverCanMoveTo.bind(this);
+    this.moveMoverTo = this.moveMoverTo.bind(this);
   }
   render() {
     const {
@@ -47,6 +48,7 @@ export default class Game extends React.Component {
                        setMover={this.setMover}
                        mover={mover}
                        moverCanMoveTo={this.moverCanMoveTo}
+                       moveMoverTo={this.moveMoverTo}
                        turnFaction={factions ? factions[turn] : null} />
           <Factions attacker={attacker}
                     defender={defender}
@@ -72,6 +74,7 @@ export default class Game extends React.Component {
       .then(res => res.json())
       .then(body => {
         const { board, factions, turn, mover, combat } = body;
+        console.log(board);
         const { attacker, attackType } = combat;
         this.setState({ board, factions, turn, attacker, attackType, mover });
       })
@@ -157,7 +160,8 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
   setMover(unitId, coordinates = null) {
-    fetch('/setMover', {
+    console.log('coordinates of mover set ' + coordinates);
+    fetch('setMover', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -182,8 +186,23 @@ export default class Game extends React.Component {
     const yDistance = Math.abs(mover.coordinates[1] - coordinates[1]);
     return xDistance + yDistance <= mover.steps;
   }
-  moveTo(coordinates) {
-    // change coordinates of mover in board, remove mover in game state
-    // reduce steps to 0 (regardless of steps taken)
+  moveMoverTo(coordinates) {
+    console.log('coordinates sent in moveTo ' + coordinates);
+    fetch('moveMoverTo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ coordinates })
+    })
+      .then(res => {
+        if (res.ok) {
+          console.log(`Successfully moved unit to ${coordinates}`);
+          this.loadCurrentGame();
+        } else {
+          throw new Error(res);
+        }
+      })
+      .catch(err => console.error(`Error moving unit: ${err}`));    
   }
 }

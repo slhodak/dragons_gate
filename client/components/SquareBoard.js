@@ -3,16 +3,24 @@ import BoardCell from './BoardCell.js';
 import '../style.css';
 
 export default (props) => {
-  const { board, setMover, turnFaction, moverCanMoveTo, mover } = props;
+  const {
+    board,
+    setMover,
+    turnFaction,
+    moverCanMoveTo,
+    mover,
+    moveMoverTo
+  } = props;
   return (
     board ? <div className="board">
       {board.map((row, rowIndex) => {
         return <div className="squareRow">{row.map((cellData, columnIndex) => {
-          const coordinates = [columnIndex, rowIndex];
+          const coordinates = [rowIndex, columnIndex];
           const isValidMove = moverCanMoveTo(coordinates, cellData);
           if (!cellData) {
             return <BoardCell coordinates={coordinates}
-                              isValidMove={isValidMove} />
+                              isValidMove={isValidMove}
+                              moveMoverTo={moveMoverTo} />
           } else {
             const { id, name, faction } = cellData;
             const myTurn = faction === turnFaction.name;
@@ -23,7 +31,7 @@ export default (props) => {
                               setMover={setMover}
                               mover={mover}
                               myTurn={myTurn}
-                              isValidMove={isValidMove} />
+                              isValidMove={false} />
           }
         })}</div>
       })}
