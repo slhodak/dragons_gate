@@ -10,10 +10,12 @@ app.use(bodyParser.json({ urlencoded: true }));
 
 // Send game data from value in memory
 app.get('/load', async (_req, res) => {
+  const { board, mover } = game;
   res.send({
-    board: game.board.data,
+    board: board.data,
     factions: game.factionsWithoutCircularReference(),
     turn: game.turn,
+    mover: game.unitWithoutCircularReference(mover),
     combat: game.combatWithoutCircularReference()
   });
 });
@@ -37,6 +39,12 @@ app.post('/save', (_req, res) => {
     res.status(400).send(`Error saving game: ${saved}`);
   }
 });
+
+app.post('/setMover', (req, res) => {
+  const { mover, coordinates } = req.body;
+  game.setMover(mover, coordinates);
+  res.sendStatus(200);
+})
 
 app.post('/selectAttacker', (req, res) => {
   const { attacker, attackType } = req.body;

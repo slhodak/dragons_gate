@@ -10,7 +10,7 @@ export default (props) => {
   const { attacker, defender, unit, attackTypeUnderway, myTurn } = props;
   const {
     healthPoints,
-    speed,
+    steps,
     meleeAttacks,
     meleeRange,
     meleeDamage,
@@ -37,7 +37,7 @@ export default (props) => {
         <span className={status}><em>{status}</em></span>
       </div>
       <div>{`HP: ${healthPoints}`}<Loss loss={loss}/></div>
-      <div>{`Speed: ${speed}`}</div>
+      <div>{`Steps: ${steps}`}</div>
       <div>{`Melee Range: ${meleeRange}`}</div>
       <div>
         {`Melee Damage: ${meleeDamage}`}

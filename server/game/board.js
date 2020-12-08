@@ -1,5 +1,3 @@
-const { createPortal } = require("react-dom");
-
 const { factionNames } = require(`${process.env.PWD}/lib/enums.js`);
 
 const boardSides = {
@@ -57,7 +55,8 @@ module.exports = class Board {
     return {
       id: unit.id,
       name: unit.name,
-      faction: unit.faction.name
+      faction: unit.faction.name,
+      steps: unit.steps
     }
   }
 }

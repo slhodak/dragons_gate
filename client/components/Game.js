@@ -13,7 +13,8 @@ export default class Game extends React.Component {
       board: null,
       factions: [],
       attacker: null,
-      attackType: null
+      attackType: null,
+      mover: null
     };
 
     this.nextTurn = this.nextTurn.bind(this);
@@ -22,12 +23,14 @@ export default class Game extends React.Component {
     this.selectAttacker = this.selectAttacker.bind(this);
     this.attack = this.attack.bind(this);
     this.resetAttack = this.resetAttack.bind(this);
-    this.startMovement = this.startMovement.bind(this);
+    this.setMover = this.setMover.bind(this);
+    this.moverCanMoveTo = this.moverCanMoveTo.bind(this);
   }
   render() {
     const {
       turn,
       board,
+      mover,
       factions,
       attacker,
       defender,
@@ -41,6 +44,9 @@ export default class Game extends React.Component {
                 nextTurn={this.nextTurn} />
         <div className="game">
           <SquareBoard board={board}
+                       setMover={this.setMover}
+                       mover={mover}
+                       moverCanMoveTo={this.moverCanMoveTo}
                        turnFaction={factions ? factions[turn] : null} />
           <Factions attacker={attacker}
                     defender={defender}
@@ -65,10 +71,9 @@ export default class Game extends React.Component {
     fetch('load')
       .then(res => res.json())
       .then(body => {
-        const { board, factions, turn, combat } = body;
-        console.log(board);
+        const { board, factions, turn, mover, combat } = body;
         const { attacker, attackType } = combat;
-        this.setState({ board, factions, turn, attacker, attackType });
+        this.setState({ board, factions, turn, attacker, attackType, mover });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -117,7 +122,7 @@ export default class Game extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(body => {
+      .then(body => { // Remove this response use the all-get
         const { attacker, attackType } = body;
         this.setState({
           attacker,
@@ -151,7 +156,30 @@ export default class Game extends React.Component {
       .then(_res => this.loadCurrentGame())
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
-  startMovement(unit) {
-    // show unit movement range, allow clicking "to" square
+  setMover(unitId, coordinates = null) {
+    fetch('/setMover', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ mover: unitId, coordinates })
+    })
+      .then(_res => {
+        console.log('Mover set successfully');
+        this.loadCurrentGame();
+      })
+      .catch(err => console.error(`Error setting mover: ${err}`));
+  }
+  // Returns true if it unit is in motion and square is in range
+  moverCanMoveTo(coordinates) {
+    const { mover } = this.state;
+    // mover must exist
+    if (!mover) {
+      return false;
+    }
+    // are coordinates within step range of mover?
+    const xDistance = Math.abs(mover.coordinates[0] - coordinates[0]);
+    const yDistance = Math.abs(mover.coordinates[1] - coordinates[1]);
+    return xDistance + yDistance <= mover.steps;
   }
 }

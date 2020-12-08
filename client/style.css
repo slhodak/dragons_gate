@@ -85,6 +85,7 @@ body {
 .board {
   border-bottom: 1px solid white;
   margin: 10px;
+  background-color: black;
 }
 
 .squareRow {
@@ -99,11 +100,20 @@ body {
   border-bottom: none;
   margin: 0px;
   padding: 0px;
-  background-color: black;
 }
 
 .squareCell:hover {
   background-color: gray;
+}
+
+.turnUnit {
+  background-color: rgba(0, 194, 0, 0.24);
+  height: 100%;
+  width: 100%;
+}
+
+.isValidMove {
+  background-color: rgba(0, 255, 55, 0.445);
 }
 
 /*

@@ -16,6 +16,7 @@ class Game {
     this.assignIds();
     this.turn = 0;
     this.board = new Board(8, 8, this.factions);
+    this.mover = null;
     this.combat = {
       attacker: null,
       defender: null,
@@ -47,6 +48,15 @@ class Game {
       return 0;
     } catch (ex) {
       return ex;
+    }
+  }
+  setMover(unitId, coordinates) {
+    if (unitId == null) {
+      this.mover = null;
+    } else {
+      const unit = this.getUnitById(unitId);
+      unit.coordinates = coordinates;
+      this.mover = unit;
     }
   }
   /*
@@ -131,11 +141,17 @@ class Game {
   }
   unitsWithoutCircularReference(units) {
     return units.map(unit => {
-      let unitCopy = {};
-      Object.assign(unitCopy, unit);
-      unitCopy.faction = unit.faction.name;
-      return unitCopy;
+      return this.unitWithoutCircularReference(unit);
     });
+  }
+  unitWithoutCircularReference(unit) {
+    if (!unit) {
+      return null;
+    }
+    let unitCopy = {};
+    Object.assign(unitCopy, unit);
+    unitCopy.faction = unit.faction.name;
+    return unitCopy;
   }
   combatWithoutCircularReference() {
     const { attacker, defender, attackType } = this.combat;

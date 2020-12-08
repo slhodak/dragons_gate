@@ -3,7 +3,7 @@ const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`)
 class Unit {
   constructor(stats, name, faction) {
     this.healthPoints = stats.healthPoints;
-    this.speed = stats.speed;
+    this.steps = stats.steps;
     this.meleeAttacks = stats.meleeAttacks;
     this.maxMeleeAttacks = stats.maxMeleeAttacks,
     this.meleeRange = stats.meleeRange;
@@ -125,7 +125,7 @@ class EliteSoldier extends Unit {
   constructor(faction) {
     super({
       healthPoints: 30,
-      speed: 3,
+      steps: 3,
       meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [4, 4],
@@ -147,7 +147,7 @@ class FlagBearer extends Unit {
   constructor(faction) {
     super({
       healthPoints: 35,
-      speed: 2,
+      steps: 2,
       meleeAttacks: 1,
       meleeRange: 1,
       meleeDamage: [3, 4],
@@ -169,7 +169,7 @@ class Yuma extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      speed: 3,
+      steps: 3,
       meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [4, 6],
@@ -183,7 +183,7 @@ class Kusarigama extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      speed: 3,
+      steps: 3,
       meleeAttacks: 1,
       meleeRange: 3,
       meleeDamage: [4, 6],
@@ -202,7 +202,7 @@ class Daisho extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      speed: 3,
+      steps: 3,
       meleeAttacks: 2,
       maxMeleeAttacks: 2,
       meleeRange: 2,
@@ -217,7 +217,7 @@ class Shuriken extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      speed: 4,
+      steps: 4,
       meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [4, 6],
@@ -250,7 +250,7 @@ class Ryu extends Unit {
   constructor(faction) {
     super({
       healthPoints: 100,
-      speed: 0,
+      steps: 0,
       meleeAttacks: 1,
       meleeRange: 3,
       meleeDamage: [5, 4],
@@ -267,7 +267,7 @@ class Yokai extends Unit {
   constructor(faction) {
     super({
       healthPoints: 60,
-      speed: 5,
+      steps: 5,
       meleeAttacks: 1,
       meleeRange: 3,
       meleeDamage: [2, 10],
@@ -286,7 +286,7 @@ class Shinja extends Unit {
   constructor(faction) {
     super({
       healthPoints: 20,
-      speed: 2,
+      steps: 2,
       meleeAttacks: 1,
       meleeRange: 2,
       meleeDamage: [3, 6],
