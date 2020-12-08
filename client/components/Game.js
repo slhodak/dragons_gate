@@ -22,6 +22,7 @@ export default class Game extends React.Component {
     this.selectAttacker = this.selectAttacker.bind(this);
     this.attack = this.attack.bind(this);
     this.resetAttack = this.resetAttack.bind(this);
+    this.startMovement = this.startMovement.bind(this);
   }
   render() {
     const {
@@ -39,7 +40,8 @@ export default class Game extends React.Component {
                 saveGame={this.saveGame}
                 nextTurn={this.nextTurn} />
         <div className="game">
-          <SquareBoard board={board} />
+          <SquareBoard board={board}
+                       turnFaction={factions ? factions[turn] : null} />
           <Factions attacker={attacker}
                     defender={defender}
                     attackTypeUnderway={attackType}
@@ -64,6 +66,7 @@ export default class Game extends React.Component {
       .then(res => res.json())
       .then(body => {
         const { board, factions, turn, combat } = body;
+        console.log(board);
         const { attacker, attackType } = combat;
         this.setState({ board, factions, turn, attacker, attackType });
       })
@@ -147,5 +150,8 @@ export default class Game extends React.Component {
     })
       .then(_res => this.loadCurrentGame())
       .catch(err => console.error(`Error calculating combat result: ${err}`));
+  }
+  startMovement(unit) {
+    // show unit movement range, allow clicking "to" square
   }
 }

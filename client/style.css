@@ -65,7 +65,7 @@ body {
 
 .game {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .gameButton {
@@ -74,13 +74,15 @@ body {
   border-radius: 3px;
   margin: 5px;
 }
+.gameButton:hover {
+  background-color: rgb(177, 177, 177);
+}
 
 /*
   Board
 */
 
 .board {
-  height: 100%;
   border-bottom: 1px solid white;
   margin: 10px;
 }
@@ -91,8 +93,8 @@ body {
 }
 
 .squareCell {
-  height: 80px;
-  width: 80px;
+  height: 100px;
+  width: 100px;
   border: 1px solid white;
   border-bottom: none;
   margin: 0px;

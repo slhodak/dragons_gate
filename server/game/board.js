@@ -1,4 +1,4 @@
-const e = require("express");
+const { createPortal } = require("react-dom");
 
 const { factionNames } = require(`${process.env.PWD}/lib/enums.js`);
 
@@ -31,24 +31,33 @@ module.exports = class Board {
     });
   }
   addUnitsTo(side, faction) {
-    if (side === boardSides.BOTTOM) {
-      for (let i = 0; i < faction.units.length; i++) {
-        this.data[this.height - 1][i] = faction.units[i].name;
-      }
-    } else if (side === boardSides.TOP) {
-      for (let i = 0; i < faction.units.length; i++) {
-        this.data[0][i] = faction.units[i].name;
-      }
-    }
-    
-    if (side === boardSides.LEFT) {
-      for (let i = 0; i < faction.units.length; i++) {
-        this.data[i][0] = faction.units[i].name;
-      }
+    let row, column;
+
+    if (side === boardSides.TOP) {
+      row = 0;
+    } else if (side === boardSides.BOTTOM) {
+      row = this.height - 1;
+    } else if (side === boardSides.LEFT) {
+      column = 0;
     } else if (side === boardSides.RIGHT) {
-      for (let i = 0; i < faction.units.length; i++) {
-        this.data[i][this.width - 1] = faction.units[i].name;
-      }
+      column = this.width - 1;
+    }
+
+    if (row != null) {
+      faction.units.forEach((unit, i) => {
+        this.data[row][i] = this.cellDataFor(unit);
+      });
+    } else {
+      faction.units.forEach((unit, i) => {
+        this.data[i][column] = this.cellDataFor(unit);
+      });
+    }
+  }
+  cellDataFor(unit) {
+    return {
+      id: unit.id,
+      name: unit.name,
+      faction: unit.faction.name
     }
   }
 }
