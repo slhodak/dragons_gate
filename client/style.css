@@ -90,26 +90,40 @@ body {
 
 .squareRow {
   display: flex;
-  color: white;
 }
 
 .squareCell {
-  height: 100px;
-  width: 100px;
+  height: 85px;
+  width: 85px;
   border: 1px solid white;
   border-bottom: none;
   margin: 0px;
   padding: 0px;
 }
 
-.squareCell:hover {
-  background-color: gray;
+.cellContents {
+  display: flex;
+  flex-direction: column;
 }
 
-.turnUnit {
-  background-color: rgba(0, 194, 0, 0.24);
-  height: 100%;
-  width: 100%;
+.squareCell .cellName {
+  font-size: 2em;
+  font-weight: 700;
+  text-align: center;
+}
+
+.squareRow .Guardians {
+  color: rgb(119, 47, 29);
+}
+.squareRow .Protectors {
+  color: rgb(28, 68, 121);
+}
+.squareRow .Empire {
+  color: rgb(20, 80, 2);
+}
+
+.squareCell:hover {
+  background-color: gray;
 }
 
 .isValidMove {

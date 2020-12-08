@@ -18,6 +18,7 @@ export default (props) => {
             const myTurn = faction === turnFaction.name;
             return <BoardCell unitId={id}
                               unitName={name}
+                              unitFaction={faction}
                               coordinates={coordinates}
                               setMover={setMover}
                               mover={mover}

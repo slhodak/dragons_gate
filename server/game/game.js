@@ -15,7 +15,7 @@ class Game {
     ];
     this.assignIds();
     this.turn = 0;
-    this.board = new Board(8, 8, this.factions);
+    this.board = new Board(10, 10, this.factions);
     this.mover = null;
     this.combat = {
       attacker: null,
