@@ -9,7 +9,7 @@ export default (props) => {
       {board.map((row, rowIndex) => {
         return <div className="squareRow">{row.map((cellData, columnIndex) => {
           const coordinates = [columnIndex, rowIndex];
-          const isValidMove = moverCanMoveTo(coordinates);
+          const isValidMove = moverCanMoveTo(coordinates, cellData);
           if (!cellData) {
             return <BoardCell coordinates={coordinates}
                               isValidMove={isValidMove} />

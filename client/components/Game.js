@@ -171,15 +171,19 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error setting mover: ${err}`));
   }
   // Returns true if it unit is in motion and square is in range
-  moverCanMoveTo(coordinates) {
+  moverCanMoveTo(coordinates, cellData) {
     const { mover } = this.state;
-    // mover must exist
-    if (!mover) {
+    // Ensure this method is not called unless mover exists?
+    if (!mover || cellData) {
       return false;
     }
     // are coordinates within step range of mover?
     const xDistance = Math.abs(mover.coordinates[0] - coordinates[0]);
     const yDistance = Math.abs(mover.coordinates[1] - coordinates[1]);
     return xDistance + yDistance <= mover.steps;
+  }
+  moveTo(coordinates) {
+    // change coordinates of mover in board, remove mover in game state
+    // reduce steps to 0 (regardless of steps taken)
   }
 }
