@@ -128,8 +128,10 @@ class Unit {
       return this.rangedAttacks > 0;
     }
   }
-  depleteSteps(_steps) {
-    console.log('depleting steps');
+  depleteSteps(steps) {
+    if (steps) {
+      console.debug(`${this.name} took ${steps} steps`);
+    }
     this.steps = 0;
   }
   replenishSteps() {
@@ -198,14 +200,20 @@ class Yuma extends Unit {
     }, 'Yuma', faction);
     this.movedThisTurn = false;
   }
+  // still not working correctly
+  // after first move, replenish steps
+  // after second move, deplete steps
+  // attacking has no effect
   depleteSteps(steps) {
-    // Can this be done better with a closure?
-    if (this.movedThisTurn) {
-      Unit.prototype.depleteSteps.call(this);
+    // null steps means this was called by doCombat
+    if (!steps) {
       return;
     }
-    if (steps) { // null steps implies this was called by doCombat
-      this.steps -= steps;
+    // Can this be done better with a closure?
+    if (this.movedThisTurn) {
+      return Unit.prototype.depleteSteps.call(this, steps);
+    } else {
+      console.debug(`${this.name} took ${steps} steps`);
       this.movedThisTurn = true;
     }
   }
