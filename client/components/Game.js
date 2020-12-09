@@ -124,13 +124,8 @@ export default class Game extends React.Component {
         attackType
       })
     })
-      .then(res => res.json())
-      .then(body => { // Remove this response use the all-get
-        const { attacker, attackType } = body;
-        this.setState({
-          attacker,
-          attackType
-        })
+      .then(_res => {
+        this.loadCurrentGame();
       })
       .catch(err => console.error(`Error selecting attacker: ${err}`));
   }

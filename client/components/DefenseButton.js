@@ -4,10 +4,10 @@ import '../style.css';
 export default (props) => {
   const { unit, attacker, attackTypeUnderway } = props;
   return (
-    <div className="combatButton">
+    <div>
       {(() => {
         if (attacker && attacker.faction != unit.faction) {
-          return <button className="confirmButton" onClick={() => props.attack(unit)}>Attack with {attacker.name}'s {attackTypeUnderway} attack</button>
+          return <button className="gameButton confirmAttack" onClick={() => props.attack(unit)}>Attack with {attacker.name}'s {attackTypeUnderway} attack</button>
         }
       })()}
     </div>

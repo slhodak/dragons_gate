@@ -74,8 +74,9 @@ class Game {
    Technically defender should never be set when this is called
    (so these don't *need* to be set individually, but that's why they are)
   */
-  setAttacker(attacker, attackType) {
-    this.combat.attacker = attacker;
+  setAttacker(attackerId, attackType) {
+    const attackerInstance = this.getUnitById(attackerId);
+    this.combat.attacker = attackerInstance;
     this.combat.attackType = attackType;
   }
   // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)

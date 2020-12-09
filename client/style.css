@@ -76,6 +76,7 @@ body {
 }
 .gameButton:hover {
   background-color: rgb(177, 177, 177);
+  border-color: rgb(114, 114, 114);
 }
 
 /*
@@ -137,31 +138,13 @@ body {
   Combat Buttons
 */
 
-.combatButton button {
-  font-weight: 600;
-  font-size: 1em;
-  border-radius: 3px;
-  margin: 5px 0px;
+.beginAttack:hover {
+  background-color: rgb(235, 145, 44);
+  border-color: rgb(204, 125, 34);
 }
-
-.combatButton button:active {
-  background-color: rgb(63, 184, 63);
-}
-
-.combatButton .cancelButton {
-  width: 80px;
-}
-
-.combatButton .confirmDefender:active {
-  background-color: rgb(243, 130, 65);
-}
-
-.combatButton .confirmButton {
-  background-color: white;
-}
-
-.combatButton .confirmButton:active {
-  background-color: rgb(241, 57, 57);
+.confirmAttack:hover {
+  background-color: rgb(255, 100, 100);
+  border-color: rgb(192, 70, 70);
 }
 
 /*

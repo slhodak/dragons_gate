@@ -7,7 +7,7 @@ export default (props) => {
   const { unit, meleeAttacks, rangedAttacks, attacker, attackType, attackTypeUnderway, myTurn } = props;
   const { status } = unit;
   return (
-    <div className="combatButton">
+    <div>
       {(() => {
         if (!myTurn || status === unitStatuses.DECEASED) {
           return null;
@@ -25,10 +25,10 @@ export default (props) => {
           if ((meleeAttacks && meleeAttacks > 1) || (rangedAttacks && rangedAttacks > 1)) {
             attackCount = <span> ({meleeAttacks || rangedAttacks} Left)</span>;
           }
-          return <button onClick={() => props.selectAttacker(unit, attackType)}>{capitalize(attackType)} Attack {attackCount}</button>
+          return <button className="gameButton beginAttack" onClick={() => props.selectAttacker(unit, attackType)}>{capitalize(attackType)} Attack {attackCount}</button>
         }
         if (attacker.id === unit.id) {
-          return <div>Select enemy or <button className="cancelButton" onClick={props.resetAttack}>Cancel</button></div>;
+          return <div>Select enemy or <button className="gameButton" onClick={props.resetAttack}>Cancel</button></div>;
         }
       })()}
     </div>
