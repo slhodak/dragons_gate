@@ -43,7 +43,11 @@
     .codeBlock {
       flex-grow: 1;
       height: 35vh;
-      overflow: scroll;
+      overflow-y: scroll;
+      min-width: 150px;
+      border: 1px solid var(--accent-color);
+      padding: 6px;
+      margin-left: 6px;
     }
   </style>
 </head>
@@ -54,8 +58,8 @@
   </div>
   <div class="upper">
    <div>Turn<pre id="turn"></pre></div>
-    <div>Mover<pre id="mover"></pre></div>
-    <div>Combat<pre id="combat"></pre></div>
+    <div>Mover<pre class="codeBlock" id="mover"></pre></div>
+    <div>Combat<pre class="codeBlock" id="combat"></pre></div>
   </div>
   <div class="main">
     <div>Factions
