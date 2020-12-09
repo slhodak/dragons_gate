@@ -4,20 +4,117 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Server Explorer</title>
+  <style>
+    :root {
+      --accent-color: rgb(148, 179, 166); 
+    }
+    html {
+      background-color: rgb(19, 18, 16);
+      color: var(--accent-color);
+      font-size: 1.2em;
+      font-family: 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+    }
+    .header button {
+      height: 100%;
+      align-self: center;
+    }
+    #polling {
+      color: rgb(255, 0, 0);
+      font-weight: 500;
+    }
+    .upper {
+      display: flex;
+      justify-content: space-around;
+      border: 1px solid  var(--accent-color);
+      padding: 3px;
+      margin: 5px 0px;
+    }
+    .main {
+      display: flex;
+      flex-direction: column;
+    }
+    .factions {
+      display: flex;
+    }
+    .codeBlock {
+      flex-grow: 1;
+      height: 35vh;
+      overflow: scroll;
+    }
+  </style>
 </head>
 <body>
-  <h1>Server Explorer</h1>
-  <pre id="game"></pre>
+  <div class="header">
+    <h1>Server Explorer</h1>
+    <button onclick="togglePolling()">Polling<span id="polling"> on</span></button>
+  </div>
+  <div class="upper">
+   <div>Turn<pre id="turn"></pre></div>
+    <div>Mover<pre id="mover"></pre></div>
+    <div>Combat<pre id="combat"></pre></div>
+  </div>
+  <div class="main">
+    <div>Factions
+      <div class="factions">
+        <pre class="codeBlock" id="empire"></pre>
+        <pre class="codeBlock" id="protectors"></pre>
+        <pre class="codeBlock" id="guardians"></pre>
+      </div>
+    </div>
+    <div>Board<pre class="codeBlock" id="board"></pre></div>
+  </div>
   <script>
-    window.setInterval(() => {
-      fetch('/load')
-      .then(res => res.json())
-      .then(data => {
-        const div = document.getElementById('game');
-        div.innerText = JSON.stringify(data, undefined, 2);
-      })
-      .catch(err => console.error(`Error fetchin game state: ${err}`));
-    }, 1000);
+    let polling = true;
+    const POLL_INTERVAL = 1000;
+    const elements = {
+      turn: document.getElementById('turn'),
+      empire: document.getElementById('empire'),
+      protectors: document.getElementById('protectors'),
+      guardians: document.getElementById('guardians'),
+      mover: document.getElementById('mover'),
+      combat: document.getElementById('combat'),
+      board: document.getElementById('board'),
+      pollingSpan: document.getElementById('polling')
+    };
+    function startInterval() {
+      return window.setInterval(() => {
+        fetch('/load')
+          .then(res => res.json())
+          .then(game => {
+            const { turn, factions, mover, combat, board } = game;
+            const gameFactions = {
+              empire: factions.find(faction => faction.name === 'Empire'),
+              protectors: factions.find(faction => faction.name === 'Protectors'),
+              guardians: factions.find(faction => faction.name === 'Guardians')
+            };
+            elements.turn.innerText = JSON.stringify(turn, undefined, 2);
+            elements.empire.innerText = JSON.stringify(gameFactions.empire, undefined, 2);
+            elements.protectors.innerText = JSON.stringify(gameFactions.protectors, undefined, 2);
+            elements.guardians.innerText = JSON.stringify(gameFactions.guardians, undefined, 2);
+            elements.mover.innerText = JSON.stringify(mover, undefined, 2);
+            elements.combat.innerText = JSON.stringify(combat, undefined, 2);
+            elements.board.innerText = JSON.stringify(board, undefined, 2);
+          })
+          .catch(err => console.error(`Error fetchin game state: ${err}`));
+        }, POLL_INTERVAL);
+    }
+    let poller = startInterval();
+    function togglePolling() {
+      console.debug('Toggling polling');
+      if (polling) {
+        window.clearInterval(poller);
+        polling = false;
+        elements.pollingSpan.innerText = ' off';
+      } else {
+        poller = startInterval();
+        polling = true;
+        elements.pollingSpan.innerText = ' on';
+      }
+    }
   </script>
 </body>
 </html>
