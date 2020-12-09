@@ -96,6 +96,7 @@ class Game {
         console.debug(`${defender.name} is ${affected ? `now ${effect}` : `still ${defender.effect}`}`);
       }
     }
+    attacker.depleteSteps();
   }
   resetCombat() {
     this.combat = {

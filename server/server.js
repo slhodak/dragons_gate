@@ -72,10 +72,7 @@ app.post('/selectAttacker', (req, res) => {
 });
 
 app.post('/resetAttack', (_req, res) => {
-  game.combat = {
-    attacker: null,
-    attackType: null
-  };
+  game.resetCombat();
   res.sendStatus(200);
 });
 
@@ -93,6 +90,7 @@ app.post('/doCombat', (req, res) => {
   const { defender } = req.body;
   game.combat.defender = game.getUnitById(defender.id);
   game.doCombat();
+  game.board.update([game.combat.attacker]);
   if (game.attackerFactionHasNoMoves()) {
     game.nextTurn();
   }

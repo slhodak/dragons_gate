@@ -128,6 +128,9 @@ class Unit {
       return this.rangedAttacks > 0;
     }
   }
+  depleteSteps() {
+    this.steps = 0;
+  }
   replenishSteps() {
     this.steps = this.maxSteps;
   }
@@ -192,6 +195,9 @@ class Yuma extends Unit {
       defenseArmor: [3, 6],
       healthRegen: 5
     }, 'Yuma', faction);
+  }
+  depleteSteps() {
+    return;
   }
 }
 

@@ -74,7 +74,6 @@ export default class Game extends React.Component {
       .then(res => res.json())
       .then(body => {
         const { board, factions, turn, mover, combat } = body;
-        console.log(board);
         const { attacker, attackType } = combat;
         this.setState({ board, factions, turn, attacker, attackType, mover });
       })

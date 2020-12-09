@@ -28,6 +28,20 @@ module.exports = class Board {
       }
     });
   }
+  // For each unit id, update cell data
+  update(units) {
+    units.forEach(unit => {
+      loop1:
+        for (let i = 0; i < this.height; i++) {
+          for (let j = 0; j < this.width; j++) {
+            if (this.data[i][j] && unit.id === this.data[i][j].id) {
+              this.data[i][j] = this.cellDataFor(unit);
+              break loop1;
+            }
+          }
+        }
+    });
+  }
   addUnitsTo(side, faction) {
     let row, column;
 

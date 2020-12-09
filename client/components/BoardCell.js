@@ -6,6 +6,7 @@ export default (props) => {
   const {
     unitId,
     unitName,
+    unitSteps,
     unitFaction,
     coordinates,
     myTurn,
@@ -23,6 +24,7 @@ export default (props) => {
             <span className="cellName">{unitName.substr(0, 1)}</span>
             <MoveButton myTurn={myTurn}
                         unitId={unitId}
+                        unitSteps={unitSteps}
                         coordinates={coordinates}
                         setMover={setMover}
                         mover={mover} />

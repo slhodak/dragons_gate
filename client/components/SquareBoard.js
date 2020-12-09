@@ -22,11 +22,12 @@ export default (props) => {
                               isValidMove={isValidMove}
                               moveMoverTo={moveMoverTo} />
           } else {
-            const { id, name, faction } = cellData;
+            const { id, name, faction, steps } = cellData;
             const myTurn = faction === turnFaction.name;
             return <BoardCell unitId={id}
                               unitName={name}
                               unitFaction={faction}
+                              unitSteps={steps}
                               coordinates={coordinates}
                               setMover={setMover}
                               mover={mover}
