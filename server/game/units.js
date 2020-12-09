@@ -1,4 +1,4 @@
-const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -66,6 +66,7 @@ class Unit {
       this.die();
     }
   }
+  // Return effect if roll succeeds
   getEffectFor(attackType) {
     if (attackType === attackTypes.MELEE) {
       if (!this.meleeEffect) { return; }
@@ -76,6 +77,17 @@ class Unit {
     }
     const rollResult = this.roll(roll);
     return success.includes(rollResult) ? effect : null;
+  }
+  // Some effects can override others, some cannot
+  // Maybe multiple statuses should be possible
+  applyEffect(effect) {
+    const effectIndex = statusHierarchy.indexOf(effect);
+    const statusIndex = statusHierarchy.indexOf(this.status);
+    if (effectIndex > statusIndex) {
+      this.status = effect;
+      return true;
+    }
+    return false;
   }
   beAffected() {
     let effect;

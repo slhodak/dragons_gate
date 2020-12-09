@@ -79,7 +79,7 @@ class Game {
     this.combat.attacker = attackerInstance;
     this.combat.attackType = attackType;
   }
-  // Alter defender's HP (and maybe state) based on calculated damage (and maybe other effects)
+  // Alter defender's HP and status with some randomness
   doCombat() {
     const { attacker, defender, attackType } = this.combat;
     const damage = attacker.getDamageFor(attackType);
@@ -92,8 +92,8 @@ class Game {
     if (defender.isAlive()) {
       const effect = attacker.getEffectFor(attackType);
       if (effect) {
-        defender.status = effect;
-        console.debug(`${defender.name} is now ${effect}`);
+        const affected = defender.applyEffect(effect);
+        console.debug(`${defender.name} is ${affected ? `now ${effect}` : `still ${defender.effect}`}`);
       }
     }
   }

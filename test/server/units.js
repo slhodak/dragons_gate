@@ -46,6 +46,22 @@ describe('Unit', () => {
       }
     });
   });
+  describe('#applyEffect', () => {
+    it('should change the unit status if the unit is healthy', () => {
+      this.unit.applyEffect(unitStatuses.IMMOBILIZED);
+      assert.strictEqual(this.unit.status, unitStatuses.IMMOBILIZED);
+    });
+    it('should change the unit status if the incoming effect is higher-ranking than the unit status', () => {
+      this.unit.status = unitStatuses.POISONED;
+      this.unit.applyEffect(unitStatuses.DAMNED);
+      assert.strictEqual(this.unit.status, unitStatuses.DAMNED);
+    });
+    it('should not change the unit status if the incoming effect is lower-ranking than the unit status', () => {
+      this.unit.status = unitStatuses.POISONED;
+      this.unit.applyEffect(unitStatuses.IMMOBILIZED);
+      assert.strictEqual(this.unit.status, unitStatuses.POISONED);
+    });
+  });
   describe('#beAffected', () => {
     it('should lose 1 HP per turn when poisoned', () => {
       this.unit.status = unitStatuses.POISONED;
