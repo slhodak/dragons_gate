@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Explorer</title>
+</head>
+<body>
+  <h1>Server Explorer</h1>
+  <pre id="game"></pre>
+  <script>
+    window.setInterval(() => {
+      fetch('/load')
+      .then(res => res.json())
+      .then(data => {
+        const div = document.getElementById('game');
+        div.innerText = JSON.stringify(data, undefined, 2);
+      })
+      .catch(err => console.error(`Error fetchin game state: ${err}`));
+    }, 1000);
+  </script>
+</body>
+</html>

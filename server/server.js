@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 app.use(bodyParser.json({ urlencoded: true }));
+app.use('/explorer', express.static(path.resolve(__dirname, './explorer')));
 
 // Send game data from value in memory
 app.get('/load', async (_req, res) => {
