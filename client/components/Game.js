@@ -133,13 +133,8 @@ export default class Game extends React.Component {
     fetch('/resetAttack', {
       method: 'POST'
     })
-      .then(res => res.json())
-      .then(body => {
-        const { attacker, attackType } = body;
-        this.setState({
-          attacker,
-          attackType
-        })
+      .then(_res => {
+        this.loadCurrentGame();
       })
       .catch(err => console.error(`Error resetting attack: ${err}`));
   }
@@ -164,7 +159,7 @@ export default class Game extends React.Component {
       body: JSON.stringify({ mover: unitId, coordinates })
     })
       .then(_res => {
-        console.log('Mover set successfully');
+        console.debug('Mover set successfully');
         this.loadCurrentGame();
       })
       .catch(err => console.error(`Error setting mover: ${err}`));

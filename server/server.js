@@ -76,7 +76,7 @@ app.post('/resetAttack', (_req, res) => {
     attacker: null,
     attackType: null
   };
-  res.status(200).send(game.combat);
+  res.sendStatus(200);
 });
 
 // Increment turn
