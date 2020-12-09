@@ -3,6 +3,7 @@ import Header from './Header.js';
 import SquareBoard from './SquareBoard.js';
 import Factions from './Factions.js';
 import Footer from './Footer.js';
+import { xyDistance } from '../../lib/helpers.js';
 import '../style.css';
 
 export default class Game extends React.Component {
@@ -171,9 +172,8 @@ export default class Game extends React.Component {
       return false;
     }
     // are coordinates within step range of mover?
-    const xDistance = Math.abs(mover.coordinates[0] - coordinates[0]);
-    const yDistance = Math.abs(mover.coordinates[1] - coordinates[1]);
-    return xDistance + yDistance <= mover.steps;
+    const distance = xyDistance(mover.coordinates, coordinates);
+    return distance <= mover.steps;
   }
   moveMoverTo(coordinates) {
     console.log('coordinates sent in moveTo ' + coordinates);

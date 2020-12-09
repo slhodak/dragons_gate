@@ -2,6 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const { Empire, Protectors, Guardians } = require('./factions.js');
 const Board = require('./board.js');
+const { xyDistance } = require(`${process.env.PWD}/lib/helpers.js`);
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
@@ -35,6 +36,7 @@ class Game {
   }
   // change over control of game to next player
   // calculate turn-based effects
+  // ensure board reflects changes
   nextTurn() {
     try {
       this.turn = (this.turn + 1) % 3;
@@ -46,6 +48,7 @@ class Game {
           unit.replenishSteps();
         }
       });
+      this.board.update(turnFaction.units);
       return 0;
     } catch (ex) {
       return ex;
@@ -56,18 +59,19 @@ class Game {
       this.mover = null;
     } else {
       const unit = this.getUnitById(unitId);
-      unit.coordinates = coordinates;
-      this.mover = unit;
+      this.mover = this.board.cellDataFor(unit);
+      this.mover.coordinates = coordinates;
     }
   }
   // Change coordinates of mover in board
+  // Deplete steps of unit
   moveMoverTo(coordinates) {
     const { mover, board } = this;
-    const movingUnit = this.getUnitById(mover.id);
-    board.addUnitTo(coordinates, movingUnit);
-    board.removeUnitFrom(mover.coordinates);
-    // reduce steps to 0 (regardless of steps taken)
-    movingUnit.steps = 0;
+    const stepsToTake = xyDistance(mover.coordinates, coordinates);
+    const moverInstance = this.getUnitById(mover.id);
+    moverInstance.depleteSteps(stepsToTake);
+    board.addUnit(moverInstance, coordinates);
+    board.removeUnit(mover);
     this.mover = null;
   }
   /*
@@ -96,7 +100,7 @@ class Game {
         console.debug(`${defender.name} is ${affected ? `now ${effect}` : `still ${defender.effect}`}`);
       }
     }
-    attacker.depleteSteps();
+    attacker.depleteSteps(null);
   }
   resetCombat() {
     this.combat = {

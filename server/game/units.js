@@ -2,6 +2,10 @@ const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PW
 
 class Unit {
   constructor(stats, name, faction) {
+    this.id = null; // Assigned at game initialization
+    this.name = name,
+    this.faction = faction
+    this.status = unitStatuses.HEALTHY;
     this.healthPoints = stats.healthPoints;
     this.steps = stats.steps;
     this.maxSteps = stats.steps;
@@ -17,11 +21,7 @@ class Unit {
     this.rangedEffect = stats.rangedEffect;
     this.defenseArmor = stats.defenseArmor;
     this.healthRegen = stats.healthRegen;
-    this.status = unitStatuses.HEALTHY;
     this.damnedTurns = 0;
-    this.name = name,
-    this.faction = faction
-    this.id = null; // Assigned at game initialization
   }
   isAlive() {
     return this.healthPoints > 0;
@@ -128,7 +128,8 @@ class Unit {
       return this.rangedAttacks > 0;
     }
   }
-  depleteSteps() {
+  depleteSteps(_steps) {
+    console.log('depleting steps');
     this.steps = 0;
   }
   replenishSteps() {
@@ -195,9 +196,22 @@ class Yuma extends Unit {
       defenseArmor: [3, 6],
       healthRegen: 5
     }, 'Yuma', faction);
+    this.movedThisTurn = false;
   }
-  depleteSteps() {
-    return;
+  depleteSteps(steps) {
+    // Can this be done better with a closure?
+    if (this.movedThisTurn) {
+      Unit.prototype.depleteSteps.call(this);
+      return;
+    }
+    if (steps) { // null steps implies this was called by doCombat
+      this.steps -= steps;
+      this.movedThisTurn = true;
+    }
+  }
+  replenishSteps() {
+    this.movedThisTurn = false;
+    Unit.prototype.replenishSteps.call(this);
   }
 }
 

@@ -28,13 +28,14 @@ module.exports = class Board {
       }
     });
   }
-  // For each unit id, update cell data
+  // For each unit, update cell data
+  // Least efficient method so far, I think
   update(units) {
     units.forEach(unit => {
       loop1:
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
-            if (this.data[i][j] && unit.id === this.data[i][j].id) {
+            if (this.data[i][j] && (unit.id === this.data[i][j].id)) {
               this.data[i][j] = this.cellDataFor(unit);
               break loop1;
             }
@@ -65,11 +66,12 @@ module.exports = class Board {
       });
     }
   }
-  addUnitTo(coordinates, unit) {
+  addUnit(unit, coordinates) {
     this.data[coordinates[0]][coordinates[1]] = this.cellDataFor(unit);
   }
-  removeUnitFrom(coordinates) {
-    this.data[coordinates[0]][coordinates[1]] = null;
+  removeUnit(unit) {
+    const [x, y] = unit.coordinates;
+    this.data[x][y] = null;
   }
   cellDataFor(unit) {
     return {
