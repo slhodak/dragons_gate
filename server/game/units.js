@@ -200,10 +200,6 @@ class Yuma extends Unit {
     }, 'Yuma', faction);
     this.movedThisTurn = false;
   }
-  // still not working correctly
-  // after first move, replenish steps
-  // after second move, deplete steps
-  // attacking has no effect
   depleteSteps(steps) {
     // null steps means this was called by doCombat
     if (!steps) {

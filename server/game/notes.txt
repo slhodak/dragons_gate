@@ -55,6 +55,7 @@ Square Board
 
 Next is to determine attack ranges
   hide/show defense buttons based on this
+  
 
 Render JSON as collapsible in Explorer
   https://github.com/caldwell/renderjson
