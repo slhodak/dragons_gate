@@ -55,6 +55,11 @@ Square Board
 
 Next is to determine attack ranges
   hide/show defense buttons based on this
+
+Must kill my darling.
+  The unit stat area should not double as a combat area
+  Also the fading loss display should be on the unit's board cell
+  gut it...
   
 
 Render JSON as collapsible in Explorer
