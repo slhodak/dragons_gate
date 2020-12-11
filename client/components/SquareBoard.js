@@ -14,20 +14,17 @@ export default (props) => {
   return (
     board ? <div className="board">
       {board.map((row, rowIndex) => {
-        return <div className="squareRow">{row.map((cellData, columnIndex) => {
+        return <div className="squareRow">{row.map((unit, columnIndex) => {
           const coordinates = [rowIndex, columnIndex];
-          const isValidMove = moverCanMoveTo(coordinates, cellData);
-          if (!cellData) {
+          const isValidMove = moverCanMoveTo(coordinates, unit);
+          if (!unit) {
             return <BoardCell coordinates={coordinates}
-                              isValidMove={isValidMove}
-                              moveMoverTo={moveMoverTo} />
+            isValidMove={isValidMove}
+            moveMoverTo={moveMoverTo} />
           } else {
-            const { id, name, faction, steps } = cellData;
+            const { faction } = unit;
             const myTurn = faction === turnFaction.name;
-            return <BoardCell unitId={id}
-                              unitName={name}
-                              unitFaction={faction}
-                              unitSteps={steps}
+            return <BoardCell unit={unit}
                               coordinates={coordinates}
                               setMover={setMover}
                               mover={mover}

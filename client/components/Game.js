@@ -202,10 +202,10 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Server error setting mover: ${err}`));
   }
   // Returns true if it unit is in motion and square is in range
-  moverCanMoveTo(coordinates, cellData) {
+  moverCanMoveTo(coordinates, unit) {
     const { mover } = this.state;
     // Ensure this method is not called unless mover exists?
-    if (!mover || cellData) {
+    if (!mover || unit) {
       return false;
     }
     // are coordinates within step range of mover?

@@ -4,10 +4,7 @@ import '../style.css';
 
 export default (props) => {
   const {
-    unitId,
-    unitName,
-    unitSteps,
-    unitFaction,
+    unit,
     coordinates,
     myTurn,
     setMover,
@@ -16,15 +13,16 @@ export default (props) => {
     moveMoverTo
   } = props;
   // refactor later depending on final layout of each version
-  if (unitId) {
+  if (unit) {
+    const { id, name, steps, faction } = unit;
     if (myTurn) {
       return (
-        <div className={`squareCell ${unitFaction}`}>
+        <div className={`squareCell ${faction}`}>
           <div className="cellContents">
-            <span className="cellName">{unitName.substr(0, 1)}</span>
+            <span className="cellName">{name.substr(0, 1)}</span>
             <MoveButton myTurn={myTurn}
-                        unitId={unitId}
-                        unitSteps={unitSteps}
+                        unitId={id}
+                        unitSteps={steps}
                         coordinates={coordinates}
                         setMover={setMover}
                         mover={mover} />
@@ -33,9 +31,9 @@ export default (props) => {
       )
     } else {
       return (
-        <div className={`squareCell ${unitFaction}`}>
+        <div className={`squareCell ${faction}`}>
           <div className="cellContents">
-            <span className="cellName">{unitName.substr(0, 1)}</span>
+            <span className="cellName">{name.substr(0, 1)}</span>
           </div>
         </div>
       )
