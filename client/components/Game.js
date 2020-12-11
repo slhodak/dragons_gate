@@ -70,9 +70,15 @@ export default class Game extends React.Component {
   }
   // Get game data from value in server memory
   loadCurrentGame() {
-    console.log("Updating game from server memory...");
+    console.debug("Updating game from server memory...");
     fetch('load')
-      .then(res => res.json())
+    .then(res => { 
+      if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('Error updating game');
+        }
+      })
       .then(body => {
         const { board, factions, turn, mover, combat } = body;
         const { attacker, attackType } = combat;
@@ -93,13 +99,18 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
   saveGame() {
-    console.log('Saving game file...');
+    console.debug('Saving game file...');
     fetch('save', {
       method: 'POST'
     })
-      .then(_res => {
-        console.log('Game saved successfully');
+      .then(res => {
+        if (res.ok) {
+          console.log('Game saved successfully');
+        } else {
+          return res.json();
+        }
       })
+      .then(err => { throw new Error(err.message) })
       .catch(err => {
         console.error(`Error saving game: ${err}`);
       });
@@ -107,10 +118,15 @@ export default class Game extends React.Component {
   // Change turn
   nextTurn() {
     fetch('/nextTurn')
-      .then(_res => {
-        console.debug('Changing turn');
-        this.loadCurrentGame();
+      .then(res => {
+        if (res.ok) {
+          console.debug('Changing turn');
+          this.loadCurrentGame();
+        } else {
+          return res.json();
+        }
       })
+      .then(err => { throw new Error(err.message) })
       .catch(err => `Error changing turns: ${err}`)
   }
   selectAttacker(attacker, attackType) {
@@ -124,18 +140,28 @@ export default class Game extends React.Component {
         attackType
       })
     })
-      .then(_res => {
-        this.loadCurrentGame();
+      .then(res => {
+        if (res.ok) {
+          this.loadCurrentGame();
+        } else {
+          return res.json();
+        }
       })
+      .then(err => { throw new Error(err.message) })
       .catch(err => console.error(`Error selecting attacker: ${err}`));
   }
   resetAttack() {
     fetch('/resetAttack', {
       method: 'POST'
     })
-      .then(_res => {
-        this.loadCurrentGame();
+      .then(res => {
+        if (res.ok) {
+          this.loadCurrentGame();
+        } else {
+          return res.json();
+        }
       })
+      .then(err => { throw new Error(err.message) })
       .catch(err => console.error(`Error resetting attack: ${err}`));
   }
   attack(defender) {
@@ -146,7 +172,14 @@ export default class Game extends React.Component {
       },
       body: JSON.stringify({ defender })
     })
-      .then(_res => this.loadCurrentGame())
+      .then(res => {
+        if (res.ok) {
+          this.loadCurrentGame();
+        } else {
+          return res.json();
+        }
+      })
+      .then(err => { throw new Error(err.message) })
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
   setMover(unitId, coordinates = null) {
@@ -162,8 +195,6 @@ export default class Game extends React.Component {
         if (res.ok) {
           console.debug('Mover set successfully');
           this.loadCurrentGame();
-        } else {
-          return res.json();
         }
       })
       .then(err => {
