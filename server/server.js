@@ -47,7 +47,7 @@ app.post('/setMover', (req, res) => {
     game.setMover(mover, coordinates);
     res.sendStatus(200);
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -58,7 +58,7 @@ app.post('/moveMoverTo', (req, res) => {
     res.sendStatus(200);
   } catch (err) {
     console.error(`Error moving unit ${err}`);
-    res.status(500).send(err);
+    res.status(500).send({ message: err });
   }
 });
 

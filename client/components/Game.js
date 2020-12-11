@@ -158,11 +158,18 @@ export default class Game extends React.Component {
       },
       body: JSON.stringify({ mover: unitId, coordinates })
     })
-      .then(_res => {
-        console.debug('Mover set successfully');
-        this.loadCurrentGame();
+      .then(res => {
+        if (res.ok) {
+          console.debug('Mover set successfully');
+          this.loadCurrentGame();
+        } else {
+          return res.json();
+        }
       })
-      .catch(err => console.error(`Error setting mover: ${err}`));
+      .then(err => {
+        throw new Error(err.message);
+      })
+      .catch(err => console.error(`Server error setting mover: ${err}`));
   }
   // Returns true if it unit is in motion and square is in range
   moverCanMoveTo(coordinates, cellData) {
