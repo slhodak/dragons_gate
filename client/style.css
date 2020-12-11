@@ -71,8 +71,9 @@ body {
 .gameButton {
   font-weight: 600;
   font-size: 1em;
-  border-radius: 3px;
-  margin: 5px;
+  border-radius: 5px;
+  margin: 1px;
+  padding: 2px;
 }
 .gameButton:hover {
   background-color: rgb(177, 177, 177);
@@ -89,6 +90,7 @@ body {
   background-color: black;
   display: flex;
   flex-direction: column;
+  width: 1000px;
 }
 
 .squareRow {
@@ -97,8 +99,8 @@ body {
 }
 
 .squareCell {
-  height: 85px;
-  width: 85px;
+  height: 100px;
+  width: 100px;
   border: 1px solid white;
   border-bottom: none;
   margin: 0px;
@@ -132,6 +134,19 @@ body {
 
 .isValidMove {
   background-color: rgba(0, 255, 55, 0.445);
+}
+
+.cellButtons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cellButton {
+  display: inline-block;
+}
+
+.cellButtonIcon {
+  height: 20px;
 }
 
 /*
