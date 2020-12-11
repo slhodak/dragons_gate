@@ -59,7 +59,7 @@ class Game {
       this.mover = null;
     } else {
       const unit = this.getUnitById(unitId);
-      this.mover = this.board.cellDataFor(unit);
+      this.mover = unit;
       this.mover.coordinates = coordinates;
     }
   }
