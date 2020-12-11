@@ -183,7 +183,6 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
   setMover(unitId, coordinates = null) {
-    console.log('coordinates of mover set ' + coordinates);
     fetch('setMover', {
       method: 'POST',
       headers: {
