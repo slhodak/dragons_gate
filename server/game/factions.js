@@ -6,9 +6,14 @@ const {
 const { factionNames } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Faction {
-  constructor(name) {
+  constructor(faction) {
+    this.name = faction.name;
     this.units = [];
-    this.name = name;
+    faction.units.forEach(unit => {
+      for (let i = 0; i < unit.count; i++) {
+        this.units.push(new unit.clazz(faction.name));
+      }
+    });
   }
   // return number of living units in the faction
   unitsAlive() {
@@ -23,38 +28,59 @@ class Faction {
   }
 }
 
-class Empire extends Faction {
-  constructor() {
-    super(factionNames.EMPIRE);
-    for (let i = 0; i < 6; i++) {
-      this.units.push(new EliteSoldier(this));
-    }
-    this.units.push(new FlagBearer(this));
-  }
-}
+const Empire = {
+  name: factionNames.EMPIRE,
+  units: [
+    {
+      clazz: EliteSoldier,
+      count: 6
+    },
+    {
+      clazz: FlagBearer,
+      count: 1
+    },
+  ]
+};
 
-class Protectors extends Faction {
-  constructor() {
-    super(factionNames.PROTECTORS);
-    this.units.push(
-      new Yuma(this),
-      new Kusarigama(this),
-      new Daisho(this),
-      new Shuriken(this)
-    );
-  }
-}
+const Protectors = {
+  name: factionNames.PROTECTORS,
+  units: [
+    {
+      clazz: Yuma,
+      count: 1
+    },
+    {
+      clazz: Kusarigama,
+      count: 1
+    },
+    {
+      clazz: Daisho,
+      count: 1
+    },
+    {
+      clazz: Shuriken,
+      count: 1
+    },
+  ]
+};
 
-class Guardians extends Faction {
-  constructor() {
-    super(factionNames.GUARDIANS);
-    this.units.push(
-      new Ryu(this),
-      new Yokai(this),
-      new Shinja(this)
-    );
-  }
-}
+const Guardians = {
+  name: factionNames.GUARDIANS,
+  units: [
+    {
+      clazz: Ryu,
+      count: 1
+    },
+    {
+      clazz: Yokai,
+      count: 1
+    },
+    {
+      clazz: Shinja,
+      count: 1
+    },
+  ]
+};
 
 module.exports = {
   Faction,

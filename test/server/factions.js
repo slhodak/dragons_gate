@@ -1,6 +1,6 @@
 const assert = require('assert');
 const { factionNames } = require('../../lib/enums');
-const { Empire, Protectors, Guardians } = require(`${process.env.PWD}/server/game/factions.js`);
+const { Faction, Empire, Protectors, Guardians } = require(`${process.env.PWD}/server/game/factions.js`);
 const {
   EliteSoldier,
   FlagBearer,
@@ -15,7 +15,7 @@ const {
 
 describe('Empire', () => {
   before(() => {
-    this.empire = new Empire();
+    this.empire = new Faction(Empire);
   })
   it('should have 7 units', () => {
     assert.strictEqual(this.empire.units.length, 7);
@@ -45,7 +45,7 @@ describe('Empire', () => {
 
 describe('Protectors', () => {
   before(() => {
-    this.protectors = new Protectors();
+    this.protectors = new Faction(Protectors);
     this.yumaCount = 0;
     this.kusarigamaCount = 0;
     this.daishoCount = 0;
@@ -81,7 +81,7 @@ describe('Protectors', () => {
 
 describe('Guardians', () => {
   before(() => {
-    this.guardians = new Guardians();
+    this.guardians = new Faction(Guardians);
     const { units } = this.guardians;
     this.ryuCount = 0;
     this.yokaiCount = 0;

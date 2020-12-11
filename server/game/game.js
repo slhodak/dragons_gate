@@ -1,6 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
-const { Empire, Protectors, Guardians } = require('./factions.js');
+const { Faction, Empire, Protectors, Guardians } = require('./factions.js');
 const Board = require('./board.js');
 const { xyDistance } = require(`${process.env.PWD}/lib/helpers.js`);
 
@@ -10,9 +10,9 @@ class Game {
   constructor() {
     this.stateFilePath = path.join(__dirname, './state.json');
     this.factions = [
-      new Empire(),
-      new Protectors(),
-      new Guardians()
+      new Faction(Empire),
+      new Faction(Protectors),
+      new Faction(Guardians)
     ];
     this.assignIds();
     this.turn = 0;
@@ -145,51 +145,11 @@ class Game {
       return err;
     }
   }
-  // Replace faction reference on unit with faction name
-  factionsWithoutCircularReference() {
-    return this.factions.map(faction => {
-      let factionCopy = {};
-      Object.assign(factionCopy, faction);
-      const { units } = factionCopy;
-      factionCopy.units = this.unitsWithoutCircularReference(units);
-      return factionCopy;
-    });
-  }
-  unitsWithoutCircularReference(units) {
-    return units.map(unit => {
-      return this.unitWithoutCircularReference(unit);
-    });
-  }
-  unitWithoutCircularReference(unit) {
-    if (!unit) {
-      return null;
-    }
-    let unitCopy = {};
-    Object.assign(unitCopy, unit);
-    unitCopy.faction = unit.faction.name;
-    return unitCopy;
-  }
-  combatWithoutCircularReference() {
-    const { attacker, defender, attackType } = this.combat;
-    if (attacker) {
-      var attackerCopy = Object.assign({}, attacker)
-      attackerCopy.faction = attacker.faction.name;
-    }
-    if (defender) {
-      var defenderCopy = Object.assign({}, defender)
-      defenderCopy.faction = defender.faction.name;
-    }
-    return {
-      attacker: attackerCopy,
-      defender: defenderCopy,
-      attackType
-    };
-  }
   // Determine whether the attacker's faction has moves left
   attackerFactionHasNoMoves() {
     // do any units still have attacks left?
     const { attacker } = this.combat;
-    const { faction } = attacker;
+    const faction = this.factions.find(faction => faction.name === attacker.faction);
     if (faction.units.find(unit => unit.hasAttacksLeft())) {
       return false;
     }

@@ -36,7 +36,7 @@ module.exports = class Board {
         for (let i = 0; i < this.height; i++) {
           for (let j = 0; j < this.width; j++) {
             if (this.data[i][j] && (unit.id === this.data[i][j].id)) {
-              this.data[i][j] = this.cellDataFor(unit);
+              this.data[i][j] = unit;
               break loop1;
             }
           }
@@ -58,27 +58,19 @@ module.exports = class Board {
 
     if (row != null) {
       faction.units.forEach((unit, i) => {
-        this.data[row][i] = this.cellDataFor(unit);
+        this.data[row][i] = unit;
       });
     } else {
       faction.units.forEach((unit, i) => {
-        this.data[i][column] = this.cellDataFor(unit);
+        this.data[i][column] = unit;
       });
     }
   }
   addUnit(unit, coordinates) {
-    this.data[coordinates[0]][coordinates[1]] = this.cellDataFor(unit);
+    this.data[coordinates[0]][coordinates[1]] = unit;
   }
   removeUnit(unit) {
     const [x, y] = unit.coordinates;
     this.data[x][y] = null;
-  }
-  cellDataFor(unit) {
-    return {
-      id: unit.id,
-      name: unit.name,
-      faction: unit.faction.name,
-      steps: unit.steps
-    }
   }
 }

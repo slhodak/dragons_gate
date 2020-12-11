@@ -31,44 +31,6 @@ describe('Game', () => {
       assert(startingHP > eliteSoldier.healthPoints);
     });
   });
-  describe('#unitsWithoutCircularReference', () => {
-    before(() => {
-      const { units } = this.empire;
-      this.unit = units[0];
-      this.unitsWoCR = this.game.unitsWithoutCircularReference(units);
-    });
-    it('should return a list', () => {
-      assert(this.unitsWoCR instanceof Array);
-    });
-    it('should return units that contain their faction name', () => {
-      assert.strictEqual(this.unitsWoCR[0].faction, factionNames.EMPIRE);
-    })
-  });
-  describe('#factionsWithoutCircularReference', () => {
-    before(() => {
-      const { units } = this.empire;
-      this.unit = units[0];
-    });
-    it('should start with units that reference their factions', () => {
-      assert.strictEqual(this.unit.faction, this.empire);
-    });
-    it('should return a list', () => {
-      this.factionsWoCR = this.game.factionsWithoutCircularReference();
-      assert(this.factionsWoCR instanceof Array);
-    });
-    it('should replace the faction reference with faction name', () => {
-      const empireWoCR = this.factionsWoCR.find(faction => faction.name === factionNames.EMPIRE);
-      const { units } = empireWoCR;
-      const unitWoCR = units.find(unit => unit.id === this.unit.id);
-      assert.strictEqual(unitWoCR.faction, factionNames.EMPIRE);
-    });
-    it('should not mutate the server-side game.factions', () => {
-      const { units } = this.game.factions.find(faction => {
-        return faction.name === factionNames.EMPIRE;
-      });
-      assert.strictEqual(units[0].faction, this.empire);
-    });
-  });
   describe('#attackerFactionHasNoMoves', () => {
     it('should return false when the faction has moves left', () => {
       const { combat } = this.game;

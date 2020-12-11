@@ -14,10 +14,10 @@ app.get('/load', async (_req, res) => {
   const { board, mover } = game;
   res.send({
     board: board.data,
-    factions: game.factionsWithoutCircularReference(),
+    factions: game.factions,
     turn: game.turn,
-    mover: game.unitWithoutCircularReference(mover),
-    combat: game.combatWithoutCircularReference()
+    mover: mover,
+    combat: game.combat
   });
 });
 
