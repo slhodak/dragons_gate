@@ -4,8 +4,8 @@ import { capitalize } from '../../lib/helpers.js';
 import '../style.css';
 
 export default (props) => {
-  const { unit, meleeAttacks, rangedAttacks, attacker, attackType, attackTypeUnderway, myTurn } = props;
-  const { status } = unit;
+  const { unit, rangedAttacks, attacker, attackType, attackTypeUnderway, myTurn } = props;
+  const { status, meleeAttacks } = unit;
   return (
     <div>
       {(() => {

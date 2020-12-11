@@ -11,7 +11,6 @@ export default (props) => {
   const {
     healthPoints,
     steps,
-    meleeAttacks,
     meleeRange,
     meleeDamage,
     rangedAttacks,
@@ -43,7 +42,6 @@ export default (props) => {
         {`Melee Damage: ${meleeDamage}`}
         <AttackButton unit={unit}
                       myTurn={myTurn}
-                      meleeAttacks={meleeAttacks}
                       attacker={attacker}
                       defender={defender}
                       attackTypeUnderway={attackTypeUnderway}
