@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './Header.js';
-import SquareBoard from './SquareBoard.js';
-import Factions from './Factions.js';
-import Footer from './Footer.js';
-import { xyDistance } from '../../lib/helpers.js';
+import Header from './Header';
+import SquareBoard from './SquareBoard';
+import Factions from './Factions';
+import Footer from './Footer';
+import { xyDistance } from '../../lib/helpers';
 import '../style.css';
 
 export default class Game extends React.Component {
@@ -13,8 +13,7 @@ export default class Game extends React.Component {
       turn: 0,
       board: null,
       factions: [],
-      attacker: null,
-      attackType: null,
+      combat: {},
       mover: null
     };
 
@@ -34,13 +33,12 @@ export default class Game extends React.Component {
       board,
       mover,
       factions,
-      attacker,
-      defender,
-      attackType
+      combat
     } = this.state;
+    const turnFaction = factions ? factions[turn] : null;
     return (
       <div>
-        <Header turnFaction={factions ? factions[turn] : null}
+        <Header turnFaction={turnFaction}
                 loadSavedGame={this.loadSavedGame}
                 saveGame={this.saveGame}
                 nextTurn={this.nextTurn} />
@@ -50,16 +48,13 @@ export default class Game extends React.Component {
                        mover={mover}
                        moverCanMoveTo={this.moverCanMoveTo}
                        moveMoverTo={this.moveMoverTo}
-                       turnFaction={factions ? factions[turn] : null} />
-          <Factions attacker={attacker}
-                    defender={defender}
-                    attackTypeUnderway={attackType}
-                    turn={turn}
-                    factions={factions}
-                    selectAttacker={this.selectAttacker}
-                    attack={this.attack}
-                    resetAttack={this.resetAttack}
-                    confirmAttack={this.confirmAttack} />
+                       turnFaction={turnFaction}
+                       combat={combat}
+                       selectAttacker={this.selectAttacker}
+                       resetAttack={this.resetAttack}
+                       attack={this.attack}
+                       />
+          <Factions factions={factions} turnFaction={turnFaction} />
         </div>
         <Footer />
       </div>
@@ -81,8 +76,7 @@ export default class Game extends React.Component {
       })
       .then(body => {
         const { board, factions, turn, mover, combat } = body;
-        const { attacker, attackType } = combat;
-        this.setState({ board, factions, turn, attacker, attackType, mover });
+        this.setState({ board, factions, turn, combat, mover });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -93,8 +87,7 @@ export default class Game extends React.Component {
       .then(res => res.json())
       .then(body => {
         const { factions, turn, combat } = body;
-        const { attacker, attackType } = combat;
-        this.setState({ factions, turn, attacker, attackType });
+        this.setState({ factions, turn, combat });
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -133,12 +126,10 @@ export default class Game extends React.Component {
     fetch('/selectAttacker', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: JSON.stringify({
-        attacker,
-        attackType
-      })
+      body: JSON.stringify({ attacker, attackType })
     })
       .then(res => {
         if (res.ok) {
@@ -147,7 +138,11 @@ export default class Game extends React.Component {
           return res.json();
         }
       })
-      .then(err => { throw new Error(err.message) })
+      .then(err => {
+        if (err) {
+          throw new Error(err.message);
+        }
+      })
       .catch(err => console.error(`Error selecting attacker: ${err}`));
   }
   resetAttack() {
@@ -161,7 +156,11 @@ export default class Game extends React.Component {
           return res.json();
         }
       })
-      .then(err => { throw new Error(err.message) })
+      .then(err => { 
+        if (err) {
+          throw new Error(err.message);
+        }
+      })
       .catch(err => console.error(`Error resetting attack: ${err}`));
   }
   attack(defender) {
@@ -179,7 +178,11 @@ export default class Game extends React.Component {
           return res.json();
         }
       })
-      .then(err => { throw new Error(err.message) })
+      .then(err => {
+        if (err) {
+          throw new Error(err.message);
+        }
+      })
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
   setMover(unitId, coordinates = null) {
@@ -197,7 +200,9 @@ export default class Game extends React.Component {
         }
       })
       .then(err => {
-        throw new Error(err.message);
+        if (err) {
+          throw new Error(err.message);
+        }
       })
       .catch(err => console.error(`Server error setting mover: ${err}`));
   }
@@ -213,7 +218,7 @@ export default class Game extends React.Component {
     return distance <= mover.steps;
   }
   moveMoverTo(coordinates) {
-    console.log('coordinates sent in moveTo ' + coordinates);
+    console.debug('Coordinates sent in moveTo ' + coordinates);
     fetch('moveMoverTo', {
       method: 'POST',
       headers: {
@@ -223,10 +228,15 @@ export default class Game extends React.Component {
     })
       .then(res => {
         if (res.ok) {
-          console.log(`Successfully moved unit to ${coordinates}`);
+          console.debug(`Successfully moved unit to ${coordinates}`);
           this.loadCurrentGame();
         } else {
-          throw new Error(res);
+          res.json();
+        }
+      })
+      .then(err => {
+        if (err) {
+          throw new Error(err.message);
         }
       })
       .catch(err => console.error(`Error moving unit: ${err}`));    

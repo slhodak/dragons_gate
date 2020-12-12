@@ -112,10 +112,14 @@ body {
   flex-direction: column;
 }
 
+.cellHeader {
+  display: flex;
+  justify-content: space-around;
+}
+
 .squareCell .cellName {
   font-size: 2em;
   font-weight: 700;
-  text-align: center;
 }
 
 .squareRow .Guardians {

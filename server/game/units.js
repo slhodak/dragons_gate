@@ -9,16 +9,15 @@ class Unit {
     this.healthPoints = stats.healthPoints;
     this.steps = stats.steps;
     this.maxSteps = stats.steps;
-    this.meleeAttacks = stats.meleeAttacks;
-    this.maxMeleeAttacks = stats.meleeAttacks,
-    this.meleeRange = stats.meleeRange;
-    this.meleeDamage = stats.meleeDamage;
-    this.meleeEffect = stats.meleeEffect;
-    this.rangedAttacks = stats.rangedAttacks;
-    this.maxRangedAttacks = stats.rangedAttacks,
-    this.rangedRange = stats.rangedRange;
-    this.rangedDamage = stats.rangedDamage;
-    this.rangedEffect = stats.rangedEffect;
+    this.attack = stats.attack;
+    Object.values(this.attack).forEach(type => {
+      if (type.count) {
+        type.max = type.count;
+      } else {
+        type.max = 1;
+        type.count = 1;
+      }
+    });
     this.defenseArmor = stats.defenseArmor;
     this.healthRegen = stats.healthRegen;
     this.damnedTurns = 0;
@@ -38,21 +37,9 @@ class Unit {
     return total;
   }
   getDamageFor(attackType) {
-    if (attackType === attackTypes.MELEE) {
-      return this.rollMeleeDamage();
-    } else if (attackType === attackTypes.RANGED) {
-      return this.rollRangedDamage();
-    }
-  }
-  rollMeleeDamage() {
-    if (!this.meleeDamage) { return; }
-    this.meleeAttacks -= 1;
-    return this.roll(this.meleeDamage);
-  }
-  rollRangedDamage() {
-    if (!this.rangedDamage) { return; }
-    this.rangedAttacks -= 1;
-    return this.roll(this.rangedDamage);
+    const attack = this.attack[attackType];
+    attack.count -= 1;
+    return this.roll(attack.damage);
   }
   rollDefenseArmor() {
     return this.roll(this.defenseArmor);
@@ -68,13 +55,9 @@ class Unit {
   }
   // Return effect if roll succeeds
   getEffectFor(attackType) {
-    if (attackType === attackTypes.MELEE) {
-      if (!this.meleeEffect) { return; }
-      var { roll, success, effect } = this.meleeEffect;
-    } else if (attackType === attackTypes.RANGED) {
-      if (!this.rangedEffect) { return; }
-      var { roll, success, effect } = this.rangedEffect;
-    }
+    const attack = this.attack[attackType];
+    if (!attack.effect) { return; }
+    const { roll, success, effect } = attack.effect;
     const rollResult = this.roll(roll);
     return success.includes(rollResult) ? effect : null;
   }
@@ -114,19 +97,17 @@ class Unit {
     if (effect) console.debug(`${this.name} (id:${this.id}) suffered from being ${effect}`);
   }
   replenishAttacks() {
-    if (this.meleeDamage) {
-      this.meleeAttacks = this.maxMeleeAttacks || 1;
-    }
-    if (this.rangedDamage) {
-      this.rangedAttacks = this.maxRangedAttacks || 1;
-    }
+    Object.values(this.attack).forEach(type => {
+      type.count = type.max;
+    });
   }
   hasAttacksLeft() {
-    if (this.meleeDamage) {
-      return this.meleeAttacks > 0;
-    } else if (this.rangedDamage) {
-      return this.rangedAttacks > 0;
+    const hasAttacksLeft = Object.values(this.attack).some(type => type.count > 0)
+    console.log(this.name, hasAttacksLeft) 
+    if (hasAttacksLeft) {
+      return true;
     }
+    return false;
   }
   depleteSteps(steps) {
     if (steps) {
@@ -148,9 +129,12 @@ class EliteSoldier extends Unit {
     super({
       healthPoints: 30,
       steps: 3,
-      meleeAttacks: 1,
-      meleeRange: 2,
-      meleeDamage: [4, 4],
+      attack: {
+        melee: {
+          range: 2,
+          damage: [4, 4]
+        }
+      },
       defenseArmor: [2, 4],
       healthRegen: 2
     }, 'Elite Soldier', faction);
@@ -170,9 +154,12 @@ class FlagBearer extends Unit {
     super({
       healthPoints: 35,
       steps: 2,
-      meleeAttacks: 1,
-      meleeRange: 1,
-      meleeDamage: [3, 4],
+      attack: {
+        melee: {
+          range: 1,
+          damage: [3, 4]
+        }
+      },
       defenseArmor: [2, 4],
       healthRegen: 3
     }, 'Flag-Bearer', faction);
@@ -192,9 +179,12 @@ class Yuma extends Unit {
     super({
       healthPoints: 50,
       steps: 3,
-      meleeAttacks: 1,
-      meleeRange: 2,
-      meleeDamage: [4, 6],
+      attack: {
+        melee: {
+          range: 2,
+          damage: [4, 6]
+        }
+      },
       defenseArmor: [3, 6],
       healthRegen: 5
     }, 'Yuma', faction);
@@ -224,13 +214,16 @@ class Kusarigama extends Unit {
     super({
       healthPoints: 50,
       steps: 3,
-      meleeAttacks: 1,
-      meleeRange: 3,
-      meleeDamage: [4, 6],
-      meleeEffect: {
-        roll: [1, 6],
-        success: [4, 5, 6],
-        effect: unitStatuses.IMMOBILIZED
+      attack: {
+        melee: {
+          range: 3,
+          damage: [4, 6],
+          effect: {
+            roll: [1, 6],
+            success: [4, 5, 6],
+            effect: unitStatuses.IMMOBILIZED
+          }
+        }
       },
       defenseArmor: [3, 4],
       healthRegen: 5
@@ -243,9 +236,13 @@ class Daisho extends Unit {
     super({
       healthPoints: 50,
       steps: 3,
-      meleeAttacks: 2,
-      meleeRange: 2,
-      meleeDamage: [4, 6],
+      attack: {
+        melee: {
+          range: 2,
+          damage: [4, 6],
+          count: 2
+        }
+      },
       defenseArmor: [2, 4],
       healthRegen: 5
     }, 'Daisho', faction);
@@ -257,16 +254,21 @@ class Shuriken extends Unit {
     super({
       healthPoints: 50,
       steps: 4,
-      meleeAttacks: 1,
-      meleeRange: 2,
-      meleeDamage: [4, 6],
-      rangedAttacks: 2,
-      rangedRange: 10,
-      rangedDamage: [6, 4],
-      rangedEffect: {
-        roll: [1, 6],
-        success: [5, 6],
-        effect: unitStatuses.POISONED
+      attack: {
+        melee: {
+          range: 2,
+          roll: [4, 6],
+        },
+        ranged: {
+          range: 10,
+          damage: [6, 4],
+          count: 2,
+          effect: {
+            roll: [1, 6],
+            success: [5, 6],
+            effect: unitStatuses.POISONED
+          }
+        }
       },
       defenseArmor: [3, 4],
       healthRegen: 5,
@@ -288,13 +290,17 @@ class Ryu extends Unit {
   constructor(faction) {
     super({
       healthPoints: 100,
-      steps: 0,
-      meleeAttacks: 1,
-      meleeRange: 3,
-      meleeDamage: [5, 4],
-      rangedAttacks: 1,
-      rangedRange: Infinity,
-      rangedDamage: [4, 4],
+      steps: 1,
+      attack: {
+        melee: {
+          range: 3,
+          damage: [5, 4]
+        },
+        ranged: {
+          range: Infinity,
+          damage: [4, 4]
+        }
+      },
       defenseArmor: [4, 4],
       healthRegen: 5
     }, 'Ryu', faction);
@@ -306,13 +312,16 @@ class Yokai extends Unit {
     super({
       healthPoints: 60,
       steps: 5,
-      meleeAttacks: 1,
-      meleeRange: 3,
-      meleeDamage: [2, 10],
-      meleeEffect: {
-        roll: [2, 6],
-        success: [7],
-        effect: unitStatuses.DAMNED
+      attack: {
+        melee: {
+          range: 3,
+          damage: [2, 10],
+          effect: {
+            roll: [2, 6],
+            success: [7],
+            effect: unitStatuses.DAMNED
+          }
+        }
       },
       defenseArmor: [3, 4],
       healthRegen: 2
@@ -325,9 +334,12 @@ class Shinja extends Unit {
     super({
       healthPoints: 20,
       steps: 2,
-      meleeAttacks: 1,
-      meleeRange: 2,
-      meleeDamage: [3, 6],
+      attack: {
+        melee: {
+          range: 2,
+          damage: [3, 6]
+        }
+      },
       defenseArmor: [4, 4],
       healthRegen: 0
     }, 'Shinja', faction);

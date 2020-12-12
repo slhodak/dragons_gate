@@ -41,7 +41,7 @@ describe('Game', () => {
       const { combat } = this.game;
       combat.attacker = this.empire.units[0];
       // Currently assumed no Imperial units have ranged attacks
-      this.empire.units.forEach(unit => unit.meleeAttacks = 0);
+      this.empire.units.forEach(unit => unit.attack.melee.count = 0);
       assert(this.game.attackerFactionHasNoMoves());
     });
   });

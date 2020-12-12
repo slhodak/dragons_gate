@@ -1,7 +1,7 @@
 import React from 'react';
-import MoveButton from './MoveButton.js';
-import AttackButton from './AttackButton.js';
-import { attackTypes } from '../../lib/enums.js';
+import MoveButton from './MoveButton';
+import AttackButton from './AttackButton';
+import DefenseButton from './DefenseButton';
 import '../style.css';
 
 export default (props) => {
@@ -12,41 +12,42 @@ export default (props) => {
     setMover,
     mover,
     isValidMove,
-    moveMoverTo
+    moveMoverTo,
+    combat,
+    selectAttacker,
+    resetAttack,
+    attack
   } = props;
   // refactor later depending on final layout of each version
+  
+  // put this in a component
   if (unit) {
-    const { id, name, steps, faction } = unit;
+    const { name, faction, healthPoints } = unit;
+    const cellHeader =  <div className="cellHeader">
+                          <span className="cellName">{name.substr(0, 1)}</span>
+                          <span>{healthPoints}</span>
+                        </div>
     if (myTurn) {
       return (
         <div className={`squareCell ${faction}`}>
           <div className="cellContents">
-            <span className="cellName">{name.substr(0, 1)}</span>
+            {cellHeader}
             <div className="cellButtons">
-              <MoveButton myTurn={myTurn}
-                          unitId={id}
-                          unitSteps={steps}
-                          coordinates={coordinates}
-                          setMover={setMover}
-                          mover={mover} />            
-              <AttackButton unit={unit}
-                            myTurn={myTurn}
-                            // attacker={attacker}
-                            // defender={defender}
-                            // attackTypeUnderway={attackTypeUnderway}
-                            attackType={attackTypes.MELEE}
-                            // selectAttacker={selectAttacker}
-                            // resetAttack={resetAttack}
-                            />
-              <AttackButton unit={unit}
-                            myTurn={myTurn}
-                            // attacker={attacker}
-                            // defender={defender}
-                            // attackTypeUnderway={attackTypeUnderway}
-                            attackType={attackTypes.RANGED}
-                            // selectAttacker={selectAttacker}
-                            // resetAttack={resetAttack}
-                            />
+              <div className="actionButtons">
+                <MoveButton unit={unit}
+                            coordinates={coordinates}
+                            setMover={setMover}
+                            mover={mover} />
+                {Object.keys(unit.attack).map(type => {
+                  return (
+                    <AttackButton unit={unit}
+                                  attackType={type}
+                                  combat={combat}
+                                  selectAttacker={selectAttacker}
+                                  resetAttack={resetAttack} />
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -55,7 +56,10 @@ export default (props) => {
       return (
         <div className={`squareCell ${faction}`}>
           <div className="cellContents">
-            <span className="cellName">{name.substr(0, 1)}</span>
+            {cellHeader}
+            <DefenseButton  unit={unit}
+                            combat={combat}
+                            attack={attack} />
           </div>
         </div>
       )

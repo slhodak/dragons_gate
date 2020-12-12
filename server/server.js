@@ -41,13 +41,23 @@ app.post('/save', (_req, res) => {
   }
 });
 
+// Increment turn
+app.get('/nextTurn', (_req, res) => {
+  let err = game.nextTurn();
+  if (err) {
+    res.status(500).send(err);
+  } else {
+    res.sendStatus(200);
+  }
+});
+
 app.post('/setMover', (req, res) => {
   try {
     const { mover, coordinates } = req.body;
     game.setMover(mover, coordinates);
     res.sendStatus(200);
   } catch (err) {
-    res.status(500).send({ message: err.message });
+    res.status(500).send({ message: err });
   }
 });
 
@@ -63,40 +73,44 @@ app.post('/moveMoverTo', (req, res) => {
 });
 
 app.post('/selectAttacker', (req, res) => {
-  const { attacker, attackType } = req.body;
-  if (attacker && attackType) {
-    game.setAttacker(attacker.id, attackType);
-    res.sendStatus(200);
-  } else {
-    res.status(400).send('Invalid request body; need attacker and attack type');
+  try {
+    const { attacker, attackType } = req.body;
+    console.log(attacker, attackType);
+    if (attacker && attackType) {
+      game.setAttacker(attacker.id, attackType);
+      console.log('here');
+      res.sendStatus(200);
+    } else {
+      res.status(400).send({ message: 'Invalid request body; need attacker and attack type' });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err });
   }
 });
 
 app.post('/resetAttack', (_req, res) => {
-  game.resetCombat();
-  res.sendStatus(200);
-});
-
-// Increment turn
-app.get('/nextTurn', (_req, res) => {
-  let err = game.nextTurn();
-  if (err) {
-    res.status(500).send(err);
-  } else {
+  try {
+    game.resetCombat();
     res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send({ message: err });
   }
 });
 
 app.post('/doCombat', (req, res) => {
-  const { defender } = req.body;
-  game.combat.defender = game.getUnitById(defender.id);
-  game.doCombat();
-  game.board.update([game.combat.attacker]);
-  if (game.attackerFactionHasNoMoves()) {
-    game.nextTurn();
+  try {
+    const { defender } = req.body;
+    game.combat.defender = game.getUnitById(defender.id);
+    game.doCombat();
+    game.board.update([game.combat.attacker]);
+    if (game.attackerFactionHasNoMoves()) {
+      game.nextTurn();
+    }
+    game.resetCombat();
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send({ message: err });
   }
-  game.resetCombat();
-  res.sendStatus(200);
 });
 
 app.listen(port, () => {

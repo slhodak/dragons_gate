@@ -150,10 +150,7 @@ class Game {
     // do any units still have attacks left?
     const { attacker } = this.combat;
     const faction = this.factions.find(faction => faction.name === attacker.faction);
-    if (faction.units.find(unit => unit.hasAttacksLeft())) {
-      return false;
-    }
-    return true;
+    return !faction.units.some(unit => unit.hasAttacksLeft());
   }
 }
 

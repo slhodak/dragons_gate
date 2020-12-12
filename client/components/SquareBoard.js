@@ -1,5 +1,5 @@
 import React from 'react';
-import BoardCell from './BoardCell.js';
+import BoardCell from './BoardCell';
 import '../style.css';
 
 export default (props) => {
@@ -9,7 +9,11 @@ export default (props) => {
     turnFaction,
     moverCanMoveTo,
     mover,
-    moveMoverTo
+    moveMoverTo,
+    combat,
+    selectAttacker,
+    resetAttack,
+    attack
   } = props;
   return (
     board ? <div className="board">
@@ -29,7 +33,12 @@ export default (props) => {
                               setMover={setMover}
                               mover={mover}
                               myTurn={myTurn}
-                              isValidMove={false} />
+                              isValidMove={false}
+                              combat={combat}
+                              selectAttacker={selectAttacker}
+                              resetAttack={resetAttack}
+                              attack={attack}
+                              />
           }
         })}</div>
       })}

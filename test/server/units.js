@@ -5,17 +5,23 @@ const {
   Yuma, Kusarigama, Daisho, Shuriken,
   Ryu, Yokai, Shinja
 } = require(`${process.env.PWD}/server/game/units.js`);
-const { unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
 
 describe('Unit', () => {
   beforeEach(() => {
     let stats = {
         healthPoints: 10,
         speed: 5,
-        meleeAttacks: 1,
-        meleeDamage: [3, 4],
-        rangedAttacks: 1,
-        rangedDamage: [2, 4],
+        attack: {
+          melee: {
+            range: 2,
+            damage: [2, 4]
+          },
+          ranged: {
+            range: 6,
+            damage: [4, 4]
+          }
+        },
         defenseArmor: [2, 2],
         healthRegen: 1
     };
@@ -32,15 +38,15 @@ describe('Unit', () => {
   });
   describe('#roll', () => {
     it('should return an integer', () => {
-      let { meleeDamage } = this.unit;
-      let damage = this.unit.roll(meleeDamage);
-      assert.equal(damage % 1, 0)
+      let { melee } = this.unit.attack;
+      let damage = this.unit.roll(melee.damage);
+      assert.strictEqual(damage % 1, 0)
     });
     it('should return a valid roll value based on the input', () => {
-      let { meleeDamage } = this.unit;
-      let maxDamage = meleeDamage[0] * meleeDamage[1];
+      let { melee } = this.unit.attack;
+      let maxDamage = melee.damage[0] * melee.damage[1];
       for (let i = 0; i < 1000; i++) {
-        let damage = this.unit.roll(meleeDamage);
+        let damage = this.unit.roll(melee.damage);
         assert(damage > 0);
         assert(damage <= maxDamage)
       }
@@ -79,18 +85,18 @@ describe('Unit', () => {
   });
   describe('#rollMeleeDamage', () => {
     it('should reduce remaining melee attacks by 1', () => {
-      const startingAttacks = this.unit.meleeAttacks;
-      this.unit.rollMeleeDamage();
-      assert.strictEqual(this.unit.meleeAttacks, startingAttacks - 1);
+      const startingAttacks = this.unit.attack.melee.count;
+      this.unit.getDamageFor(attackTypes.MELEE);
+      assert.strictEqual(this.unit.attack.melee.count, startingAttacks - 1);
     });
   });
   describe('#replenishAttacks', () => {
     it('should bring remaining attacks back to the unit maximum', () => {
-      const startingAttacks = this.unit.meleeAttacks;
-      this.unit.rollMeleeDamage();
-      assert.strictEqual(this.unit.meleeAttacks, startingAttacks - 1);
+      const startingAttacks = this.unit.attack.melee.count;
+      this.unit.getDamageFor(attackTypes.MELEE);
+      assert.strictEqual(this.unit.attack.melee.count, startingAttacks - 1);
       this.unit.replenishAttacks();
-      assert.strictEqual(this.unit.meleeAttacks, startingAttacks);
+      assert.strictEqual(this.unit.attack.melee.count, startingAttacks);
     })
   });
 });
