@@ -75,10 +75,8 @@ app.post('/moveMoverTo', (req, res) => {
 app.post('/selectAttacker', (req, res) => {
   try {
     const { attacker, attackType } = req.body;
-    console.log(attacker, attackType);
     if (attacker && attackType) {
       game.setAttacker(attacker.id, attackType);
-      console.log('here');
       res.sendStatus(200);
     } else {
       res.status(400).send({ message: 'Invalid request body; need attacker and attack type' });

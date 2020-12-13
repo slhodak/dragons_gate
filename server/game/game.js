@@ -91,7 +91,7 @@ class Game {
     const defense = defender.rollDefenseArmor();
     console.debug(`${defender.name} (id:${defender.id}) rolled ${defense} defense`);
     const loss = damage - defense;
-    defender.reduceHP(damage - defense);
+    defender.reduceHP(loss);
     console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`);
     if (defender.isAlive()) {
       const effect = attacker.getEffectFor(attackType);

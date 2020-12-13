@@ -103,7 +103,6 @@ class Unit {
   }
   hasAttacksLeft() {
     const hasAttacksLeft = Object.values(this.attack).some(type => type.count > 0)
-    console.log(this.name, hasAttacksLeft) 
     if (hasAttacksLeft) {
       return true;
     }
@@ -142,7 +141,7 @@ class EliteSoldier extends Unit {
   die() {
     this.faction.units.forEach(unit => {
       if (unit != this && unit.isAlive()) {
-        unit.meleeDamage[1] += 2;
+        unit.attack.melee.damage[1] += 2;
       }
     });
     Unit.prototype.die.call(this);
@@ -167,7 +166,7 @@ class FlagBearer extends Unit {
   die() {
     this.faction.units.forEach(unit => {
       if (unit != this && unit.isAlive()) {
-        unit.meleeDamage[0] -= 1;
+        unit.attack.melee.damage[0] -= 1;
       }
     });
     Unit.prototype.die.call(this);
@@ -257,7 +256,7 @@ class Shuriken extends Unit {
       attack: {
         melee: {
           range: 2,
-          roll: [4, 6],
+          damage: [4, 6],
         },
         ranged: {
           range: 10,
@@ -275,14 +274,23 @@ class Shuriken extends Unit {
     }, 'Shuriken', faction);
   }
   // -1 roll per 2cm distance
-  rollRangedDamage(distance = 10) {
-    const rangedRoll = [
-      this.rangedDamage[0] - Math.ceil(distance / 2),
-      this.rangedDamage[1]
-    ];
-    const damage = this.roll(rangedRoll);
-    this.rangedAttacks -= 1;
-    return damage;
+  // distance tracking tbd
+  getDamageFor(attackType, distance = 10) {
+    if (attackType === attackTypes.MELEE) {
+      return Unit.prototype.getDamageFor.call(this, attackType);
+    }
+    if (attackType === attackTypes.RANGED) {
+      const { ranged } = this.attack;
+      const rangedRoll = [
+        ranged.damage[0] - Math.ceil(distance / 2),
+        ranged.damage[1]
+      ];
+      const damage = Unit.prototype.roll.call(this, rangedRoll);
+      ranged.count -= 1;
+      return damage;
+    } else {
+      console.warn(`No attackType ${attackType} found for ${this.name}`);
+    }
   }
 }
 
