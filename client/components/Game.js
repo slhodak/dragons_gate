@@ -185,13 +185,13 @@ export default class Game extends React.Component {
       })
       .catch(err => console.error(`Error calculating combat result: ${err}`));
   }
-  setMover(unitId, coordinates = null) {
+  setMover(unitId) {
     fetch('setMover', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ mover: unitId, coordinates })
+      body: JSON.stringify({ mover: unitId })
     })
       .then(res => {
         if (res.ok) {

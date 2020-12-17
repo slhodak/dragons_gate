@@ -46,6 +46,7 @@ class Game {
           unit.beAffected();
           unit.replenishAttacks();
           unit.replenishSteps();
+          unit.findUnitsInRange(this.board);
         }
       });
       this.board.update(turnFaction.units);
@@ -54,7 +55,7 @@ class Game {
       return ex;
     }
   }
-  setMover(unitId, coordinates) {
+  setMover(unitId) {
     if (unitId == null) {
       this.mover = null;
     } else {
