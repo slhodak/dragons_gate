@@ -60,7 +60,6 @@ class Game {
     } else {
       const unit = this.getUnitById(unitId);
       this.mover = unit;
-      this.mover.coordinates = coordinates;
     }
   }
   // Change coordinates of mover in board
@@ -69,9 +68,8 @@ class Game {
     const { mover, board } = this;
     const stepsToTake = xyDistance(mover.coordinates, coordinates);
     const moverInstance = this.getUnitById(mover.id);
+    board.moveUnit(moverInstance, coordinates);
     moverInstance.depleteSteps(stepsToTake);
-    board.addUnit(moverInstance, coordinates);
-    board.removeUnit(mover);
     this.mover = null;
   }
   /*

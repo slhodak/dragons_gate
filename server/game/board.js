@@ -29,6 +29,7 @@ module.exports = class Board {
     });
   }
   // For each unit, update cell data
+  // This is for combat, effects, step-replenishment, etc, but not movement
   // Least efficient method so far, I think
   update(units) {
     units.forEach(unit => {
@@ -58,19 +59,24 @@ module.exports = class Board {
 
     if (row != null) {
       faction.units.forEach((unit, i) => {
-        this.data[row][i] = unit;
+        this.addUnit(unit, [row, i]);
       });
     } else {
       faction.units.forEach((unit, i) => {
-        this.data[i][column] = unit;
+        this.addUnit(unit, [i, column]);
       });
     }
   }
+  moveUnit(unit, coordinates) {
+    this.removeUnit(unit.coordinates);
+    this.addUnit(unit, coordinates);
+    unit.findUnitsInRange(this);
+  }
   addUnit(unit, coordinates) {
     this.data[coordinates[0]][coordinates[1]] = unit;
+    unit.coordinates = coordinates;
   }
-  removeUnit(unit) {
-    const [x, y] = unit.coordinates;
-    this.data[x][y] = null;
+  removeUnit(coordinates) {
+    this.data[coordinates[0]][coordinates[1]] = null;
   }
 }

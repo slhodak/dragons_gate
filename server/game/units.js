@@ -1,4 +1,4 @@
-const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums.js`);
+const { unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -27,6 +27,36 @@ class Unit {
   }
   canMove() {
     return this.isAlive() && this.status != unitStatuses.IMMOBILIZED;
+  }
+  findUnitsInRange(board) {
+    // for each attack
+    // search range of board corresponding to range of attack
+    // set units in range
+    // consider limits of board
+    Object.values(this.attack).forEach(attack => {
+      let unitsInRange = [];
+      let yRange = [
+        Math.max(this.coordinates[0] - attack.range, 0),
+        Math.min(this.coordinates[0] + attack.range, board.height - 1)
+      ];
+      let xRange = [
+        Math.max(this.coordinates[1] - attack.range, 0),
+        Math.min(this.coordinates[1] + attack.range, board.width - 1)
+      ];
+      console.debug(`Attack range for ${this.name} is from [${yRange[0]},${xRange[0]}] to [${yRange[1]},${xRange[1]}]`)
+      for (let i = yRange[0]; i < yRange[yRange.length-1]; i++) {
+        for (let j = xRange[0]; j < xRange[xRange.length-1]; j++) {
+          if (board.data[i][j]) {
+            let unit = board.data[i][j];
+            if (unit.faction != this.faction) {
+              console.debug(`Found unit id=${unit.id} name=${unit.name} at square [${i},${j}]`);
+              unitsInRange.push(unit);
+            }
+          }
+        }
+      }
+      attack.unitsInRange = unitsInRange;
+    });
   }
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
@@ -177,7 +207,7 @@ class Yuma extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      steps: 3,
+      steps: 2,
       attack: {
         melee: {
           range: 2,
@@ -255,11 +285,11 @@ class Shuriken extends Unit {
       steps: 4,
       attack: {
         melee: {
-          range: 2,
+          range: 1,
           damage: [4, 6],
         },
         ranged: {
-          range: 10,
+          range: 5,
           damage: [6, 4],
           count: 2,
           effect: {
@@ -273,16 +303,16 @@ class Shuriken extends Unit {
       healthRegen: 5,
     }, 'Shuriken', faction);
   }
-  // -1 roll per 2cm distance
+  // -1 roll per square distance
   // distance tracking tbd
-  getDamageFor(attackType, distance = 10) {
+  getDamageFor(attackType, distance = this.attack[attackTypes.RANGED].range) {
     if (attackType === attackTypes.MELEE) {
       return Unit.prototype.getDamageFor.call(this, attackType);
     }
     if (attackType === attackTypes.RANGED) {
       const { ranged } = this.attack;
       const rangedRoll = [
-        ranged.damage[0] - Math.ceil(distance / 2),
+        ranged.damage[0] - distance,
         ranged.damage[1]
       ];
       const damage = Unit.prototype.roll.call(this, rangedRoll);
