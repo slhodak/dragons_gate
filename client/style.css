@@ -293,18 +293,18 @@ body {
 */
 
 .footer {
-  background-color:white;
-  color: black;
+  background-color:rgb(41, 41, 41);
+  color: rgb(218, 218, 218);
   padding: 5px;
 }
 
 .footer a {
   text-decoration: none;
-  color: rgb(0, 93, 175);
+  color: rgb(49, 135, 211);
 }
 .footer a:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 .footer a:visited {
-  color: rgb(0, 93, 175);
+  color: rgb(154, 79, 216);
 }

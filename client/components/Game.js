@@ -42,20 +42,18 @@ export default class Game extends React.Component {
                 loadSavedGame={this.loadSavedGame}
                 saveGame={this.saveGame}
                 nextTurn={this.nextTurn} />
-        <div className="game">
-          <SquareBoard board={board}
-                       setMover={this.setMover}
-                       mover={mover}
-                       moverCanMoveTo={this.moverCanMoveTo}
-                       moveMoverTo={this.moveMoverTo}
-                       turnFaction={turnFaction}
-                       combat={combat}
-                       selectAttacker={this.selectAttacker}
-                       resetAttack={this.resetAttack}
-                       attack={this.attack}
-                       />
-          <Factions factions={factions} turnFaction={turnFaction} />
-        </div>
+        <SquareBoard  board={board}
+                      setMover={this.setMover}
+                      mover={mover}
+                      moverCanMoveTo={this.moverCanMoveTo}
+                      moveMoverTo={this.moveMoverTo}
+                      turnFaction={turnFaction}
+                      combat={combat}
+                      selectAttacker={this.selectAttacker}
+                      resetAttack={this.resetAttack}
+                      attack={this.attack}
+                      />
+        <Factions factions={factions} turnFaction={turnFaction} />
         <Footer />
       </div>
     )
