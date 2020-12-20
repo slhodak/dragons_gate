@@ -30,7 +30,7 @@ export default (props) => {
           return <button className="gameButton beginAttack" onClick={() => props.selectAttacker(unit, attackType)}><img className="cellButtonIcon" src={icon} alt="attack"/>{attackCount}</button>
         }
         if (attacker.id === unit.id) {
-          return <button className="gameButton" onClick={props.resetAttack}>x</button>;
+          return <button className="gameButton" onClick={props.resetAttack}>X</button>;
         }
       })()}
     </div>

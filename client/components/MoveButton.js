@@ -14,7 +14,7 @@ export default (props) => {
           if (!mover) {
             return <button className="gameButton" onClick={() => setMover(id, coordinates)}><img className="cellButtonIcon" src={footsteps} alt="movement" /></button>
           } else if (mover.id == id) {
-            return <button className="gameButton" onClick={() => setMover(null)}>c</button>
+            return <button className="gameButton" onClick={() => setMover(null)}>X</button>
           } else {
             return null;
           }

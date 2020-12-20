@@ -70,7 +70,6 @@ module.exports = class Board {
   moveUnit(unit, coordinates) {
     this.removeUnit(unit.coordinates);
     this.addUnit(unit, coordinates);
-    unit.findUnitsInRange(this);
   }
   addUnit(unit, coordinates) {
     this.data[coordinates[0]][coordinates[1]] = unit;

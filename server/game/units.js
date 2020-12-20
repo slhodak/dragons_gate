@@ -1,4 +1,4 @@
-const { unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums.js`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -28,35 +28,9 @@ class Unit {
   canMove() {
     return this.isAlive() && this.status != unitStatuses.IMMOBILIZED;
   }
-  findUnitsInRange(board) {
-    // for each attack
-    // search range of board corresponding to range of attack
-    // set units in range
-    // consider limits of board
-    Object.values(this.attack).forEach(attack => {
-      let unitsInRange = [];
-      let yRange = [
-        Math.max(this.coordinates[0] - attack.range, 0),
-        Math.min(this.coordinates[0] + attack.range, board.height - 1)
-      ];
-      let xRange = [
-        Math.max(this.coordinates[1] - attack.range, 0),
-        Math.min(this.coordinates[1] + attack.range, board.width - 1)
-      ];
-      console.debug(`Attack range for ${this.name} is from [${yRange[0]},${xRange[0]}] to [${yRange[1]},${xRange[1]}]`)
-      for (let i = yRange[0]; i < yRange[yRange.length-1]; i++) {
-        for (let j = xRange[0]; j < xRange[xRange.length-1]; j++) {
-          if (board.data[i][j]) {
-            let unit = board.data[i][j];
-            if (unit.faction != this.faction) {
-              console.debug(`Found unit id=${unit.id} name=${unit.name} at square [${i},${j}]`);
-              unitsInRange.push(unit);
-            }
-          }
-        }
-      }
-      attack.unitsInRange = unitsInRange;
-    });
+  // any units in range: use bool to gray-out or show attack buttons
+  anyUnitsInRange() {
+    
   }
   roll(rollsSides) {
     // parse rolls-d-sides string and calculate resulting damage
@@ -335,7 +309,7 @@ class Ryu extends Unit {
           damage: [5, 4]
         },
         ranged: {
-          range: Infinity,
+          range: 10,
           damage: [4, 4]
         }
       },
