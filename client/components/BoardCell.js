@@ -9,7 +9,7 @@ export default (props) => {
   const {
     unit,
     coordinates,
-    myTurn,
+    turnFaction,
     setMover,
     mover,
     isValidMove,
@@ -20,10 +20,9 @@ export default (props) => {
     confirmAttack
   } = props;
   // refactor later depending on final layout of each version
-
-  // put this in a component
   if (unit) {
     const { faction } = unit;
+    const myTurn = faction === turnFaction.name;
     if (myTurn) {
       return (
         <div className={`squareCell ${faction}`}>
