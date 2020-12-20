@@ -54,6 +54,7 @@ app.get('/nextTurn', (_req, res) => {
 app.post('/setMover', (req, res) => {
   try {
     const { mover, coordinates } = req.body;
+    game.resetCombat();
     game.setMover(mover, coordinates);
     res.sendStatus(200);
   } catch (err) {
@@ -76,6 +77,7 @@ app.post('/selectAttacker', (req, res) => {
   try {
     const { attacker, attackType } = req.body;
     if (attacker && attackType) {
+      game.setMover(null);
       game.setAttacker(attacker.id, attackType);
       res.sendStatus(200);
     } else {

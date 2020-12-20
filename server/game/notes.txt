@@ -83,6 +83,6 @@ marker for status on board
 
 saving game means fix bug and keep playing
 
-movement should cancel attack / vise versa
+movement should cancel attack / vise versa (done)
 
 can attack deceased players? or only because die() not called?

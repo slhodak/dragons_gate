@@ -168,6 +168,7 @@ class FlagBearer extends Unit {
     }, 'Flag-Bearer', faction);
   }
   die() {
+    
     this.faction.units.forEach(unit => {
       if (unit != this && unit.isAlive()) {
         unit.attack.melee.damage[0] -= 1;
