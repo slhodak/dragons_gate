@@ -86,3 +86,7 @@ saving game means fix bug and keep playing
 movement should cancel attack / vise versa (done)
 
 can attack deceased players? or only because die() not called?
+
+errors not displaying in fetch catches from non-success statuses
+
+
