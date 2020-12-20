@@ -39,6 +39,8 @@ class Game {
   // ensure board reflects changes
   nextTurn() {
     try {
+      this.resetCombat();
+      this.setMover(null);
       this.turn = (this.turn + 1) % 3;
       const turnFaction = this.factions[this.turn];
       turnFaction.units.forEach((unit) => {
@@ -46,7 +48,6 @@ class Game {
           unit.beAffected();
           unit.replenishAttacks();
           unit.replenishSteps();
-          unit.findUnitsInRange(this.board);
         }
       });
       this.board.update(turnFaction.units);

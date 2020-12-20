@@ -53,8 +53,8 @@ app.get('/nextTurn', (_req, res) => {
 
 app.post('/setMover', (req, res) => {
   try {
-    const { mover } = req.body;
-    game.setMover(mover);
+    const { mover, coordinates } = req.body;
+    game.setMover(mover, coordinates);
     res.sendStatus(200);
   } catch (err) {
     res.status(500).send({ message: err });
@@ -107,6 +107,7 @@ app.post('/doCombat', (req, res) => {
     game.resetCombat();
     res.sendStatus(200);
   } catch (err) {
+    console.error(err);
     res.status(500).send({ message: err });
   }
 });

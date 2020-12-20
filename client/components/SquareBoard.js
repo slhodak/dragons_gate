@@ -13,7 +13,7 @@ export default (props) => {
     combat,
     selectAttacker,
     resetAttack,
-    attack
+    confirmAttack
   } = props;
   return (
     board ? <div className="board">
@@ -37,7 +37,7 @@ export default (props) => {
                               combat={combat}
                               selectAttacker={selectAttacker}
                               resetAttack={resetAttack}
-                              attack={attack}
+                              confirmAttack={confirmAttack}
                               />
           }
         })}</div>

@@ -21,7 +21,7 @@ export default class Game extends React.Component {
     this.loadSavedGame = this.loadSavedGame.bind(this);
     this.loadCurrentGame = this.loadCurrentGame.bind(this);
     this.selectAttacker = this.selectAttacker.bind(this);
-    this.attack = this.attack.bind(this);
+    this.confirmAttack = this.confirmAttack.bind(this);
     this.resetAttack = this.resetAttack.bind(this);
     this.setMover = this.setMover.bind(this);
     this.moverCanMoveTo = this.moverCanMoveTo.bind(this);
@@ -52,7 +52,7 @@ export default class Game extends React.Component {
                        combat={combat}
                        selectAttacker={this.selectAttacker}
                        resetAttack={this.resetAttack}
-                       attack={this.attack}
+                       confirmAttack={this.confirmAttack}
                        />
           <Factions factions={factions} turnFaction={turnFaction} />
         </div>
@@ -163,7 +163,7 @@ export default class Game extends React.Component {
       })
       .catch(err => console.error(`Error resetting attack: ${err}`));
   }
-  attack(defender) {
+  confirmAttack(defender) {
     fetch('doCombat', {
       method: 'POST',
       headers: {
@@ -183,7 +183,7 @@ export default class Game extends React.Component {
           throw new Error(err.message);
         }
       })
-      .catch(err => console.error(`Error calculating combat result: ${err}`));
+      .catch(err => console.error(`Error calculating combat result: ${err.message}`));
   }
   setMover(unitId) {
     fetch('setMover', {

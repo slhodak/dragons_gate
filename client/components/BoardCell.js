@@ -17,10 +17,10 @@ export default (props) => {
     combat,
     selectAttacker,
     resetAttack,
-    attack
+    confirmAttack
   } = props;
   // refactor later depending on final layout of each version
-  
+
   // put this in a component
   if (unit) {
     const { faction } = unit;
@@ -51,9 +51,10 @@ export default (props) => {
       return (
         <div className={`squareCell ${faction}`}>
           <CellHeader coordinates={coordinates} unit={unit} />
-          <DefenseButton  unit={unit}
+          <DefenseButton  coordinates={coordinates}
+                          unit={unit}
                           combat={combat}
-                          attack={attack} />
+                          confirmAttack={confirmAttack} />
         </div>
       )
     }

@@ -24,9 +24,10 @@ playing notes:
 
 
 Refactor:
-  Status effects into hash that is copied to unit
+  Status effects into hash that is copied to unit (less customizable. Maybe class?)
     including turns damned, poison damage, rolls for effects
   Attacks belong in an object? Premature optimization while there are only 2 kinds.
+    They do belong in an object to check ranges readably (done)
 
 Bug:
   Units are loaded as PO objects, not instances of respective classes
@@ -58,14 +59,30 @@ Next is to determine attack ranges
 
 Must kill my darling.
   The unit stat area should not double as a combat area
-  Also the fading loss display should be on the unit's board cell
+  Also the fading loss display should be on the unit's board cell (low prio)
   gut it...
-  
 
-Render JSON as collapsible in Explorer
+
+Render JSON as collapsible in Explorer (low prio)
   https://github.com/caldwell/renderjson
 
 Use frontend env var to toggle presence of board square coordinates in view
+  This is fine as always visible on hover
   (or for anything else)
   https://trekinbami.medium.com/using-environment-variables-in-react-6b0a99d83cf5
 
+DefenseButtons filter by Range 
+Next turn resets/cancels all motion or attack in progress
+
+
+Bugs from Playthrough #3:
+
+empire unit die() calling forEach on faction string
+
+marker for status on board
+
+saving game means fix bug and keep playing
+
+movement should cancel attack / vise versa
+
+can attack deceased players? or only because die() not called?
