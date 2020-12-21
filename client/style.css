@@ -104,6 +104,20 @@ body {
   flex-direction: row;
 }
 
+.squareRow .Guardians {
+  color: var(--guardians-color);
+}
+.squareRow .Protectors {
+  color: var(--protectors-color);
+}
+.squareRow .Empire {
+  color: var(--empire-color);
+}
+
+/*
+  BoardCell
+*/
+
 .squareCell {
   display: flex;
   flex-direction: column;
@@ -123,26 +137,6 @@ body {
 }
 .squareCell:hover .coordinates {
   visibility: visible;
-}
-
-.cellHeader {
-  display: flex;
-  justify-content: space-around;
-}
-
-.squareCell .cellName {
-  font-size: 2em;
-  font-weight: 700;
-}
-
-.squareRow .Guardians {
-  color: var(--guardians-color);
-}
-.squareRow .Protectors {
-  color: var(--protectors-color);
-}
-.squareRow .Empire {
-  color: var(--empire-color);
 }
 
 .squareCell:hover {
@@ -170,6 +164,29 @@ body {
 }
 
 /*
+  CellHeader
+*/
+
+.cellHeader {
+  display: flex;
+  justify-content: space-around;
+}
+
+.cellHeader .cellName {
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.hpStatus {
+  display: flex;
+  flex-direction: column;
+}
+.hpStatus .status {
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+/*
   Combat Buttons
 */
 
@@ -180,17 +197,6 @@ body {
 .confirmAttack:hover {
   background-color: rgb(255, 100, 100);
   border-color: rgb(192, 70, 70);
-}
-
-/*
-  Hex Board
-*/
-
-.hexBoard {
-  border: 1px solid white;
-  flex-grow: 1;
-  height: 1000px;
-  margin: 10px;
 }
 
 /*
@@ -263,6 +269,7 @@ body {
   padding: 0px;
 }
 
+/* Also for cellHeader */
 .deceased {
   color: rgb(199, 11, 11);
 }
