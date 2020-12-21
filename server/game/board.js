@@ -1,4 +1,5 @@
-const { factionNames } = require(`${process.env.PWD}/lib/enums.js`);
+const { factionNames } = require(`${process.env.PWD}/lib/enums`);
+const { Unit } = require(`${process.env.PWD}/server/game/units`);
 
 const boardSides = {
   TOP: 'top',
@@ -77,5 +78,14 @@ module.exports = class Board {
   }
   removeUnit(coordinates) {
     this.data[coordinates[0]][coordinates[1]] = null;
+  }
+  withoutCircularReference() {
+    return this.data.map(row => {
+      return row.map(cell => {
+        if (cell instanceof Unit) {
+          return cell.withoutCircularReference();
+        }
+      });
+    });
   }
 }

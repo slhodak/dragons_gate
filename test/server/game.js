@@ -1,14 +1,7 @@
 const assert = require('assert');
-const e = require('express');
-const game = require(`${process.env.PWD}/server/game/game.js`);
-const { Faction, Empire, Protectors, Guardians } = require(`${process.env.PWD}/server/game/factions.js`);
-const {
-  Unit,
-  EliteSoldier, FlagBearer,
-  Yuma, Kusarigama, Daisho, Shuriken,
-  Ryu, Yokai, Shinja
-} = require(`${process.env.PWD}/server/game/units.js`);
-const { attackTypes, factionNames } = require(`${process.env.PWD}/lib/enums.js`);
+const game = require(`${process.env.PWD}/server/game/game`);
+const { EliteSoldier, Ryu } = require(`${process.env.PWD}/server/game/units`);
+const { attackTypes, factionNames } = require(`${process.env.PWD}/lib/enums`);
 
 describe('Game', () => {
   before(() => {

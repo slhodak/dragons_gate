@@ -2,16 +2,17 @@ const {
   EliteSoldier, FlagBearer,
   Yuma, Kusarigama, Daisho, Shuriken,
   Ryu, Yokai, Shinja
-} = require('./units.js');
-const { factionNames } = require(`${process.env.PWD}/lib/enums.js`);
+} = require('./units');
+const { factionNames } = require(`${process.env.PWD}/lib/enums`);
 
 class Faction {
-  constructor(faction) {
+  constructor(faction, game) {
+    this.game = game;
     this.name = faction.name;
     this.units = [];
     faction.units.forEach(unit => {
       for (let i = 0; i < unit.count; i++) {
-        this.units.push(new unit.clazz(faction.name));
+        this.units.push(new unit.clazz(this));
       }
     });
   }
@@ -25,6 +26,14 @@ class Faction {
   }
   status() {
     // return a code indicating whether the faction is defeated, active, or otherwise
+  }
+  // Replace faction reference on unit with faction name
+  withoutCircularReference() {
+    let factionCopy = Object.assign({}, this);
+    delete factionCopy.game;
+    const { units } = factionCopy;
+    factionCopy.units = units.map(unit => unit.withoutCircularReference());
+    return factionCopy;
   }
 }
 

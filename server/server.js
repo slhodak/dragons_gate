@@ -2,7 +2,7 @@ const port = 3456;
 const path = require('path');
 const express = require('express');
 const app = express();
-const game = require('./game/game.js')();
+const game = require('./game/game')();
 const bodyParser = require('body-parser');
 
 app.use(express.static(path.resolve(__dirname, '../public')));
@@ -11,14 +11,12 @@ app.use('/explorer', express.static(path.resolve(__dirname, './explorer')));
 
 // Send game data from value in memory
 app.get('/load', async (_req, res) => {
-  const { board, mover } = game;
-  res.send({
-    board: board.data,
-    factions: game.factions,
-    turn: game.turn,
-    mover: mover,
-    combat: game.combat
-  });
+  try {
+    res.send(game.withoutCircularReference());
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(400);
+  }
 });
 
 // Send game data from last save on disk
@@ -27,7 +25,7 @@ app.get('/loadSaved', async (_req, res) => {
   if (loadedGame) {
     res.send(loadedGame);
   } else {
-    res.status(400).send(`Error saving game: ${loaded}`);
+    res.status(400).send(`Error loading game: ${loaded}`);
   }
 });
 

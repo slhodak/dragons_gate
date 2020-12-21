@@ -89,4 +89,5 @@ can attack deceased players? or only because die() not called?
 
 errors not displaying in fetch catches from non-success statuses
 
+units are affected even after death?
 

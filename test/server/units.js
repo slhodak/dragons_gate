@@ -1,11 +1,7 @@
 const assert = require('assert');
-const {
-  Unit,
-  EliteSoldier, FlagBearer,
-  Yuma, Kusarigama, Daisho, Shuriken,
-  Ryu, Yokai, Shinja
-} = require(`${process.env.PWD}/server/game/units.js`);
-const { attackTypes, unitStatuses } = require(`${process.env.PWD}/lib/enums.js`);
+const { Unit } = require(`${process.env.PWD}/server/game/units.js`);
+const { attackTypes, unitStatuses, factionNames } = require(`${process.env.PWD}/lib/enums.js`);
+const { Faction, Empire } = require(`${process.env.PWD}/server/game/factions.js`);
 
 describe('Unit', () => {
   beforeEach(() => {
@@ -98,5 +94,55 @@ describe('Unit', () => {
       this.unit.replenishAttacks();
       assert.strictEqual(this.unit.attack.melee.count, startingAttacks);
     })
+  });
+  describe('#withoutCircularReference', () => {
+    before(() => {
+      this.empire = new Faction(Empire);
+      this.imperialUnit = this.empire.units[0];
+      this.unitWoCR = this.imperialUnit.withoutCircularReference();
+    });
+    it('should return an object', () => {
+      assert(this.unitWoCR instanceof Object);
+    });
+    it('should not return a Unit', () => {
+      assert.strictEqual(this.unitWoCR instanceof Unit, false);
+    });
+    it('should have the faction replaced with the faction name', () => {
+      assert.strictEqual(this.unitWoCR.faction, factionNames.EMPIRE);
+    });
+    it('should not alter the faction reference in the original unit', () => {
+      assert.strictEqual(this.imperialUnit.faction, this.empire);
+    });
+  });
+});
+
+describe('EliteSoldier', () => {
+  beforeEach(() => {
+    this.empire = new Faction(Empire);
+    this.soldierIndex = 1;
+    this.soldier = this.empire.units[this.soldierIndex];
+  });
+  describe('#die', () => {
+    it("should increase its comrades' attack damage die sides by 2 when it dies", () => {
+      const comrade = this.empire.units[this.soldierIndex + 1];
+      const comradeDieSides = comrade.attack.melee.damage[1];
+      this.soldier.die(this.game);
+      assert.strictEqual(comrade.attack.melee.damage[1], comradeDieSides + 2);
+    });
+  });
+});
+
+describe('FlagBearer', () => {
+  beforeEach(() => {
+    this.empire = new Faction(Empire);
+    this.flagBearer = this.empire.units.find(unit => unit.name === 'Flag-Bearer'); // no constant... oooh
+  });
+  describe('#die', () => {
+    it("should decrease its comrades' attack damage die rolls by 1 when it dies", () => {
+      const comrade = this.empire.units[0]; // no constant... oooh
+      const comradeDieRolls = comrade.attack.melee.damage[0];
+      this.flagBearer.die(this.game);
+      assert.strictEqual(comrade.attack.melee.damage[0], comradeDieRolls - 1);
+    });
   });
 });

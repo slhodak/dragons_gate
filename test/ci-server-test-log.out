@@ -1,0 +1,89 @@
+Debugger attached.
+
+
+  Empire
+    ✓ should have 7 units
+    ✓ should have 6 elite soldiers
+    ✓ should have 1 flag bearer
+    ✓ should contain its name
+    #withoutCircularReference
+      ✓ should make a copy that has a unit list
+      ✓ should call unit.withoutCircularReference for each unit
+      ✓ should remove the reference to the game
+      ✓ should not remove the reference in the original faction
+
+  Protectors
+    ✓ should include one Yuma
+    ✓ should include one Kusarigama unit
+    ✓ should include one Daisho unit
+    ✓ should include one Shuriken unit
+    ✓ should contain its name
+
+  Guardians
+    ✓ should have 3 units
+    ✓ should have one Ryu
+    ✓ should have one Yokai
+    ✓ should have one Shinja
+    ✓ should contain its name
+
+  Game
+    ✓ should have 3 factions
+    #doCombat
+Ryu (id:null) rolled 17 melee damage
+Elite Soldier (id:null) rolled 4 defense
+Ryu did 13 damage to Elite Soldier with a melee attack
+      ✓ should reduce the defender's health points
+    #attackerFactionHasNoMoves
+      ✓ should return false when the faction has moves left
+      ✓ should return true when the faction has no moves left
+
+  Unit
+    #isAlive
+      ✓ should return true when the unit has HP left
+      ✓ should return false when the unit has no HP left
+    #roll
+      ✓ should return an integer
+      ✓ should return a valid roll value based on the input
+    #applyEffect
+      ✓ should change the unit status if the unit is healthy
+      ✓ should change the unit status if the incoming effect is higher-ranking than the unit status
+      ✓ should not change the unit status if the incoming effect is lower-ranking than the unit status
+    #beAffected
+undefined (id:null) suffered from being poisoned
+      ✓ should lose 1 HP per turn when poisoned
+undefined (id:null) suffered from being damned
+undefined (id:null) suffered from being damned
+undefined (id:null) died
+undefined (id:null) suffered from being damned
+      ✓ should die once affected 3 times when damned
+    #rollMeleeDamage
+      ✓ should reduce remaining melee attacks by 1
+    #replenishAttacks
+      ✓ should bring remaining attacks back to the unit maximum
+    #withoutCircularReference
+      1) "before all" hook for "should return an object"
+
+  EliteSoldier
+    #die
+Elite Soldier (id:null) died
+      ✓ should increase its comrades' attack damage die sides by 2 when it dies
+
+  FlagBearer
+    #die
+Flag-Bearer (id:null) died
+      ✓ should decrease its comrades' attack damage die rolls by 1 when it dies
+
+
+  35 passing (1m)
+  1 failing
+
+  1) Unit
+       #withoutCircularReference
+         "before all" hook for "should return an object":
+     Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/home/sam/Documents/Projects/Software/dragons_gate/test/server/units.js)
+      at processImmediate (internal/timers.js:461:21)
+      at process.callbackTrampoline (internal/async_hooks.js:126:14)
+
+
+
+Waiting for the debugger to disconnect...

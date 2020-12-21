@@ -63,13 +63,13 @@ export default class Game extends React.Component {
   }
   // Get game data from value in server memory
   loadCurrentGame() {
-    console.debug("Updating game from server memory...");
+    console.debug("Loading game from server memory...");
     fetch('load')
     .then(res => { 
       if (res.ok) {
           return res.json();
         } else {
-          throw new Error('Error updating game');
+          throw new Error('Error loading game');
         }
       })
       .then(body => {

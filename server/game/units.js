@@ -1,4 +1,4 @@
-const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums.js`);
+const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -121,9 +121,16 @@ class Unit {
   replenishSteps() {
     this.steps = this.maxSteps;
   }
+  // game reference needed in overridden die() methods
   die() {
     this.status = unitStatuses.DECEASED;
     console.debug(`${this.name} (id:${this.id}) died`);
+  }
+  // replace circular reference to faction with faction name
+  withoutCircularReference() {
+    let unitCopy = Object.assign({}, this);
+    unitCopy.faction = this.faction.name;
+    return unitCopy;
   }
 }
 
@@ -168,7 +175,6 @@ class FlagBearer extends Unit {
     }, 'Flag-Bearer', faction);
   }
   die() {
-    
     this.faction.units.forEach(unit => {
       if (unit != this && unit.isAlive()) {
         unit.attack.melee.damage[0] -= 1;

@@ -1,6 +1,7 @@
 const assert = require('assert');
 const { factionNames } = require('../../lib/enums');
 const { Faction, Empire, Protectors, Guardians } = require(`${process.env.PWD}/server/game/factions.js`);
+const game = require(`${process.env.PWD}/server/game/game`);
 const {
   EliteSoldier,
   FlagBearer,
@@ -40,6 +41,25 @@ describe('Empire', () => {
   });
   it('should contain its name', () => {
     assert.strictEqual(this.empire.name, factionNames.EMPIRE);
+  });
+  describe('#withoutCircularReference', () => {
+    before(() => {
+      this.game = game();
+      this.faction = this.game.factions[0];
+      this.factionWoCR = this.faction.withoutCircularReference();
+    });
+    it('should make a copy that has a unit list', () => {
+      assert(this.factionWoCR.units instanceof Array);
+    });
+    it('should call unit.withoutCircularReference for each unit', () => {
+      // need spies from chai or sinon
+    });
+    it('should remove the reference to the game', () => {
+      assert.strictEqual(this.factionWoCR.game, undefined);
+    });
+    it('should not remove the reference in the original faction', () => {
+      assert.strictEqual(this.faction.game, this.game);
+    });
   });
 });
 

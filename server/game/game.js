@@ -1,8 +1,9 @@
 const fs = require('fs').promises;
 const path = require('path');
-const { Faction, Empire, Protectors, Guardians } = require('./factions.js');
-const Board = require('./board.js');
-const { xyDistance } = require(`${process.env.PWD}/lib/helpers.js`);
+const factions = require('./factions');
+const { Faction, Empire, Protectors, Guardians } = factions;
+const Board = require('./board');
+const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
@@ -10,9 +11,9 @@ class Game {
   constructor() {
     this.stateFilePath = path.join(__dirname, './state.json');
     this.factions = [
-      new Faction(Empire),
-      new Faction(Protectors),
-      new Faction(Guardians)
+      new Faction(Empire, this),
+      new Faction(Protectors, this),
+      new Faction(Guardians, this)
     ];
     this.assignIds();
     this.turn = 0;
@@ -24,7 +25,7 @@ class Game {
       attackType: null
     };
   }
-  // assign IDs
+  // Assign unique IDs to units
   assignIds() {
     let idCounter = 1;
     this.factions.forEach((faction) => {
@@ -34,9 +35,9 @@ class Game {
       });
     });
   }
-  // change over control of game to next player
-  // calculate turn-based effects
-  // ensure board reflects changes
+  // Give control of game to next player
+  // Calculate turn-based effects
+  // Ensure board reflects changes
   nextTurn() {
     try {
       this.resetCombat();
@@ -147,10 +148,28 @@ class Game {
   }
   // Determine whether the attacker's faction has moves left
   attackerFactionHasNoMoves() {
-    // do any units still have attacks left?
     const { attacker } = this.combat;
-    const faction = this.factions.find(faction => faction.name === attacker.faction);
+    const faction = this.factions.find(faction => faction.name === attacker.faction.name);
     return !faction.units.some(unit => unit.hasAttacksLeft());
+  }
+  // Return game data without any circular references
+  withoutCircularReference() {
+    const { factions, mover } = this;
+    return {
+      factions: factions.map(faction => faction.withoutCircularReference()),
+      combat: this.combatWithoutCircularReference(),
+      mover: mover ? mover.withoutCircularReference() : null,
+      turn: this.turn,
+      board: this.board.withoutCircularReference()
+    }
+  }
+  combatWithoutCircularReference() {
+    const { attacker, defender, attackType } = this.combat;
+    return {
+      attacker: attacker ? attacker.withoutCircularReference() : null,
+      defender: defender ? defender.withoutCircularReference() : null,
+      attackType
+    };
   }
 }
 
