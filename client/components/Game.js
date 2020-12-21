@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import SquareBoard from './SquareBoard';
+import SquareBoard from './Board/SquareBoard';
 import Factions from './Factions';
 import Footer from './Footer';
 import { xyDistance } from '../../lib/helpers';
@@ -51,8 +51,7 @@ export default class Game extends React.Component {
                       combat={combat}
                       selectAttacker={this.selectAttacker}
                       resetAttack={this.resetAttack}
-                      confirmAttack={this.confirmAttack}
-                      />
+                      confirmAttack={this.confirmAttack} />
         <Factions factions={factions} turnFaction={turnFaction} />
         <Footer />
       </div>

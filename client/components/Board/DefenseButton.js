@@ -1,7 +1,7 @@
 import React from 'react';
-import { isInRange } from '../../lib/helpers';
-import { unitStatuses } from '../../lib/enums';
-import '../style.css';
+import { isInRange } from '../../../lib/helpers';
+import { unitStatuses } from '../../../lib/enums';
+import '../../style.css';
 
 export default (props) => {
   const { coordinates, unit, combat, confirmAttack } = props;

@@ -1,6 +1,6 @@
 import React from 'react';
-import footsteps from '../images/icons8-footsteps-80.png';
-import '../style.css';
+import footsteps from '../../images/icons8-footsteps-80.png';
+import '../../style.css';
 
 export default (props) => {
   const { unit, setMover, mover, coordinates } = props;

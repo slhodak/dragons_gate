@@ -1,8 +1,8 @@
 import React from 'react';
-import { attackTypes, unitStatuses } from '../../lib/enums';
-import katana from '../images/icons8-katana-100.png';
-import bowAndArrow from '../images/icons8-bow-and-arrow-96.png';
-import '../style.css';
+import { attackTypes, unitStatuses } from '../../../lib/enums';
+import katana from '../../images/icons8-katana-100.png';
+import bowAndArrow from '../../images/icons8-bow-and-arrow-96.png';
+import '../../style.css';
 
 export default (props) => {
   const { unit, combat, attackType } = props;
