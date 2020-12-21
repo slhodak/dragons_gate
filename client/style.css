@@ -96,7 +96,7 @@ body {
   background-color: black;
   display: flex;
   flex-direction: column;
-  width: 1000px;
+  width: 1200px;
 }
 
 .squareRow {
@@ -121,8 +121,8 @@ body {
 .squareCell {
   display: flex;
   flex-direction: column;
-  height: 100px;
-  width: 110px;
+  height: 120px;
+  width: 120px;
   border: 1px solid white;
   border-bottom: none;
   margin: 0px;
