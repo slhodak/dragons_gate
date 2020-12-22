@@ -134,6 +134,7 @@ class Unit {
     unitCopy.faction = this.faction.name;
     return unitCopy;
   }
+  // desperately needs a test
   static fromPOO(object, faction) {
     let unit = new Unit();
     for (const [key, value] of Object.entries(object)) {
