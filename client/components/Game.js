@@ -83,8 +83,12 @@ export default class Game extends React.Component {
     fetch('loadSaved')
       .then(res => res.json())
       .then(body => {
-        const { factions, turn, combat } = body;
-        this.setState({ factions, turn, combat });
+        if (body.message) {
+          throw new Error(body.message);
+        } else {
+          const { factions, turn, combat, board, mover } = body;
+          this.setState({ factions, turn, combat, board, mover });
+        }
       })
       .catch(err => console.error(`Error fetching game state ${err}`));
   }
@@ -100,7 +104,11 @@ export default class Game extends React.Component {
           return res.json();
         }
       })
-      .then(err => { throw new Error(err.message) })
+      .then(err => {
+        if (err) {
+          throw new Error(err.message);
+        }
+      })
       .catch(err => {
         console.error(`Error saving game: ${err}`);
       });
@@ -116,7 +124,11 @@ export default class Game extends React.Component {
           return res.json();
         }
       })
-      .then(err => { throw new Error(err.message) })
+      .then(err => {
+        if (err) {
+          throw new Error(err.message);
+        }
+      })
       .catch(err => `Error changing turns: ${err}`)
   }
   selectAttacker(attacker, attackType) {

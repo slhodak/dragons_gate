@@ -4,12 +4,12 @@ const factions = require('./factions');
 const { Faction, Empire, Protectors, Guardians } = factions;
 const Board = require('./board');
 const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
+const SAVE_PATH = path.join(__dirname, './data/game.json');
 
 // Tracks the state of factions and their units
 // Interface for users to play the game
 class Game {
   constructor() {
-    this.stateFilePath = path.join(__dirname, './state.json');
     this.factions = [
       new Faction(Empire, this),
       new Faction(Protectors, this),
@@ -126,8 +126,8 @@ class Game {
   // Write game state to file
   async save() {
     try {
-      const game = { factions: this.factions, turn: this.turn, combat: this.combat };
-      await fs.writeFile(this.stateFilePath, JSON.stringify(game));
+      const game = JSON.stringify(this.withoutCircularReference());
+      await fs.writeFile(SAVE_PATH, game);
       return true;
     } catch (err) {
       return err;
@@ -136,7 +136,7 @@ class Game {
   // Read game state from file
   async load() {
     try {
-      const json = await fs.readFile(this.stateFilePath);
+      const json = await fs.readFile(SAVE_PATH);
       const { factions, turn, combat } = JSON.parse(json);
       this.factions = factions;
       this.turn = turn;

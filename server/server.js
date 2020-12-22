@@ -25,17 +25,17 @@ app.get('/loadSaved', async (_req, res) => {
   if (loadedGame) {
     res.send(loadedGame);
   } else {
-    res.status(400).send(`Error loading game: ${loaded}`);
+    res.status(400).send({ message: `Error loading game: ${loadedGame}` });
   }
 });
 
 // Save game to disk
-app.post('/save', (_req, res) => {
-  let saved = game.save();
+app.post('/save', async (_req, res) => {
+  let saved = await game.save();
   if (saved) {
     res.sendStatus(200);
   } else {
-    res.status(400).send(`Error saving game: ${saved}`);
+  res.status(400).send({ message: `Error saving game: ${saved}` });
   }
 });
 

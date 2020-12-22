@@ -1,13 +1,13 @@
 # NPM
 node_modules
 
-# bundle
+# bundle, bundled assets
 bundle.app.js
 public/*.jpg
 public/*.png
 
-# game state
-state.json
+# gaved game
+data/game.json
 
 # code coverage
 coverage/
