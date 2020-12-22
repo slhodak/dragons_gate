@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const chalk = require('chalk');
 const { Faction, Empire, Protectors, Guardians } = require('./factions');
 const Board = require('./board');
 const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
@@ -87,17 +88,17 @@ class Game {
   doCombat() {
     const { attacker, defender, attackType } = this.combat;
     const damage = attacker.getDamageFor(attackType);
-    console.debug(`${attacker.name} (id:${attacker.id}) rolled ${damage} ${attackType} damage`);
+    console.debug(chalk.yellow(`${attacker.name} (id:${attacker.id}) rolled ${damage} ${attackType} damage`));
     const defense = defender.rollDefenseArmor();
-    console.debug(`${defender.name} (id:${defender.id}) rolled ${defense} defense`);
+    console.debug(chalk.yellow(`${defender.name} (id:${defender.id}) rolled ${defense} defense`));
     const loss = damage - defense;
     defender.reduceHP(loss);
-    console.debug(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`);
+    console.debug(chalk.yellow(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`));
     if (defender.isAlive()) {
       const effect = attacker.getEffectFor(attackType);
       if (effect) {
         const affected = defender.applyEffect(effect);
-        console.debug(`${defender.name} is ${affected ? `now ${effect}` : `still ${defender.effect}`}`);
+        console.debug(chalk.red(`${defender.name} is ${affected ? `now ${effect}` : `still ${effect}`}`));
       }
     }
     attacker.depleteSteps(null);
@@ -142,7 +143,7 @@ class Game {
         return new Faction(faction, this, false);
       });
       this.turn = turn;
-      this.board = new Board(board.length, board[0].length, factions, false);
+      this.board = new Board(board.length, board[0].length, this.factions, false);
       this.mover = mover ? this.getUnitById(mover.id) : null;
       this.combat = Game.combatFromPOO(combat);
       return { json };

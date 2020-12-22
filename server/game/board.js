@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { factionNames } = require(`${process.env.PWD}/lib/enums`);
 const { Unit } = require(`${process.env.PWD}/server/game/units`);
 
@@ -10,6 +11,7 @@ const boardSides = {
 
 module.exports = class Board {
   constructor(height, width, factions, initialBoard = true) {
+    console.debug(chalk.cyan(`Creating board of height=${height} width=${width} initialBoard=${initialBoard}`));
     this.height = height;
     this.width = width;
     this.data = [];
@@ -31,6 +33,7 @@ module.exports = class Board {
       });
     } else {
       factions.forEach(faction => {
+        console.debug(chalk.cyan('Placing units from faction ') + chalk.yellow(faction.name));
         faction.units.forEach(unit => this.addUnit(unit, unit.coordinates));
       });
     }

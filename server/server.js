@@ -27,7 +27,7 @@ app.get('/loadSaved', async (_req, res) => {
     console.error(`Error loading game: ${loadedGame.err}\nTrace:\n${loadedGame.err.stack}`);
     res.status(400).send({ message: `Error loading game: ${loadedGame.err}` });
   } else {
-    console.debug(chalk.black.bgCyan('Loading game from persistent storage'));
+    console.debug(chalk.cyan('Loading game from persistent storage'));
     res.send(loadedGame.json);
   }
 });
@@ -36,7 +36,7 @@ app.get('/loadSaved', async (_req, res) => {
 app.post('/save', async (_req, res) => {
   let saved = await game.save();
   if (saved) {
-    console.debug(chalk.black.bgCyan('Saving game to persistent storage'));
+    console.debug(chalk.cyan('Saving game to persistent storage'));
     res.sendStatus(200);
   } else {
     res.status(400).send({ message: `Error saving game: ${saved}` });

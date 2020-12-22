@@ -1,3 +1,4 @@
+const chalk = require('chalk');
 const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums`);
 
 class Unit {
@@ -116,7 +117,7 @@ class Unit {
   }
   depleteSteps(steps) {
     if (steps) {
-      console.debug(`${this.name} took ${steps} steps`);
+      console.debug(chalk.blue(`${this.name} took ${steps} steps`));
     }
     this.steps = 0;
   }
