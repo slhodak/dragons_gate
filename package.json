@@ -10,7 +10,7 @@
     "build": "webpack --config webpack.config.js",
     "react-dev": "webpack --config webpack.config.js --watch",
     "start": "node ./server/server.js",
-    "server-dev": "nodemon ./server/server.js"
+    "server-dev": "nodemon --ignore 'game.json' ./server/server.js"
   },
   "keywords": [
     "game",

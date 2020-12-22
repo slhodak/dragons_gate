@@ -206,6 +206,8 @@ export default class Game extends React.Component {
         if (res.ok) {
           console.debug('Mover set successfully');
           this.loadCurrentGame();
+        } else {
+          return res.json();
         }
       })
       .then(err => {
@@ -213,7 +215,7 @@ export default class Game extends React.Component {
           throw new Error(err.message);
         }
       })
-      .catch(err => console.error(`Server error setting mover: ${err}`));
+      .catch(err => console.error(`Server error setting mover: ${err.message}`));
   }
   // Returns true if it unit is in motion and square is in range
   moverCanMoveTo(coordinates, unit) {

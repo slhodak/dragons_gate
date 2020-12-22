@@ -22,10 +22,12 @@ app.get('/load', async (_req, res) => {
 // Send game data from last save on disk
 app.get('/loadSaved', async (_req, res) => {
   let loadedGame = await game.load();
-  if (loadedGame) {
-    res.send(loadedGame);
+  if (loadedGame.err) {
+    console.error(`Error loading game: ${loadedGame.err}\nTrace:\n${loadedGame.err.stack}`);
+    res.status(400).send({ message: `Error loading game: ${loadedGame.err}` });
   } else {
-    res.status(400).send({ message: `Error loading game: ${loadedGame}` });
+    console.debug('Loading game from persistent storage');
+    res.send(loadedGame.json);
   }
 });
 
@@ -33,9 +35,10 @@ app.get('/loadSaved', async (_req, res) => {
 app.post('/save', async (_req, res) => {
   let saved = await game.save();
   if (saved) {
+    console.debug('Saving game to persistent storage');
     res.sendStatus(200);
   } else {
-  res.status(400).send({ message: `Error saving game: ${saved}` });
+    res.status(400).send({ message: `Error saving game: ${saved}` });
   }
 });
 
@@ -51,12 +54,13 @@ app.get('/nextTurn', (_req, res) => {
 
 app.post('/setMover', (req, res) => {
   try {
-    const { mover, coordinates } = req.body;
+    const { mover } = req.body;
     game.resetCombat();
-    game.setMover(mover, coordinates);
+    game.setMover(mover);
     res.sendStatus(200);
   } catch (err) {
-    res.status(500).send({ message: err });
+    console.error(`Error setting mover: ${err.message}\nTrace:\n${err.stack}`);
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -66,7 +70,7 @@ app.post('/moveMoverTo', (req, res) => {
     game.moveMoverTo(coordinates);
     res.sendStatus(200);
   } catch (err) {
-    console.error(`Error moving unit ${err}`);
+    console.error(`Error moving unit: ${err}`);
     res.status(500).send({ message: err });
   }
 });

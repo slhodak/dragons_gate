@@ -1,20 +1,27 @@
 const {
-  EliteSoldier, FlagBearer,
+  Unit, EliteSoldier, FlagBearer,
   Yuma, Kusarigama, Daisho, Shuriken,
   Ryu, Yokai, Shinja
 } = require('./units');
 const { factionNames } = require(`${process.env.PWD}/lib/enums`);
 
 class Faction {
-  constructor(faction, game) {
+  // faction param is either constant to create new, or existing object to copy from
+  constructor(faction, game, initialFaction = true) {
     this.game = game;
     this.name = faction.name;
     this.units = [];
-    faction.units.forEach(unit => {
-      for (let i = 0; i < unit.count; i++) {
-        this.units.push(new unit.clazz(this));
-      }
-    });
+    if (initialFaction) {
+      faction.units.forEach(unit => {
+        for (let i = 0; i < unit.count; i++) {
+          this.units.push(new unit.clazz(this));
+        }
+      });
+    } else {
+      faction.units.forEach(unit => {
+        this.units.push(Unit.fromPOO(unit, faction));
+      });
+    }
   }
   // return number of living units in the faction
   unitsAlive() {
@@ -47,7 +54,7 @@ const Empire = {
     {
       clazz: FlagBearer,
       count: 1
-    },
+    }
   ]
 };
 
@@ -69,7 +76,7 @@ const Protectors = {
     {
       clazz: Shuriken,
       count: 1
-    },
+    }
   ]
 };
 
@@ -87,7 +94,7 @@ const Guardians = {
     {
       clazz: Shinja,
       count: 1
-    },
+    }
   ]
 };
 

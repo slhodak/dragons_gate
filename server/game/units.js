@@ -6,20 +6,22 @@ class Unit {
     this.name = name,
     this.faction = faction
     this.status = unitStatuses.HEALTHY;
-    this.healthPoints = stats.healthPoints;
-    this.steps = stats.steps;
-    this.maxSteps = stats.steps;
-    this.attack = stats.attack;
-    Object.values(this.attack).forEach(type => {
-      if (type.count) {
-        type.max = type.count;
-      } else {
-        type.max = 1;
-        type.count = 1;
-      }
-    });
-    this.defenseArmor = stats.defenseArmor;
-    this.healthRegen = stats.healthRegen;
+    if (stats) {
+      this.healthPoints = stats.healthPoints;
+      this.steps = stats.steps;
+      this.maxSteps = stats.steps;
+      this.attack = stats.attack;
+      Object.values(this.attack).forEach(type => {
+        if (type.count) {
+          type.max = type.count;
+        } else {
+          type.max = 1;
+          type.count = 1;
+        }
+      });
+      this.defenseArmor = stats.defenseArmor;
+      this.healthRegen = stats.healthRegen;
+    }
     this.damnedTurns = 0;
   }
   isAlive() {
@@ -131,6 +133,14 @@ class Unit {
     let unitCopy = Object.assign({}, this);
     unitCopy.faction = this.faction.name;
     return unitCopy;
+  }
+  static fromPOO(object, faction) {
+    let unit = new Unit();
+    Object.entries(object).forEach((key, value) => {
+      unit[key] = value;
+    });
+    unit.faction = faction;
+    return unit;
   }
 }
 

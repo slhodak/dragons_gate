@@ -9,7 +9,7 @@ const boardSides = {
 };
 
 module.exports = class Board {
-  constructor(height, width, factions) {
+  constructor(height, width, factions, initialBoard = true) {
     this.height = height;
     this.width = width;
     this.data = [];
@@ -18,16 +18,22 @@ module.exports = class Board {
     }
 
     // Place faction units on separate walls
-    factions.forEach(faction => {
-      // Guardians at top
-      if (faction.name === factionNames.GUARDIANS) {
-        this.addUnitsTo(boardSides.TOP, faction);
-      } else if (faction.name === factionNames.PROTECTORS) {
-        this.addUnitsTo(boardSides.RIGHT, faction);
-      } else if (faction.name === factionNames.EMPIRE) {
-        this.addUnitsTo(boardSides.BOTTOM, faction);
-      }
-    });
+    if (initialBoard) {
+      factions.forEach(faction => {
+        // Guardians at top
+        if (faction.name === factionNames.GUARDIANS) {
+          this.addUnitsTo(boardSides.TOP, faction);
+        } else if (faction.name === factionNames.PROTECTORS) {
+          this.addUnitsTo(boardSides.RIGHT, faction);
+        } else if (faction.name === factionNames.EMPIRE) {
+          this.addUnitsTo(boardSides.BOTTOM, faction);
+        }
+      });
+    } else {
+      factions.forEach(faction => {
+        faction.units.forEach(unit => this.addUnit(unit, unit.coordinates));
+      });
+    }
   }
   // For each unit, update cell data
   // This is for combat, effects, step-replenishment, etc, but not movement
@@ -73,6 +79,7 @@ module.exports = class Board {
     this.addUnit(unit, coordinates);
   }
   addUnit(unit, coordinates) {
+    console.debug(`Adding ${unit.name} to board at ${coordinates}`);
     this.data[coordinates[0]][coordinates[1]] = unit;
     unit.coordinates = coordinates;
   }

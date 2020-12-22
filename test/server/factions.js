@@ -3,6 +3,7 @@ const { factionNames } = require('../../lib/enums');
 const { Faction, Empire, Protectors, Guardians } = require(`${process.env.PWD}/server/game/factions.js`);
 const game = require(`${process.env.PWD}/server/game/game`);
 const {
+  Unit,
   EliteSoldier,
   FlagBearer,
   Yuma,
@@ -13,6 +14,154 @@ const {
   Yokai,
   Shinja
 } = require(`${process.env.PWD}/server/game/units.js`);
+
+describe('Faction', () => {
+  before(() => {
+    const FakeFaction = {
+      name: 'FakeFaction',
+      units: [
+        {
+          clazz: EliteSoldier,
+          count: 1
+        },
+        {
+          clazz: Yuma,
+          count: 1
+        }
+      ]
+    };
+    this.faction = new Faction(Empire);
+  });
+  it('should have a list of units', () => {
+    const { units } = this.faction;
+    assert(units instanceof Array);
+    assert(units[0] instanceof Unit);
+  });
+  describe('#constructor', () => {
+    it('should be able to create a Faction from a plain object', () => {
+      const exampleObject = {
+                            "name": "Guardians",
+                            "units": [
+                                {
+                                    "id": 12,
+                                    "name": "Ryu",
+                                    "faction": "Guardians",
+                                    "status": "healthy",
+                                    "healthPoints": 100,
+                                    "steps": 1,
+                                    "maxSteps": 1,
+                                    "attack": {
+                                        "melee": {
+                                            "range": 3,
+                                            "damage": [
+                                                5,
+                                                4
+                                            ],
+                                            "max": 1,
+                                            "count": 1
+                                        },
+                                        "ranged": {
+                                            "range": 10,
+                                            "damage": [
+                                                4,
+                                                4
+                                            ],
+                                            "max": 1,
+                                            "count": 1
+                                        }
+                                    },
+                                    "defenseArmor": [
+                                        4,
+                                        4
+                                    ],
+                                    "healthRegen": 5,
+                                    "damnedTurns": 0,
+                                    "coordinates": [
+                                        0,
+                                        0
+                                    ]
+                                },
+                                {
+                                    "id": 13,
+                                    "name": "Yokai",
+                                    "faction": "Guardians",
+                                    "status": "healthy",
+                                    "healthPoints": 60,
+                                    "steps": 5,
+                                    "maxSteps": 5,
+                                    "attack": {
+                                        "melee": {
+                                            "range": 3,
+                                            "damage": [
+                                                2,
+                                                10
+                                            ],
+                                            "effect": {
+                                                "roll": [
+                                                    2,
+                                                    6
+                                                ],
+                                                "success": [
+                                                    7
+                                                ],
+                                                "effect": "damned"
+                                            },
+                                            "max": 1,
+                                            "count": 1
+                                        }
+                                    },
+                                    "defenseArmor": [
+                                        3,
+                                        4
+                                    ],
+                                    "healthRegen": 2,
+                                    "damnedTurns": 0,
+                                    "coordinates": [
+                                        0,
+                                        1
+                                    ]
+                                },
+                                {
+                                    "id": 14,
+                                    "name": "Shinja",
+                                    "faction": "Guardians",
+                                    "status": "healthy",
+                                    "healthPoints": 20,
+                                    "steps": 2,
+                                    "maxSteps": 2,
+                                    "attack": {
+                                        "melee": {
+                                            "range": 2,
+                                            "damage": [
+                                                3,
+                                                6
+                                            ],
+                                            "max": 1,
+                                            "count": 1
+                                        }
+                                    },
+                                    "defenseArmor": [
+                                        4,
+                                        4
+                                    ],
+                                    "healthRegen": 0,
+                                    "damnedTurns": 0,
+                                    "deaths": 2,
+                                    "coordinates": [
+                                        0,
+                                        2
+                                    ]
+                                }
+                            ]
+                          }
+      const faction = new Faction(exampleObject, null, false);
+      assert(faction instanceof Faction);
+      assert(faction.units instanceof Array);
+      console.debug(faction.units[0].constructor.name);
+      assert(faction.units[0] instanceof Unit);
+    });
+  });
+});
 
 describe('Empire', () => {
   before(() => {

@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
-const factions = require('./factions');
-const { Faction, Empire, Protectors, Guardians } = factions;
+const { Faction, Empire, Protectors, Guardians } = require('./factions');
+const { Unit } = require('./units');
 const Board = require('./board');
 const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
 const SAVE_PATH = path.join(__dirname, './data/game.json');
@@ -137,13 +137,18 @@ class Game {
   async load() {
     try {
       const json = await fs.readFile(SAVE_PATH);
-      const { factions, turn, combat } = JSON.parse(json);
-      this.factions = factions;
+      const game = JSON.parse(json);
+      let { factions, turn, board, mover, combat } = game;
+      this.factions = factions.map(faction => {
+        return new Faction(faction, this, false);
+      });
       this.turn = turn;
-      this.combat = combat;
-      return json;
+      this.board = new Board(board.length, board[0].length, factions, false);
+      this.mover = mover ? this.getUnitById(mover.id) : null;
+      this.combat = Game.combatFromPOO(combat);
+      return { json };
     } catch (err) {
-      return err;
+      return { err };
     }
   }
   // Determine whether the attacker's faction has moves left
@@ -170,6 +175,15 @@ class Game {
       defender: defender ? defender.withoutCircularReference() : null,
       attackType
     };
+  }
+  static combatFromPOO(object) {
+    const combat = { attackType: object.attackType };
+    Object.entries(object).forEach((key, value) => {
+      if (value.id) {
+        combat[key] = game.getUnitById(value.id);
+      }
+    });
+    return combat;
   }
 }
 
