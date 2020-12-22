@@ -91,3 +91,25 @@ errors not displaying in fetch catches from non-success statuses
 
 units are affected even after death?
 
+yuma can move after attacking? canceling move/attack matters?
+yuma can move after death
+immobilized not blocking buttons
+can still move after death by damnation
+
+attack range not visible to players
+attack button not clickable when no enemies in range?
+or hovering on button shows range?
+  ... think about it
+
+
+Play through with Travis Notes:
+
+implement Shinja
+
+ended turn when yuma had movement left
+move after damned death?
+yuma move  after death?
+nerf damned?
+include the rolls — little delay?
+  show loss
+
