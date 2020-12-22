@@ -1,7 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { Faction, Empire, Protectors, Guardians } = require('./factions');
-const { Unit } = require('./units');
 const Board = require('./board');
 const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
 const SAVE_PATH = path.join(__dirname, './data/game.json');

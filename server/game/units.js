@@ -136,9 +136,9 @@ class Unit {
   }
   static fromPOO(object, faction) {
     let unit = new Unit();
-    Object.entries(object).forEach((key, value) => {
+    for (const [key, value] of Object.entries(object)) {
       unit[key] = value;
-    });
+    }
     unit.faction = faction;
     return unit;
   }

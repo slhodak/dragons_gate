@@ -1,5 +1,6 @@
 const port = 3456;
 const path = require('path');
+const chalk = require('chalk');
 const express = require('express');
 const app = express();
 const game = require('./game/game')();
@@ -26,7 +27,7 @@ app.get('/loadSaved', async (_req, res) => {
     console.error(`Error loading game: ${loadedGame.err}\nTrace:\n${loadedGame.err.stack}`);
     res.status(400).send({ message: `Error loading game: ${loadedGame.err}` });
   } else {
-    console.debug('Loading game from persistent storage');
+    console.debug(chalk.black.bgCyan('Loading game from persistent storage'));
     res.send(loadedGame.json);
   }
 });
@@ -35,7 +36,7 @@ app.get('/loadSaved', async (_req, res) => {
 app.post('/save', async (_req, res) => {
   let saved = await game.save();
   if (saved) {
-    console.debug('Saving game to persistent storage');
+    console.debug(chalk.black.bgCyan('Saving game to persistent storage'));
     res.sendStatus(200);
   } else {
     res.status(400).send({ message: `Error saving game: ${saved}` });
@@ -57,6 +58,7 @@ app.post('/setMover', (req, res) => {
     const { mover } = req.body;
     game.resetCombat();
     game.setMover(mover);
+    console.debug(chalk.cyan(`Setting mover id=${mover}`))
     res.sendStatus(200);
   } catch (err) {
     console.error(`Error setting mover: ${err.message}\nTrace:\n${err.stack}`);
