@@ -4,6 +4,7 @@ const { Faction, Empire, Protectors, Guardians } = require('./factions');
 const Board = require('./board');
 const Combat = require('./combat');
 const Movement = require('./movement');
+const Turn = require('./turn');
 const SAVE_PATH = path.join(__dirname, './data/game.json');
 
 // Tracks the state of factions and their units
@@ -16,7 +17,7 @@ class Game {
       new Faction(Guardians, this)
     ];
     this.assignIds();
-    this.turn = 0;
+    this.turn = new Turn();
     this.board = new Board(this.factions);
     this.movement = new Movement(this);
     this.combat = new Combat(this);
@@ -30,28 +31,6 @@ class Game {
         idCounter += 1;
       });
     });
-  }
-  // Give control of game to next player
-  // Calculate turn-based effects
-  // Ensure board reflects changes
-  nextTurn() {
-    try {
-      this.combat.reset();
-      this.movement.resetMover();
-      this.turn = (this.turn + 1) % 3;
-      const turnFaction = this.factions[this.turn];
-      turnFaction.units.forEach((unit) => {
-        if (unit.isAlive()) {
-          unit.beAffected();
-          unit.replenishAttacks();
-          unit.replenishSteps();
-        }
-      });
-      this.board.update(turnFaction.units);
-      return 0;
-    } catch (ex) {
-      return ex;
-    }
   }
   /*
    Technically defender should never be set when this is called
@@ -89,7 +68,7 @@ class Game {
       this.factions = factions.map(faction => {
         return new Faction(faction, this, false);
       });
-      this.turn = turn;
+      this.turn = new Turn(turn);
       this.board = new Board(board.length, board[0].length, this.factions, false);
       this.movement = new Movement(movement);
       this.combat = new Combat(combat, this);
@@ -111,7 +90,7 @@ class Game {
       factions: factions.map(faction => faction.withoutCircularReference()),
       combat: combat.withoutCircularReference(),
       mover: movement.forJson(),
-      turn: turn,
+      turn: turn.turn,
       board: board.withoutCircularReference()
     }
   }
