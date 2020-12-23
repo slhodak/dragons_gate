@@ -11,19 +11,6 @@ describe('Game', () => {
   it('should have 3 factions', () => {
     assert(this.game.factions.length === 3);
   });
-  describe('#doCombat', () => {
-    it("should reduce the defender's health points", () => {
-      let eliteSoldier = new EliteSoldier();
-      const startingHP = eliteSoldier.healthPoints;
-      this.game.combat = {
-        attacker: new Ryu(),
-        defender: eliteSoldier,
-        attackType: attackTypes.MELEE
-      }
-      this.game.doCombat();
-      assert(startingHP > eliteSoldier.healthPoints);
-    });
-  });
   describe('#attackerFactionHasNoMoves', () => {
     it('should return false when the faction has moves left', () => {
       const { combat } = this.game;

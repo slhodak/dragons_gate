@@ -24,6 +24,33 @@ module.exports = class Combat {
     this.defender = null;
     this.attackType = null;
   }
+  setAttacker(unitId, attackType) {
+    this.attacker = game.getUnitById(unitId);
+    this.attackType = attackType;
+  }
+  setDefender(unitId) {
+    this.defender = game.getUnitById(unitId);
+  }
+  // Alter defender's HP and status with some randomness
+  doCombat() {
+    const { attacker, defender, attackType } = this;
+    const damage = attacker.getDamageFor(attackType);
+    console.debug(chalk.yellow(`${attacker.name} (id:${attacker.id}) rolled ${damage} ${attackType} damage`));
+    const defense = defender.rollDefenseArmor();
+    console.debug(chalk.yellow(`${defender.name} (id:${defender.id}) rolled ${defense} defense`));
+    const loss = damage - defense;
+    defender.reduceHP(loss);
+    console.debug(chalk.yellow(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`));
+    if (defender.isAlive()) {
+      const effect = attacker.getEffectFor(attackType);
+      if (effect) {
+        const affected = defender.applyEffect(effect);
+        console.debug(chalk.red(`${defender.name} is ${affected ? `now ${effect}` : `still ${effect}`}`));
+      }
+    }
+    attacker.depleteSteps(null);
+  }
+  // Remove circular references to factions within units
   withoutCircularReference() {
     const { attacker, defender, attackType } = this;
     return {

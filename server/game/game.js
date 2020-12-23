@@ -76,30 +76,6 @@ class Game {
    Technically defender should never be set when this is called
    (so these don't *need* to be set individually, but that's why they are)
   */
-  setAttacker(attackerId, attackType) {
-    const attackerInstance = this.getUnitById(attackerId);
-    this.combat.attacker = attackerInstance;
-    this.combat.attackType = attackType;
-  }
-  // Alter defender's HP and status with some randomness
-  doCombat() {
-    const { attacker, defender, attackType } = this.combat;
-    const damage = attacker.getDamageFor(attackType);
-    console.debug(chalk.yellow(`${attacker.name} (id:${attacker.id}) rolled ${damage} ${attackType} damage`));
-    const defense = defender.rollDefenseArmor();
-    console.debug(chalk.yellow(`${defender.name} (id:${defender.id}) rolled ${defense} defense`));
-    const loss = damage - defense;
-    defender.reduceHP(loss);
-    console.debug(chalk.yellow(`${attacker.name} did ${loss} damage to ${defender.name} with a ${attackType} attack`));
-    if (defender.isAlive()) {
-      const effect = attacker.getEffectFor(attackType);
-      if (effect) {
-        const affected = defender.applyEffect(effect);
-        console.debug(chalk.red(`${defender.name} is ${affected ? `now ${effect}` : `still ${effect}`}`));
-      }
-    }
-    attacker.depleteSteps(null);
-  }
   getUnitById(id) {
     let foundUnit = false; // gotta love that weak typing
     this.factions.some(faction => {

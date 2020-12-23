@@ -82,7 +82,7 @@ app.post('/selectAttacker', (req, res) => {
     const { attacker, attackType } = req.body;
     if (attacker && attackType) {
       game.setMover(null);
-      game.setAttacker(attacker.id, attackType);
+      game.combat.setAttacker(attacker.id, attackType);
       res.sendStatus(200);
     } else {
       res.status(400).send({ message: 'Invalid request body; need attacker and attack type' });
@@ -104,8 +104,8 @@ app.post('/resetAttack', (_req, res) => {
 app.post('/doCombat', (req, res) => {
   try {
     const { defender } = req.body;
-    game.combat.defender = game.getUnitById(defender.id);
-    game.doCombat();
+    game.combat.setDefender(defender.id);
+    game.combat.doCombat();
     game.board.update([game.combat.attacker]);
     if (game.attackerFactionHasNoMoves()) {
       game.nextTurn();
