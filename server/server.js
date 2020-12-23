@@ -56,7 +56,7 @@ app.get('/nextTurn', (_req, res) => {
 app.post('/setMover', (req, res) => {
   try {
     const { mover } = req.body;
-    game.resetCombat();
+    game.combat.reset();
     game.setMover(mover);
     console.debug(chalk.cyan(`Setting mover id=${mover}`))
     res.sendStatus(200);
@@ -94,7 +94,7 @@ app.post('/selectAttacker', (req, res) => {
 
 app.post('/resetAttack', (_req, res) => {
   try {
-    game.resetCombat();
+    game.combat.reset();
     res.sendStatus(200);
   } catch (err) {
     res.status(500).send({ message: err });

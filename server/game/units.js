@@ -150,7 +150,7 @@ class EliteSoldier extends Unit {
   constructor(faction) {
     super({
       healthPoints: 30,
-      steps: 3,
+      steps: 1,
       attack: {
         melee: {
           range: 2,
@@ -175,7 +175,7 @@ class FlagBearer extends Unit {
   constructor(faction) {
     super({
       healthPoints: 35,
-      steps: 2,
+      steps: 1,
       attack: {
         melee: {
           range: 1,
@@ -235,7 +235,7 @@ class Kusarigama extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      steps: 3,
+      steps: 1,
       attack: {
         melee: {
           range: 3,
@@ -257,7 +257,7 @@ class Daisho extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      steps: 3,
+      steps: 1,
       attack: {
         melee: {
           range: 2,
@@ -275,7 +275,7 @@ class Shuriken extends Unit {
   constructor(faction) {
     super({
       healthPoints: 50,
-      steps: 4,
+      steps: 1,
       attack: {
         melee: {
           range: 1,
@@ -342,7 +342,7 @@ class Yokai extends Unit {
   constructor(faction) {
     super({
       healthPoints: 60,
-      steps: 5,
+      steps: 2,
       attack: {
         melee: {
           range: 3,
@@ -364,7 +364,7 @@ class Shinja extends Unit {
   constructor(faction) {
     super({
       healthPoints: 20,
-      steps: 2,
+      steps: 1,
       attack: {
         melee: {
           range: 2,

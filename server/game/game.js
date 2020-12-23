@@ -18,7 +18,7 @@ class Game {
     ];
     this.assignIds();
     this.turn = 0;
-    this.board = new Board(10, 10, this.factions);
+    this.board = new Board(9, 9, this.factions);
     this.mover = null;
     this.combat = new Combat();
   }
