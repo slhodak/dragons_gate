@@ -3,6 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const { Faction, Empire, Protectors, Guardians } = require('./factions');
 const Board = require('./board');
+const Combat = require('./combat');
 const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
 const SAVE_PATH = path.join(__dirname, './data/game.json');
 
@@ -19,11 +20,7 @@ class Game {
     this.turn = 0;
     this.board = new Board(10, 10, this.factions);
     this.mover = null;
-    this.combat = {
-      attacker: null,
-      defender: null,
-      attackType: null
-    };
+    this.combat = new Combat();
   }
   // Assign unique IDs to units
   assignIds() {
@@ -103,13 +100,6 @@ class Game {
     }
     attacker.depleteSteps(null);
   }
-  resetCombat() {
-    this.combat = {
-      attacker: null,
-      defender: null,
-      attackType: null
-    };
-  }
   getUnitById(id) {
     let foundUnit = false; // gotta love that weak typing
     this.factions.some(faction => {
@@ -145,7 +135,7 @@ class Game {
       this.turn = turn;
       this.board = new Board(board.length, board[0].length, this.factions, false);
       this.mover = mover ? this.getUnitById(mover.id) : null;
-      this.combat = Game.combatFromPOO(combat);
+      this.combat = new Combat(combat, this);
       return { json };
     } catch (err) {
       return { err };
@@ -162,28 +152,11 @@ class Game {
     const { factions, mover } = this;
     return {
       factions: factions.map(faction => faction.withoutCircularReference()),
-      combat: this.combatWithoutCircularReference(),
+      combat: this.combat.withoutCircularReference(),
       mover: mover ? mover.withoutCircularReference() : null,
       turn: this.turn,
       board: this.board.withoutCircularReference()
     }
-  }
-  combatWithoutCircularReference() {
-    const { attacker, defender, attackType } = this.combat;
-    return {
-      attacker: attacker ? attacker.withoutCircularReference() : null,
-      defender: defender ? defender.withoutCircularReference() : null,
-      attackType
-    };
-  }
-  static combatFromPOO(object) {
-    const combat = { attackType: object.attackType };
-    Object.entries(object).forEach((key, value) => {
-      if (value.id) {
-        combat[key] = game.getUnitById(value.id);
-      }
-    });
-    return combat;
   }
 }
 
