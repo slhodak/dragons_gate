@@ -1,13 +1,18 @@
 const chalk = require('chalk');
 
 module.exports = class Combat {
-  constructor(object, game) {
-    if(object && game) {
+  constructor(game, object) {
+    this.game = game;
+    if(object) {
       console.debug(chalk.cyan('Instantiating Combat from POO'));
-      const { attacker, defender, attackType } = object;
-      this.attacker = game.getUnitById(attacker.id);
-      this.attacker = game.getUnitById(defender.id);
-      this.attackType = attackType;
+      for (const [key, value] of Object.entries(object)) {
+        if (value && value.id) {
+          this[key] = this.game.getUnitById(value.id);
+        } else {
+          this[key] = null;
+        }
+      }
+      this.attackType = object.attackType;
     } else {
       console.debug(chalk.cyan('Instantiating new Combat'));
       this.reset();
@@ -26,14 +31,5 @@ module.exports = class Combat {
       defender: defender ? defender.withoutCircularReference() : null,
       attackType
     };
-  }
-  fromPOO(object) {
-    const combat = { attackType: object.attackType };
-    Object.entries(object).forEach((key, value) => {
-      if (value.id) {
-        combat[key] = game.getUnitById(value.id);
-      }
-    });
-    return combat;
   }
 }
