@@ -378,15 +378,6 @@ class Shinja extends Unit {
   }
 }
 
-// Need a Terrain class because all code around unit based on so many assumptions such as stats
-// and making this flexible enough to be both sounds... would that be harder than adding a class?
-// distinct types of things get distinct treatment. definitely a Terrain class.
-class Gate extends Unit {
-  constructor(faction) {
-    super({}, 'Gate', faction);
-  }
-}
-
 module.exports = {
   Unit,
   EliteSoldier, FlagBearer,
