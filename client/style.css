@@ -96,7 +96,7 @@ body {
   background-color: black;
   display: flex;
   flex-direction: column;
-  width: 1200px;
+  width: 1080px;
 }
 
 .squareRow {
@@ -131,6 +131,8 @@ body {
 
 .coordinates {
   color: rgb(224, 224, 224);
+  float: right;
+  margin: 2px 8px;
 }
 .squareCell .coordinates {
   visibility: hidden;
