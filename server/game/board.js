@@ -65,18 +65,20 @@ module.exports = class Board {
   // Place faction units at default locations
   addFaction(faction) {
     const { name, units } = faction;
+    console.debug(chalk.cyan('Placing units from faction ') + chalk.yellow(name) + chalk.cyan(' at default locations'));
     const factionDefaultLocations = boardDefaults.unitLocations[name];
     for (let i = 0; i < units.length; i++ ) {
+      console.debug(units[i].name);
       const coordinates = factionDefaultLocations[units[i].name];
       if (coordinates[0] instanceof Array) {
         const unitType = units[i].name;
-        console.debug(chalk.red(unitType));
         let j = 0;
         while(units[i].name === unitType) {
           this.addUnit(units[i], coordinates[j]);
           i++;
           j++;
         }
+        i -= 1; // Go back one spot because while not true now
       } else {
         this.addUnit(units[i], coordinates);
       }
