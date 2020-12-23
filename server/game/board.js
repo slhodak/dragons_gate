@@ -8,9 +8,9 @@ const boardDefaults = {
   },
   unitLocations: {
     Guardians: {
-      Ryu: [4,3],
-      Yokai: [4,5],
-      Shinja: [3,4]
+      Ryu: [5,3],
+      Yokai: [5,5],
+      Shinja: [4,4]
     },
     Protectors: {
       Yuma: [0,8],
