@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const { Unit } = require(`${process.env.PWD}/server/game/units`);
+const { unitTypes } = require(`${process.env.PWD}/lib/enums`);
 
 const boardDefaults = {
   dimensions: {
@@ -8,19 +9,19 @@ const boardDefaults = {
   },
   unitLocations: {
     Guardians: {
-      Ryu: [5,3],
-      Yokai: [5,5],
-      Shinja: [4,4]
+      [unitTypes.RYU]: [5,3],
+      [unitTypes.YOKAI]: [5,5],
+      [unitTypes.SHINJA]: [4,4]
     },
     Protectors: {
-      Yuma: [0,8],
-      Kusarigama: [0,7],
-      Daisho: [1,7],
-      Shuriken: [1,8]
+      [unitTypes.YUMA]: [0,8],
+      [unitTypes.KUSARIGAMA]: [0,7],
+      [unitTypes.DAISHO]: [1,7],
+      [unitTypes.SHURIKEN]: [1,8]
     },
     Empire: {
-      "Flag-Bearer": [0,0],
-      "Elite Soldier": [[0,1],[0,2],[0,3],[1,0],[1,1],[1,2]]
+      [unitTypes.FLAG_BEARER]: [0,0],
+      [unitTypes.ELITE_SOLDIER]: [[0,1],[0,2],[0,3],[1,0],[1,1],[1,2]]
     }
   }
 };

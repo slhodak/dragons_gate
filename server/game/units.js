@@ -1,5 +1,5 @@
 const chalk = require('chalk');
-const { attackTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums`);
+const { attackTypes, unitTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -159,7 +159,7 @@ class EliteSoldier extends Unit {
       },
       defenseArmor: [2, 4],
       healthRegen: 2
-    }, 'Elite Soldier', faction);
+    }, unitTypes.ELITE_SOLDIER, faction);
   }
   die() {
     this.faction.units.forEach(unit => {
@@ -184,7 +184,7 @@ class FlagBearer extends Unit {
       },
       defenseArmor: [2, 4],
       healthRegen: 3
-    }, 'Flag-Bearer', faction);
+    }, unitTypes.FLAG_BEARER, faction);
   }
   die() {
     this.faction.units.forEach(unit => {
@@ -209,7 +209,7 @@ class Yuma extends Unit {
       },
       defenseArmor: [3, 6],
       healthRegen: 5
-    }, 'Yuma', faction);
+    }, unitTypes.YUMA, faction);
     this.movedThisTurn = false;
   }
   depleteSteps(steps) {
@@ -249,7 +249,7 @@ class Kusarigama extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 5
-    }, 'Kusarigama', faction);
+    }, unitTypes.KUSARIGAMA, faction);
   }
 }
 
@@ -267,7 +267,7 @@ class Daisho extends Unit {
       },
       defenseArmor: [2, 4],
       healthRegen: 5
-    }, 'Daisho', faction);
+    }, unitTypes.DAISHO, faction);
   }
 }
 
@@ -294,7 +294,7 @@ class Shuriken extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 5,
-    }, 'Shuriken', faction);
+    }, unitTypes.SHURIKEN, faction);
   }
   // -1 roll per square distance
   // distance tracking tbd
@@ -334,7 +334,7 @@ class Ryu extends Unit {
       },
       defenseArmor: [4, 4],
       healthRegen: 5
-    }, 'Ryu', faction);
+    }, unitTypes.RYU, faction);
   }
 }
 
@@ -356,7 +356,7 @@ class Yokai extends Unit {
       },
       defenseArmor: [3, 4],
       healthRegen: 2
-    }, 'Yokai', faction);
+    }, unitTypes.YOKAI, faction);
   }
 }
 
@@ -373,7 +373,7 @@ class Shinja extends Unit {
       },
       defenseArmor: [4, 4],
       healthRegen: 0
-    }, 'Shinja', faction);
+    }, unitTypes.SHINJA, faction);
     this.deaths = 2;
   }
 }
