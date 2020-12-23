@@ -1,35 +1,43 @@
 const chalk = require('chalk');
-const { factionNames } = require(`${process.env.PWD}/lib/enums`);
 const { Unit } = require(`${process.env.PWD}/server/game/units`);
 
-const boardSides = {
-  TOP: 'top',
-  RIGHT: 'right',
-  LEFT: 'left',
-  BOTTOM: 'bottom'
+const boardDefaults = {
+  dimensions: {
+    height: 9,
+    width: 9
+  },
+  unitLocations: {
+    Guardians: {
+      Ryu: [4,3],
+      Yokai: [4,5],
+      Shinja: [3,4]
+    },
+    Protectors: {
+      Yuma: [0,8],
+      Kusarigama: [0,7],
+      Daisho: [1,7],
+      Shuriken: [1,8]
+    },
+    Empire: {
+      "Flag-Bearer": [0,0],
+      "Elite Soldier": [[0,1],[0,2],[0,3],[1,0],[1,1],[1,2]]
+    }
+  }
 };
 
 module.exports = class Board {
-  constructor(height, width, factions, initialBoard = true) {
-    console.debug(chalk.cyan(`Creating board of height=${height} width=${width} initialBoard=${initialBoard}`));
-    this.height = height;
-    this.width = width;
+  constructor(factions, initialBoard = true) {
+    this.height = boardDefaults.dimensions.height; // Tied to unit default placement
+    this.width = boardDefaults.dimensions.height;
+    console.debug(chalk.cyan(`Creating board of height=${this.height} width=${this.width} initialBoard=${initialBoard}`));
     this.data = [];
-    for (let i = 0; i < height; i++) {
-      this.data.push(new Array(width));
+    for (let i = 0; i < this.height; i++) {
+      this.data.push(new Array(this.width));
     }
-
-    // Place faction units on separate walls
+    // Place units on board
     if (initialBoard) {
       factions.forEach(faction => {
-        // Guardians at top
-        if (faction.name === factionNames.GUARDIANS) {
-          this.addUnitsTo(boardSides.TOP, faction);
-        } else if (faction.name === factionNames.PROTECTORS) {
-          this.addUnitsTo(boardSides.RIGHT, faction);
-        } else if (faction.name === factionNames.EMPIRE) {
-          this.addUnitsTo(boardSides.BOTTOM, faction);
-        }
+        this.addFaction(faction);
       });
     } else {
       factions.forEach(faction => {
@@ -54,27 +62,24 @@ module.exports = class Board {
         }
     });
   }
-  addUnitsTo(side, faction) {
-    let row, column;
-
-    if (side === boardSides.TOP) {
-      row = 0;
-    } else if (side === boardSides.BOTTOM) {
-      row = this.height - 1;
-    } else if (side === boardSides.LEFT) {
-      column = 0;
-    } else if (side === boardSides.RIGHT) {
-      column = this.width - 1;
-    }
-
-    if (row != null) {
-      faction.units.forEach((unit, i) => {
-        this.addUnit(unit, [row, i]);
-      });
-    } else {
-      faction.units.forEach((unit, i) => {
-        this.addUnit(unit, [i, column]);
-      });
+  // Place faction units at default locations
+  addFaction(faction) {
+    const { name, units } = faction;
+    const factionDefaultLocations = boardDefaults.unitLocations[name];
+    for (let i = 0; i < units.length; i++ ) {
+      const coordinates = factionDefaultLocations[units[i].name];
+      if (coordinates[0] instanceof Array) {
+        const unitType = units[i].name;
+        console.debug(chalk.red(unitType));
+        let j = 0;
+        while(units[i].name === unitType) {
+          this.addUnit(units[i], coordinates[j]);
+          i++;
+          j++;
+        }
+      } else {
+        this.addUnit(units[i], coordinates);
+      }
     }
   }
   moveUnit(unit, coordinates) {
@@ -89,6 +94,8 @@ module.exports = class Board {
   removeUnit(coordinates) {
     this.data[coordinates[0]][coordinates[1]] = null;
   }
+  // Remove circular references on units
+  // See Unit#withoutCircularReference
   withoutCircularReference() {
     return this.data.map(row => {
       return row.map(cell => {
