@@ -89,7 +89,7 @@
         fetch('/load')
           .then(res => res.json())
           .then(game => {
-            const { turn, factions, mover, combat, board } = game;
+            const { turn, factions, movement, combat, board } = game;
             const gameFactions = {
               empire: factions.find(faction => faction.name === 'Empire'),
               protectors: factions.find(faction => faction.name === 'Protectors'),

@@ -1,10 +1,9 @@
 const fs = require('fs').promises;
 const path = require('path');
-const chalk = require('chalk');
 const { Faction, Empire, Protectors, Guardians } = require('./factions');
 const Board = require('./board');
 const Combat = require('./combat');
-const { xyDistance } = require(`${process.env.PWD}/lib/helpers`);
+const Movement = require('./movement');
 const SAVE_PATH = path.join(__dirname, './data/game.json');
 
 // Tracks the state of factions and their units
@@ -19,8 +18,8 @@ class Game {
     this.assignIds();
     this.turn = 0;
     this.board = new Board(this.factions);
-    this.mover = null;
-    this.combat = new Combat();
+    this.movement = new Movement(this);
+    this.combat = new Combat(this);
   }
   // Assign unique IDs to units
   assignIds() {
@@ -37,8 +36,8 @@ class Game {
   // Ensure board reflects changes
   nextTurn() {
     try {
-      this.resetCombat();
-      this.setMover(null);
+      this.combat.reset();
+      this.movement.resetMover();
       this.turn = (this.turn + 1) % 3;
       const turnFaction = this.factions[this.turn];
       turnFaction.units.forEach((unit) => {
@@ -53,24 +52,6 @@ class Game {
     } catch (ex) {
       return ex;
     }
-  }
-  setMover(unitId) {
-    if (unitId == null) {
-      this.mover = null;
-    } else {
-      const unit = this.getUnitById(unitId);
-      this.mover = unit;
-    }
-  }
-  // Change coordinates of mover in board
-  // Deplete steps of unit
-  moveMoverTo(coordinates) {
-    const { mover, board } = this;
-    const stepsToTake = xyDistance(mover.coordinates, coordinates);
-    const moverInstance = this.getUnitById(mover.id);
-    board.moveUnit(moverInstance, coordinates);
-    moverInstance.depleteSteps(stepsToTake);
-    this.mover = null;
   }
   /*
    Technically defender should never be set when this is called
@@ -104,13 +85,13 @@ class Game {
     try {
       const json = await fs.readFile(SAVE_PATH);
       const game = JSON.parse(json);
-      let { factions, turn, board, mover, combat } = game;
+      let { factions, turn, board, movement, combat } = game;
       this.factions = factions.map(faction => {
         return new Faction(faction, this, false);
       });
       this.turn = turn;
       this.board = new Board(board.length, board[0].length, this.factions, false);
-      this.mover = mover ? this.getUnitById(mover.id) : null;
+      this.movement = new Movement(movement);
       this.combat = new Combat(combat, this);
       return { json };
     } catch (err) {
@@ -125,13 +106,13 @@ class Game {
   }
   // Return game data without any circular references
   withoutCircularReference() {
-    const { factions, mover } = this;
+    const { factions, combat, movement, turn, board } = this;
     return {
       factions: factions.map(faction => faction.withoutCircularReference()),
-      combat: this.combat.withoutCircularReference(),
-      mover: mover ? mover.withoutCircularReference() : null,
-      turn: this.turn,
-      board: this.board.withoutCircularReference()
+      combat: combat.withoutCircularReference(),
+      mover: movement.forJson(),
+      turn: turn,
+      board: board.withoutCircularReference()
     }
   }
 }

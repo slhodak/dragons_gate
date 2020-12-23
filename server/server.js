@@ -57,7 +57,7 @@ app.post('/setMover', (req, res) => {
   try {
     const { mover } = req.body;
     game.combat.reset();
-    game.setMover(mover);
+    game.movement.setMover(mover);
     console.debug(chalk.cyan(`Setting mover id=${mover}`))
     res.sendStatus(200);
   } catch (err) {
