@@ -25,11 +25,11 @@ module.exports = class Combat {
     this.attackType = null;
   }
   setAttacker(unitId, attackType) {
-    this.attacker = game.getUnitById(unitId);
+    this.attacker = this.game.getUnitById(unitId);
     this.attackType = attackType;
   }
   setDefender(unitId) {
-    this.defender = game.getUnitById(unitId);
+    this.defender = this.game.getUnitById(unitId);
   }
   // Alter defender's HP and status with some randomness
   doCombat() {

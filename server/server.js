@@ -106,7 +106,7 @@ app.post('/setMover', (req, res) => {
 app.post('/moveMoverTo', (req, res) => {
   try {
     const { coordinates } = req.body;
-    game.moveMoverTo(coordinates);
+    game.movement.moveMoverTo(coordinates);
     wss.broadcastGameUpdate();
     res.sendStatus(200);
   } catch (err) {
@@ -119,7 +119,7 @@ app.post('/selectAttacker', (req, res) => {
   try {
     const { attacker, attackType } = req.body;
     if (attacker && attackType) {
-      game.setMover(null);
+      game.movement.setMover(null);
       game.combat.setAttacker(attacker.id, attackType);
       wss.broadcastGameUpdate();
       res.sendStatus(200);
@@ -127,7 +127,9 @@ app.post('/selectAttacker', (req, res) => {
       res.status(400).send({ message: 'Invalid request body; need attacker and attack type' });
     }
   } catch (err) {
-    res.status(500).send({ message: err });
+    console.error(chalk.red('Error selecting attacker'));
+    console.error(err);
+    res.status(500).send({ message: err.message });
   }
 });
 
