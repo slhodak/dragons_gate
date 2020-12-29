@@ -1,4 +1,5 @@
 import React from 'react';
+import ws from '../websocket';
 import Header from './Header';
 import SquareBoard from './Board/SquareBoard';
 import Factions from './Factions';
@@ -61,6 +62,7 @@ export default class Game extends React.Component {
     this.loadCurrentGame();
   }
   // Get game data from value in server memory
+  // TODO: Receive with websocket, do not request
   loadCurrentGame() {
     console.debug("Loading game from server memory...");
     fetch('load')

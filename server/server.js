@@ -1,10 +1,17 @@
-const port = 3456;
 const path = require('path');
 const chalk = require('chalk');
 const express = require('express');
+const http = require('http');
+
+const PORT = 3456;
 const app = express();
+
 const game = require('./game/game')();
 const bodyParser = require('body-parser');
+
+/*
+  Specify Express Routes
+*/
 
 app.use(express.static(path.resolve(__dirname, '../public')));
 app.use(bodyParser.json({ urlencoded: true }));
@@ -118,6 +125,28 @@ app.post('/doCombat', (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.debug(`Dragon's Gate server bound to port ${port}`);
+/*
+  Create HTTP Server
+    Embed WebSocket Server and Express App
+*/
+
+const server = http.createServer(app);
+
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', (ws) => {
+  console.debug(chalk.yellowBright(`Initiated WebSocket connection`));
+  ws.on('message', (message) => {
+    console.log(`received ${message}`);
+  });
+  ws.send('Hi from the server');
+});
+
+/*
+  Start HTTP Server
+*/
+
+server.listen(PORT, () => {
+  console.debug(chalk.yellowBright(`Dragon's Gate server available at to port ${server.address().port}`));
 });
