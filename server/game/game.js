@@ -17,7 +17,7 @@ class Game {
       new Faction(Guardians, this)
     ];
     this.assignIds();
-    this.turn = new Turn();
+    this.turn = new Turn(this);
     this.board = new Board(this.factions);
     this.movement = new Movement(this);
     this.combat = new Combat(this);

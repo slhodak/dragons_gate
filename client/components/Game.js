@@ -1,5 +1,5 @@
 import React from 'react';
-import ws from '../websocket';
+import createWebSocket from '../websocket';
 import Header from './Header';
 import SquareBoard from './Board/SquareBoard';
 import Factions from './Factions';
@@ -17,10 +17,11 @@ export default class Game extends React.Component {
       combat: {},
       mover: null
     };
+    this.webSocket = createWebSocket(this);
 
     this.nextTurn = this.nextTurn.bind(this);
     this.loadSavedGame = this.loadSavedGame.bind(this);
-    this.loadCurrentGame = this.loadCurrentGame.bind(this);
+    this.update = this.update.bind(this);
     this.selectAttacker = this.selectAttacker.bind(this);
     this.confirmAttack = this.confirmAttack.bind(this);
     this.resetAttack = this.resetAttack.bind(this);
@@ -58,26 +59,12 @@ export default class Game extends React.Component {
       </div>
     )
   }
-  componentDidMount() {
-    this.loadCurrentGame();
-  }
   // Get game data from value in server memory
   // TODO: Receive with websocket, do not request
-  loadCurrentGame() {
-    console.debug("Loading game from server memory...");
-    fetch('load')
-    .then(res => { 
-      if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error('Error loading game');
-        }
-      })
-      .then(body => {
-        const { board, factions, turn, mover, combat } = body;
-        this.setState({ board, factions, turn, combat, mover });
-      })
-      .catch(err => console.error(`Error fetching game state ${err}`));
+  update(newData) {
+    console.debug("Updating game");
+    const { board, factions, turn, mover, combat } = newData;
+    this.setState({ board, factions, turn, combat, mover });
   }
   // Get game data from last save on server disk
   loadSavedGame() {
@@ -119,10 +106,7 @@ export default class Game extends React.Component {
   nextTurn() {
     fetch('/nextTurn')
       .then(res => {
-        if (res.ok) {
-          console.debug('Changing turn');
-          this.loadCurrentGame();
-        } else {
+        if (!res.ok) {
           return res.json();
         }
       })
@@ -143,9 +127,7 @@ export default class Game extends React.Component {
       body: JSON.stringify({ attacker, attackType })
     })
       .then(res => {
-        if (res.ok) {
-          this.loadCurrentGame();
-        } else {
+        if (!res.ok) {
           return res.json();
         }
       })
@@ -161,9 +143,7 @@ export default class Game extends React.Component {
       method: 'POST'
     })
       .then(res => {
-        if (res.ok) {
-          this.loadCurrentGame();
-        } else {
+        if (!res.ok) {
           return res.json();
         }
       })
@@ -183,9 +163,7 @@ export default class Game extends React.Component {
       body: JSON.stringify({ defender })
     })
       .then(res => {
-        if (res.ok) {
-          this.loadCurrentGame();
-        } else {
+        if (!res.ok) {
           return res.json();
         }
       })
@@ -207,7 +185,6 @@ export default class Game extends React.Component {
       .then(res => {
         if (res.ok) {
           console.debug('Mover set successfully');
-          this.loadCurrentGame();
         } else {
           return res.json();
         }
@@ -242,7 +219,6 @@ export default class Game extends React.Component {
       .then(res => {
         if (res.ok) {
           console.debug(`Successfully moved unit to ${coordinates}`);
-          this.loadCurrentGame();
         } else {
           res.json();
         }
