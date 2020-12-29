@@ -81,10 +81,11 @@ app.post('/save', async (_req, res) => {
 app.get('/nextTurn', (_req, res) => {
   let err = game.turn.next();
   if (err) {
-    wss.broadcastGameUpdate();
-    res.status(500).send(err);
+    console.error(chalk.red('Error changing turn'));
+    console.error(err);
+    res.status(500).send({ messag: err.message });
   } else {
-    
+    wss.broadcastGameUpdate();
     res.sendStatus(200);
   }
 });
@@ -150,9 +151,9 @@ app.post('/doCombat', (req, res) => {
     game.combat.doCombat();
     game.board.update([game.combat.attacker]);
     if (game.attackerFactionHasNoMoves()) {
-      game.nextTurn();
+      game.turn.next();
     }
-    game.resetCombat();
+    game.combat.reset();
     wss.broadcastGameUpdate();
     res.sendStatus(200);
   } catch (err) {
