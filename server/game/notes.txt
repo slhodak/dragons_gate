@@ -109,3 +109,56 @@ block unit paths past enemies
 load game 
 multi-client
 
+
+PM2 - Process Management
+
+Starting Websocket server in terminal shows first WSS only
+  Hides other server logs, regardless of starting app in bg
+How do I log all of the WSS connections?
+How do I start all of them with PM2 or as subprocesses of node?
+How do I aggregate my logs from these processes?
+
+WebSocket
+
+Deal with closed or broken connections
+
+
+Jason Playthrough Notes
+
+  write special abilities on units or faction cards
+  don't transmit players thinking about moves
+  better show attack range
+    only show attack button if units in range
+    or highlight targets in red
+
+  nerf kusarigama range (2)
+
+  attack pathfinding/blocking
+
+  shuriken losing movement after spending all ranged attacks
+
+  opponents buttons shouldn't be visible to all players
+    choose teams
+
+  Show damage/rolls
+
+  once you attack, cannot move (feature?)
+
+  remove deceased from tiles?
+    after a turn or two
+
+  BUG: Can move deceased!?
+    mover not selected though
+    but move does go through, does propagate to all players
+    FIX: death must reduce steps to zero
+
+  FlagBearer range too low?
+
+  Reset game button
+
+  load (and maybe save?) broken in server/online version
+
+
+
+
+
