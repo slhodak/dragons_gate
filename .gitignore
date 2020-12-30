@@ -11,3 +11,9 @@ data/game.json
 
 # code coverage
 coverage/
+
+# package & input duplicates
+package.tar.gz
+dist/game/public
+dist/game/server
+dist/game/package.json
