@@ -7,6 +7,8 @@ import Footer from './Footer';
 import { xyDistance } from '../../lib/helpers';
 import '../style.css';
 
+const serverUrl = `http://${process.env.HOST}:${process.env.PORT}`;
+
 export default class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -69,7 +71,7 @@ export default class Game extends React.Component {
   // Get game data from last save on server disk
   loadSavedGame() {
     console.log("Fetching game from server disk...");
-    fetch('loadSaved')
+    fetch(serverUrl + '/loadSaved')
       .then(res => res.json())
       .then(body => {
         if (body.message) {
@@ -83,7 +85,7 @@ export default class Game extends React.Component {
   }
   saveGame() {
     console.debug('Saving game file...');
-    fetch('save', {
+    fetch(serverUrl + '/save', {
       method: 'POST'
     })
       .then(res => {
@@ -104,7 +106,7 @@ export default class Game extends React.Component {
   }
   // Change turn
   nextTurn() {
-    fetch('/nextTurn')
+    fetch(serverUrl + '/nextTurn')
       .then(res => {
         if (!res.ok) {
           return res.json();
@@ -118,7 +120,7 @@ export default class Game extends React.Component {
       .catch(err => `Error changing turns: ${err}`)
   }
   selectAttacker(attacker, attackType) {
-    fetch('/selectAttacker', {
+    fetch(serverUrl + '/selectAttacker', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -139,7 +141,7 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error selecting attacker: ${err}`));
   }
   resetAttack() {
-    fetch('/resetAttack', {
+    fetch(serverUrl + '/resetAttack', {
       method: 'POST'
     })
       .then(res => {
@@ -155,7 +157,7 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error resetting attack: ${err}`));
   }
   confirmAttack(defender) {
-    fetch('doCombat', {
+    fetch(serverUrl + '/doCombat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -175,7 +177,7 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error calculating combat result: ${err.message}`));
   }
   setMover(unitId) {
-    fetch('setMover', {
+    fetch(serverUrl + '/setMover', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -209,7 +211,7 @@ export default class Game extends React.Component {
   }
   moveMoverTo(coordinates) {
     console.debug('Coordinates sent in moveTo ' + coordinates);
-    fetch('moveMoverTo', {
+    fetch(serverUrl + '/moveMoverTo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
