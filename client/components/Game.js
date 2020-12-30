@@ -7,7 +7,7 @@ import Footer from './Footer';
 import { xyDistance } from '../../lib/helpers';
 import '../style.css';
 
-const serverUrl = `http://${process.env.HOST}:${process.env.PORT}`;
+const serverUrl = `http://${process.env.HOST || 'localhost'}:${process.env.PORT || '3456'}`;
 
 export default class Game extends React.Component {
   constructor(props) {

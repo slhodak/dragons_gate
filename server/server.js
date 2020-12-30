@@ -166,6 +166,6 @@ app.post('/doCombat', (req, res) => {
   Start HTTP Server
 */
 
-server.listen(PORT, () => {
+server.listen(process.env.PORT || PORT, () => {
   console.debug(chalk.yellowBright(`Dragon's Gate server available at to port ${server.address().port}`));
 });
