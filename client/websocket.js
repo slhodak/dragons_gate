@@ -1,5 +1,5 @@
 export default (game) => {
-  const ws = new WebSocket('ws://localhost:3456');
+  const ws = new WebSocket(`ws://${process.env.HOST}:${process.env.PORT}`);
   ws.onopen = (e) => {
     ws.send(JSON.stringify({ readyState: JSON.stringify(e.target.readyState) }));
   }
