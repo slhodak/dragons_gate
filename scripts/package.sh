@@ -10,6 +10,7 @@ fi
 
 cp -r server/ dist/game
 cp -r public/ dist/game
+cp -r lib/ dist/game
 cp package.json dist/game
 
 echo "Creating tar"

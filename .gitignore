@@ -16,4 +16,5 @@ coverage/
 package.tar.gz
 dist/game/public
 dist/game/server
+dist/game/lib
 dist/game/package.json
