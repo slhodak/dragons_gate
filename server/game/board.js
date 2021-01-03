@@ -85,6 +85,15 @@ module.exports = class Board {
       }
     }
   }
+  isEmptyAt(coordinates) {
+    const { data } = this;
+    let cell = data[coordinates[0]][coordinates[1]];
+    if (cell === null || cell === undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   moveUnit(unit, coordinates) {
     this.removeUnit(unit.coordinates);
     this.addUnit(unit, coordinates);

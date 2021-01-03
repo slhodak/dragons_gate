@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const { attackTypes, unitTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums`);
+const { findEmptyCellFor } = require(`${process.env.PWD}/lib/helpers`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -115,6 +116,12 @@ class Unit {
     }
     return false;
   }
+  // TODO: Needs test
+  depleteAttacks() {
+    Object.values(this.attack).forEach(attack => {
+      attack.count = 0;
+    });
+  }
   depleteSteps(steps) {
     if (steps) {
       console.debug(chalk.blue(`${this.name} took ${steps} steps`));
@@ -128,6 +135,7 @@ class Unit {
   die() {
     // TODO: Should reduce all attacks to 0?
     this.status = unitStatuses.DECEASED;
+    this.depleteAttacks();
     this.depleteSteps();
     console.debug(`${this.name} (id:${this.id}) died`);
   }
@@ -377,6 +385,23 @@ class Shinja extends Unit {
       healthRegen: 0
     }, unitTypes.SHINJA, faction);
     this.deaths = 2;
+  }
+  // TODO: Needs test
+  die() {
+    // reduce deaths by one
+    this.deaths -= 1;
+    if (this.deaths === 0) {
+      Unit.prototype.die.call(this);
+    } else {
+      // reduce steps and attacks (end turn)
+      this.depleteAttacks();
+      this.depleteSteps();
+      this.status = unitStatuses.HEALTHY;
+      this.healthPoints = 20;
+      // move back to starting square
+      const coordinates = findEmptyCellFor(this, [3, 4]);
+      this.faction.game.board.moveUnit(this, coordinates);
+    }
   }
 }
 
