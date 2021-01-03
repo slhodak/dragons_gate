@@ -76,47 +76,44 @@ Next turn resets/cancels all motion or attack in progress
 
 
 Bugs from Playthrough #3:
-
-empire unit die() calling forEach on faction string
-marker for status on board
-saving game means fix bug and keep playing
-movement should cancel attack / vise versa (done)
-can attack deceased players? or only because die() not called?
-errors not displaying in fetch catches from non-success statuses
-units are affected even after death?
-yuma can move after attacking? canceling move/attack matters?
-yuma can move after death
-immobilized not blocking buttons
-can still move after death by damnation
-attack range not visible to players
-attack button not clickable when no enemies in range?
-or hovering on button shows range?
-  ... think about it
+  empire unit die() calling forEach on faction string √
+  marker for status on board √
+  saving game means fix bug and keep playing √
+  movement should cancel attack / vise versa √
+  errors not displaying in fetch catches from non-success statuses √
+  can attack deceased players? or only because die() not called?
+  units are affected even after death?
+  yuma can move after attacking? canceling move/attack matters?
+  yuma can move after death
+  immobilized not blocking buttons
+  can still move after death by damnation
+  attack range not visible to players
+  attack button not clickable when no enemies in range?
+  or hovering on button shows range?
+    ... think about it
 
 
 Play through with Travis Notes:
+  implement Shinja
 
-implement Shinja
+  ended turn when yuma had movement left
+  move after damned death?
+  yuma move  after death?
+  nerf damned?
+  include the rolls — little delay?
+    show loss
+  block unit paths past enemies
 
-ended turn when yuma had movement left
-move after damned death?
-yuma move  after death?
-nerf damned?
-include the rolls — little delay?
-  show loss
-block unit paths past enemies
-
-load game 
-multi-client
+  load game 
+  multi-client
 
 
 PM2 - Process Management
-
-Starting Websocket server in terminal shows first WSS only
-  Hides other server logs, regardless of starting app in bg
-How do I log all of the WSS connections?
-How do I start all of them with PM2 or as subprocesses of node?
-How do I aggregate my logs from these processes?
+  Starting Websocket server in terminal shows first WSS only
+    Hides other server logs, regardless of starting app in bg
+  How do I log all of the WSS connections?
+  How do I start all of them with PM2 or as subprocesses of node?
+  How do I aggregate my logs from these processes?
 
 WebSocket
 
@@ -132,33 +129,26 @@ Jason Playthrough Notes
     or highlight targets in red
 
   nerf kusarigama range (2)
-
   attack pathfinding/blocking
-
   shuriken losing movement after spending all ranged attacks
-
   opponents buttons shouldn't be visible to all players
     choose teams
-
   Show damage/rolls
-
   once you attack, cannot move (feature?)
-
   remove deceased from tiles?
     after a turn or two
-
   BUG: Can move deceased!?
     mover not selected though
     but move does go through, does propagate to all players
     FIX: death must reduce steps to zero
 
   FlagBearer range too low?
-
   Reset game button
-
   load (and maybe save?) broken in server/online version
 
+ended turn when yuma had movement left
 
-
-
-
+move after damned death?
+yuma move  after death?
+nerf damned?
+include the rolls — little delay?
