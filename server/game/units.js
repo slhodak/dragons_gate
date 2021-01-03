@@ -126,7 +126,9 @@ class Unit {
   }
   // game reference needed in overridden die() methods
   die() {
+    // TODO: Should reduce all attacks to 0?
     this.status = unitStatuses.DECEASED;
+    this.depleteSteps();
     console.debug(`${this.name} (id:${this.id}) died`);
   }
   // replace circular reference to faction with faction name

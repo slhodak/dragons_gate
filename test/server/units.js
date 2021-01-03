@@ -7,7 +7,7 @@ describe('Unit', () => {
   beforeEach(() => {
     let stats = {
         healthPoints: 10,
-        speed: 5,
+        steps: 5,
         attack: {
           melee: {
             range: 2,
@@ -77,7 +77,7 @@ describe('Unit', () => {
         this.unit.beAffected();
       }
       assert.strictEqual(this.unit.isAlive(), false);
-    })
+    });
   });
   describe('#rollMeleeDamage', () => {
     it('should reduce remaining melee attacks by 1', () => {
@@ -114,6 +114,16 @@ describe('Unit', () => {
       assert.strictEqual(this.imperialUnit.faction, this.empire);
     });
   });
+  describe('#die', () => {
+    it('should change unit status to deceased', () => {
+      this.unit.die();
+      assert.strictEqual(this.unit.status, unitStatuses.DECEASED);
+    });
+    it('should deplete all remaining unit steps', () => {
+      this.unit.die();
+      assert.strictEqual(this.unit.steps, 0);
+    });
+  })
 });
 
 describe('EliteSoldier', () => {
