@@ -3,7 +3,7 @@ import dragonIcon from '../images/icons8-dragon-96.png';
 import '../style.css';
 
 export default (props) => {
-  const { turnFaction, nextTurn, loadSavedGame, saveGame } = props;
+  const { turnFaction, nextTurn, newGame, loadSavedGame, saveGame } = props;
   return (
     <div className="header">
       <h1>
@@ -17,6 +17,7 @@ export default (props) => {
           <button className="gameButton" onClick={loadSavedGame}>Load Game</button>
           <button className="gameButton" onClick={saveGame}>Save Game</button>
         </div>
+        <button className="gameButton" onClick={newGame}>New Game</button>
       </div>
     </div>
   )

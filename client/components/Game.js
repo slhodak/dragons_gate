@@ -43,6 +43,7 @@ export default class Game extends React.Component {
     return (
       <div>
         <Header turnFaction={turnFaction}
+                newGame={this.new}
                 loadSavedGame={this.loadSavedGame}
                 saveGame={this.saveGame}
                 nextTurn={this.nextTurn} />
@@ -60,6 +61,11 @@ export default class Game extends React.Component {
         <Footer />
       </div>
     )
+  }
+  // Reset game data, creating fresh game
+  new() {
+    fetch(serverUrl + '/new')
+      .catch(err => console.error(`Error renewing game: ${err}`));
   }
   // Get game data from value in server memory
   // TODO: Receive with websocket, do not request
