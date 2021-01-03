@@ -153,4 +153,13 @@ yuma move  after death?
 nerf damned?
 include the rolls — little delay?
 
-New Game button
+New Game button √
+
+Board Coordinates issue
+  0,0 at top left instead of bottom left
+  flip horizontal
+  - backward map / count down in react render?
+  - 
+
+love no border cell - but needs to work for ux
+

@@ -19,26 +19,28 @@ export default (props) => {
   return (
     board ? 
       <div className="board">
-        {board.map((row, rowIndex) => {
+        {board.map((column, columnIndex) => {
           return (
-            <div className="squareRow">
-              {row.map((unit, columnIndex) => {
-                const coordinates = [rowIndex, columnIndex];
+            <div className="squareColumn">
+              {column.map((unit, rowIndex) => {
+                const coordinates = [columnIndex, rowIndex];
                 const isValidMove = moverCanMoveTo(coordinates, unit);
                 return (
                   <div className="squareCell">
                     {unit ?
-                      <UnitCell  coordinates={coordinates}
-                      unit={unit}
-                      turnFaction={turnFaction}
-                      setMover={setMover}
-                      mover={mover}
-                      combat={combat}
-                      selectAttacker={selectAttacker}
-                      resetAttack={resetAttack}
-                      confirmAttack={confirmAttack} />
+                      <UnitCell coordinates={coordinates}
+                                unit={unit}
+                                turnFaction={turnFaction}
+                                setMover={setMover}
+                                mover={mover}
+                                combat={combat}
+                                selectAttacker={selectAttacker}
+                                resetAttack={resetAttack}
+                                confirmAttack={confirmAttack} />
                       :
-                      <EmptyCell isValidMove={isValidMove} coordinates={coordinates} moveMoverTo={moveMoverTo} />}
+                      <EmptyCell  isValidMove={isValidMove}
+                                  coordinates={coordinates}
+                                  moveMoverTo={moveMoverTo} />}
                   </div>
                 )
               })}

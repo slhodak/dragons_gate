@@ -399,7 +399,7 @@ class Shinja extends Unit {
       this.status = unitStatuses.HEALTHY;
       this.healthPoints = 20;
       // move back to starting square
-      const coordinates = findEmptyCellFor(this, [3, 4]);
+      const coordinates = findEmptyCellFor(this, [4, 4]);
       this.faction.game.board.moveUnit(this, coordinates);
     }
   }

@@ -95,22 +95,22 @@ body {
   margin: 10px;
   background-color: black;
   display: flex;
-  flex-direction: column;
-  width: 1080px;
-}
-
-.squareRow {
-  display: flex;
   flex-direction: row;
+  width: 1098px;
 }
 
-.squareRow .Guardians {
+.squareColumn {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.squareColumn .Guardians {
   color: var(--guardians-color);
 }
-.squareRow .Protectors {
+.squareColumn .Protectors {
   color: var(--protectors-color);
 }
-.squareRow .Empire {
+.squareColumn .Empire {
   color: var(--empire-color);
 }
 
