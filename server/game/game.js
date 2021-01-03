@@ -11,16 +11,7 @@ const SAVE_PATH = path.join(__dirname, './data/game.json');
 // Interface for users to play the game
 class Game {
   constructor() {
-    this.factions = [
-      new Faction(Empire, this),
-      new Faction(Protectors, this),
-      new Faction(Guardians, this)
-    ];
-    this.assignIds();
-    this.turn = new Turn(this);
-    this.board = new Board(this.factions);
-    this.movement = new Movement(this);
-    this.combat = new Combat(this);
+    this.reset();
   }
   // Assign unique IDs to units
   assignIds() {
@@ -48,6 +39,19 @@ class Game {
       return foundUnit;
     });
     return foundUnit;
+  }
+  // Reinitialize game
+  async reset() {
+    this.factions = [
+      new Faction(Empire, this),
+      new Faction(Protectors, this),
+      new Faction(Guardians, this)
+    ];
+    this.assignIds();
+    this.turn = new Turn(this);
+    this.board = new Board(this.factions);
+    this.movement = new Movement(this);
+    this.combat = new Combat(this);
   }
   // Write game state to file
   async save() {

@@ -44,6 +44,17 @@ app.use(express.static(path.resolve(__dirname, '../public')));
 app.use(bodyParser.json({ urlencoded: true }));
 app.use('/explorer', express.static(path.resolve(__dirname, './explorer')));
 
+app.get('/new', async (_req, res) => {
+  try {
+    game.reset();
+    wss.broadcastGameUpdate();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+    res.sendStatus(400);
+  }
+});
+
 // Send game data from value in memory
 app.get('/load', async (_req, res) => {
   try {

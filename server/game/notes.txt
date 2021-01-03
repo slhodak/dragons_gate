@@ -152,3 +152,5 @@ move after damned death?
 yuma move  after death?
 nerf damned?
 include the rolls — little delay?
+
+New Game button
