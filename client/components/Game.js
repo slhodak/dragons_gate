@@ -68,7 +68,6 @@ export default class Game extends React.Component {
       .catch(err => console.error(`Error renewing game: ${err}`));
   }
   // Get game data from value in server memory
-  // TODO: Receive with websocket, do not request
   update(newData) {
     console.debug("Updating game");
     const { board, factions, turn, mover, combat } = newData;
