@@ -1,6 +1,5 @@
 const chalk = require('chalk');
 const { attackTypes, unitTypes, unitStatuses, statusHierarchy } = require(`${process.env.PWD}/lib/enums`);
-const { findEmptyCellFor } = require(`${process.env.PWD}/lib/helpers`);
 
 class Unit {
   constructor(stats, name, faction) {
@@ -160,7 +159,7 @@ class EliteSoldier extends Unit {
   constructor(faction) {
     super({
       healthPoints: 30,
-      steps: 1,
+      steps: 10,
       attack: {
         melee: {
           range: 2,
@@ -271,7 +270,7 @@ class Daisho extends Unit {
       attack: {
         melee: {
           range: 2,
-          damage: [4, 6],
+          damage: [10, 6],
           count: 2
         }
       },
@@ -398,9 +397,14 @@ class Shinja extends Unit {
       this.depleteSteps();
       this.status = unitStatuses.HEALTHY;
       this.healthPoints = 20;
+      const { board } = this.faction.game;
       // move back to starting square
-      const coordinates = findEmptyCellFor(this, [4, 4]);
-      this.faction.game.board.moveUnit(this, coordinates);
+      const coordinates = board.findEmptyCellFor([4, 3], [5,4]);
+      if (coordinates) {
+        board.moveUnit(this, coordinates);
+      } else {
+        console.error(chalk.red('No space found to place dead Shinja'));
+      }
     }
   }
 }
