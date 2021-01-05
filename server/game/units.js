@@ -397,14 +397,17 @@ class Shinja extends Unit {
       this.depleteSteps();
       this.status = unitStatuses.HEALTHY;
       this.healthPoints = 20;
-      const { board } = this.faction.game;
-      // move back to starting square
-      const coordinates = board.findEmptyCellFor([4, 3], [5,4]);
-      if (coordinates) {
-        board.moveUnit(this, coordinates);
-      } else {
-        console.error(chalk.red('No space found to place dead Shinja'));
-      }
+      this.resetLocation();
+    }
+  }
+  // move back to starting square
+  resetLocation() {
+    const { board } = this.faction.game;
+    const coordinates = board.findEmptyCellFrom([4, 3], [5,4]);
+    if (coordinates) {
+      board.moveUnit(this, coordinates);
+    } else {
+      console.error(chalk.red('No space found to place dead Shinja'));
     }
   }
 }

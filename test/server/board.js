@@ -51,6 +51,28 @@ describe('Board', () => {
       assert.deepStrictEqual(this.board.clockwiseDirectionFromVector(veloVector), [1, 0]);
     });
   });
+  describe('#turnRight', () => {
+    it('should turn [1, 0] into [0, -1]', () => {
+      const direction = [1, 0];
+      this.board.turnRight(direction);
+      assert.deepStrictEqual(direction, [0, -1]); 
+    });
+    it('should turn [0, -1] into [-1, 0]', () => {
+      const direction = [0, -1];
+      this.board.turnRight(direction);
+      assert.deepStrictEqual(direction, [-1, 0]);
+    });
+    it('should turn [-1, 0] into [0, 1]', () => {
+      const direction = [-1, 0];
+      this.board.turnRight(direction);
+      assert.deepStrictEqual(direction, [0, 1]);
+    });
+    it('should turn [0, 1] into [1, 0]', () => {
+      const direction = [0, 1];
+      this.board.turnRight(direction);
+      assert.deepStrictEqual(direction, [1, 0]);
+    });
+  });
   describe('#findEmptyCellFor', () => {
     it('should search the first side of the first ring for the appropriate distance', () => {
 

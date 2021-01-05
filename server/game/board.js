@@ -169,16 +169,12 @@ module.exports = class Board {
     coordinates[0] += direction[0];
     coordinates[1] += direction[1];
   }
-  // 0,1 -> 1,0 -> 0,-1 -> -1,0
+  // Rotate a 2d unit vector 90 degrees clockwise
   turnRight(_2DVector) {
-    _2DVector[0] += 1;
-    if (_2DVector[0] === 2) {
-      _2DVector[0] = -1;
-    }
-    _2DVector[1] -= 1;
-    if (_2DVector[1] === -2) {
-      _2DVector[1] = 1;
-    }
+    // flip and multiply the y value by -1
+    const x = _2DVector[0];
+    _2DVector[0] = _2DVector[1];
+    _2DVector[1] = x === 0 ? 0 : x * -1;
   }
   hasCellAt(coordinates) {
     if (coordinates[0] < 0 ||

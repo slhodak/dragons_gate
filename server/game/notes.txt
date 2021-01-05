@@ -163,3 +163,7 @@ Board Coordinates issue
 
 love no border cell - but needs to work for ux
 
+re-place Shinja at randomized cell with preference toward starting square/cell?
+  when/if refactor to Hex, can do this
+
+
