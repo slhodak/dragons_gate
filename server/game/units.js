@@ -403,7 +403,7 @@ class Shinja extends Unit {
   // move back to starting square
   resetLocation() {
     const { board } = this.faction.game;
-    const coordinates = board.findEmptyCellFrom([4, 3], [5,4]);
+    const coordinates = board.emptyCellFrom([4, 3], [5,4]);
     if (coordinates) {
       board.moveUnit(this, coordinates);
     } else {

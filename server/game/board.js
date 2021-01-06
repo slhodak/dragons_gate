@@ -86,39 +86,39 @@ module.exports = class Board {
     }
   }
   // Search board in outward clockwise spiral
-  findEmptyCellFrom(coordinates, center) {
-    // Vector is magnitude direction of coordinates from center
-    let vector = this.velocity(center, coordinates);
-    let sideLength = (Math.max(...vector.map(scalar => Math.abs(scalar))) * 2) + 1;
+  emptyCellFrom(coordinates, center) {
     let side = 0;
-    let direction = this.clockwiseDirectionFromVector(vector);
     // check central tiles in clockwise spiral from 4,3, return first empty cell
     while(true) {
+      // Vector is magnitude & direction of current coordinates from center
+      let vector = this.velocity(center, coordinates);
+      let direction = this.clockwiseDirectionFromVector(vector);
       // Check all cells on a side for emptiness
-      for (let i = 0; i < sideLength; i++) {
-        this.moveInDirection(coordinates, direction);
+      let distanceToCorner = this.distanceToCorner(vector);
+      console.debug(`Searching for empty cell along side=${side} in direction=${direction} starting at vector=${vector} from center=${center} for distanceToCorner=${distanceToCorner}`);
+      for (let i = 0; i < distanceToCorner + 1; i++) {
+        console.debug(`Checking if coordinates=${coordinates} is empty`);
         if (!this.hasCellAt(coordinates)) {
+          if (i < distanceToCorner) {
+            this.moveInDirection(coordinates, direction);
+          }
           continue;
         }
         if (this.isEmptyAt(coordinates)) {
           return coordinates;
         }
+        // Don't move again at last cell on side
+        if (i < distanceToCorner) {
+          this.moveInDirection(coordinates, direction);
+        }
       }
-      this.turnRight(direction);
       side += 1;
-      // every 4 sides, move one more tile and add 1 to side length
+      // every 4 sides, move one more tile
       if (side === 4) {
         // Move one more square
         this.moveInDirection(coordinates, direction);
-        if (!this.hasCellAt(coordinates)) {
-          continue;
-        }
-        if (this.isEmptyAt(coordinates)) {
-          return coordinates;
-        }
         side = 0;
-        sideLength += 1;
-        if (sideLength >= Math.max(this.height, this.width) * 2 - 1) {
+        if (Math.max(...vector.map(num => Math.abs(num))) > this.width) {
           return null;
         }
       }
@@ -126,7 +126,7 @@ module.exports = class Board {
   }
   // Find magnitude and direction from A to B
   velocity(a, b) {
-    return [ (b[0] - a[0]), (b[1] - a[1]) ]
+    return [ (b[0] - a[0]), (b[1] - a[1]) ];
   }
   // Find the correct direction to move based on which side of a spiral the given point is on
   clockwiseDirectionFromVector(vector) {
@@ -162,6 +162,25 @@ module.exports = class Board {
         // top left, go right
         return [1, 0];
       }
+    }
+  }
+  // Provide vector from center point
+  distanceToCorner(vector) {
+    // When absolute values are equal
+    if (Math.abs(vector[0]) === Math.abs(vector[1])) {
+      return Math.abs(vector[0] * 2);
+    }
+    if (vector[0] === 0) {
+      return Math.abs(vector[1]);
+    }
+    if (vector[1] === 0) {
+      return Math.abs(vector[0]);
+    }
+    if (vector[0] > vector[1]) {
+      return vector[0] - vector[1];
+    }
+    if (vector[1] > vector[0]) {
+      return vector[1] - vector[0];
     }
   }
   // Move a coordinate pointer
