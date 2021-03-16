@@ -3,6 +3,8 @@
 2. `npm run start`
 3. `localhost:3456`
 
+![](dragon_gate_demo.gif)
+
 # Lore
 >751 BCE
 
