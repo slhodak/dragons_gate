@@ -86,6 +86,3 @@ Unit statistics include: Health Points (H), Movement Speed (S), Attack Strength 
 - Units must be within range to attack.
 - The damage done by an attack is equal to the roll result for the weapon minus the roll result for the defending unit's armor.
 - Resulting HP is reduced by the final calculated damage.
-## Health Regeneration
-- Units regenerate health by their Health Regeneration value per turn if they are more than 2cm away from all enemy units, and within 2cm of any unit from their own faction.
-- Guardians regenerate health every other turn, regardless of their proximity to other units.
