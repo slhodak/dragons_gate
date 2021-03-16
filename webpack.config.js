@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const env = require('dotenv').config({path: __dirname + '/.env'}).parsed;
 
 module.exports = {
   mode: 'development',
@@ -26,6 +27,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.EnvironmentPlugin(['HOST', 'PORT'])
+    new webpack.EnvironmentPlugin({
+      HOST: env.HOST || 'localhost',
+      PORT: env.PORT || '3456'
+    })
   ]
 };

@@ -159,7 +159,7 @@ class EliteSoldier extends Unit {
   constructor(faction) {
     super({
       healthPoints: 30,
-      steps: 10,
+      steps: 2,
       attack: {
         melee: {
           range: 2,

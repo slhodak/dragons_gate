@@ -1,9 +1,14 @@
+# To Play
+1. `npm install && npm run build`
+2. `npm run start`
+3. `localhost:3456`
+
 # Lore
 >751 BCE
 
 >The Dragon's Gate is a portal to a spiritual realm where deep wisdom and artifacts promising power and prestige await adventurers who can defeat its fearsome Guardians.
 
->The Emperor has sent an army of 100,000 to peirce the veil and recover the mysterious treasures beyond the Gate. However, the journey was beset by supernatural interventions--storms, droughts, disease, and attack by wild animals were unleashed upon the Emperor's forces by Heaven to dissuade and prevent their ambitious march. A year later, 7 soldiers remain. Today they took the steps that have finally brought the Gate within sight, and are determined to prove to their leader--and to Heaven itself--that they are worthy of their goal.
+>The Emperor has sent an army of 100,000 to pierce the veil and recover the mysterious treasures beyond the Gate. However, the journey was beset by supernatural interventions--storms, droughts, disease, and attack by wild animals were unleashed upon the Emperor's forces by Heaven to dissuade and prevent their ambitious march. A year later, 7 soldiers remain. Today they took the steps that have finally brought the Gate within sight, and are determined to prove to their leader--and to Heaven itself--that they are worthy of their goal.
 
 >A year earlier, when the campaign was being planned, a soldier named Yuma sought the Emperor's blessing to command a unit of 40 soldiers, as she had distinguished herself in nearly two decades of military service. As she was denied, the Emperor added insult to injury when he suggested that, "You are a fine warrior, perhaps your sons will make great Officers. This is what your Empire asks of you." She felt the pangs of this dishonor, but her heart sunk deeper still under the weight of the injustice, for justice's sake. She told the Emperor that she would die before he would possess the treasures beyond the Gate, and through her declaration, was forced to fight her way out of the capital to safety. In the months following, she was joined by a few others who had risen high in the Emperor's service, only to be shot out of the sky in similarly unjust fashions. These powerful enemies of the Empire were outlaws, who will prevent the Emperor from passing the Gate, or pass through it themselves to share its benefits with the downtrodden people of the Empire.
 
