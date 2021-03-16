@@ -1,7 +1,8 @@
 # To Play
-1. `npm install && npm run build`
-2. `npm run start`
-3. `localhost:3456`
+1. `npm install`
+2. `npm run build`
+3. `npm run start`
+4. `localhost:3456`
 
 ![](dragon_gate_demo.gif)
 
@@ -12,7 +13,7 @@ Clients update the game state via requests to the game server. These updates are
 Most requests are commands for the game server to execute a function to change the game state on behalf of the client player. Players call multiple endpoints to do this, but if I had known more about RPC at the time, I would probably have provided 1 endpoint for all update methods.
 
 # Local Multiplayer
-Try it over LAN: change `HOST` in `.env` to your IP address (see below) and start the server while friends on the same Wi-Fi visit `<your-ip>:3456`.
+Try it over LAN: change `HOST` in `.env` to your IP address (see below) and start the server while friends on the same Wi-Fi visit `<your-ip>:3456`. (You will have to run `npm run build` again after updating the `.env`)
 
 Your IP Address (on a Mac:)  
 ![](your-ip-address.png)
