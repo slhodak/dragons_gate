@@ -5,6 +5,18 @@
 
 ![](dragon_gate_demo.gif)
 
+# Multiplayer Architecture
+![](dragons-gate-multiplayer-architecture.jpg)
+Clients update the game state via requests to the game server. These updates are propagated to all other users (including the sender) via WebSockets. To prevent players getting out of sync, game state is never updated on the client-side. Clients produce parameters for the server to digest.
+
+Most requests are commands for the game server to execute a function to change the game state on behalf of the client player. Players call multiple endpoints to do this, but if I had known more about RPC at the time, I would probably have provided 1 endpoint for all update methods.
+
+# Local Multiplayer
+Try it over LAN: change `HOST` in `.env` to your IP address (see below) and start the server while friends on the same Wi-Fi visit `<your-ip>:3456`.
+
+Your IP Address (on a Mac:)
+![](your-ip-address.png)
+
 # Lore
 >751 BCE
 
