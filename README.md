@@ -14,7 +14,7 @@ Most requests are commands for the game server to execute a function to change t
 # Local Multiplayer
 Try it over LAN: change `HOST` in `.env` to your IP address (see below) and start the server while friends on the same Wi-Fi visit `<your-ip>:3456`.
 
-Your IP Address (on a Mac:)
+Your IP Address (on a Mac:)  
 ![](your-ip-address.png)
 
 # Lore
